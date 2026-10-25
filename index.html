@@ -27,9 +27,10 @@
     .pass-tag { font-size: 11px; font-weight: 800; color: #ffb300; }
     .pass-name { font-size: 16px; font-weight: 700; color: #fff; margin: 2px 0; }
     .pass-phone { font-size: 12px; color: #a1887f; }
-    .pass-actions { display: flex; gap: 6px; }
+    .pass-actions { display: flex; gap: 6px; align-items: center; }
     .btn-wa { background: #25d366; color: #000; border: none; padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; text-decoration: none; }
     .btn-edit { background: #424242; color: #fff; border: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; cursor: pointer; }
+    .btn-del { background: #c62828; color: #fff; border: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; cursor: pointer; }
 
     /* Guest Pass View */
     .card-wrap { width: 100%; border-radius: 26px; padding: 3px; background: linear-gradient(60deg, #ff9900, #ff0055, #00e5ff, #ff9900); background-size: 300% 300%; animation: glow 4s ease infinite; box-shadow: 0 0 35px rgba(255,140,0,0.35); }
@@ -141,15 +142,17 @@
       <input type="number" class="input-field" id="mPassId" placeholder="પાસ નંબર (101 થી 700)">
       <input type="text" class="input-field" id="mName" placeholder="મહેમાનનું નામ">
       <input type="tel" class="input-field" id="mPhone" placeholder="મોબાઈલ નંબર (10 આંકડા)">
-      <div style="display: flex; gap: 8px;">
+      
+      <div style="display: flex; gap: 8px; margin-top: 6px;">
         <button class="btn-add" onclick="saveModalPass()">સેવ કરો</button>
-        <button style="background: #c62828; color: #fff; border: none; padding: 8px 14px; border-radius: 10px;" onclick="closeModal()">રદ કરો</button>
+        <button id="modalClearBtn" style="display: none; background: #c62828; color: #fff; border: none; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer;" onclick="clearCurrentPass()">પાસ ખાલી કરો</button>
+        <button style="background: #555; color: #fff; border: none; padding: 10px 14px; border-radius: 10px; cursor: pointer;" onclick="closeModal()">બંધ કરો</button>
       </div>
     </div>
   </div>
 
   <script>
-    // તમારી Google Apps Script લાઈવ ક્લાઉડ લિંક
+    // ગૂગલ સ્ક્રિપ્ટ ક્લાઉડ લિંક
     const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbzLxXwwgHviDbNKLY1kcanoZQfIsqOqVyY_-VBpHIhr_1Assj3uRbWhTnSd9KwBpz5i/exec";
 
     // ૬૦૦ પાસ ડેટાબેઝ
@@ -182,7 +185,6 @@
       document.getElementById('dispPassId').innerText = 'PASS ID: #BK-' + guestPassId;
       document.getElementById('dispName').innerText = guestNameParam || 'Valued Guest';
 
-      // ગૂગલ ક્લાઉડ સિક્યોરિટી ચેક
       fetch(CLOUD_API_URL + '?action=check_lock&id=' + guestPassId + '&device=' + myDevice)
         .then(res => res.json())
         .then(data => {
@@ -195,7 +197,6 @@
             markAsEntered();
             startClock();
           } else {
-            // ફોરવર્ડ કરેલ પાસ - સીધો બ્લોક!
             document.getElementById('blockedScreen').style.display = 'block';
           }
         })
@@ -243,6 +244,7 @@
           <div class="pass-actions">
             ${p.phone ? `<a href="${waUrl}" target="_blank" class="btn-wa">વોટ્સએપ 📲</a>` : ''}
             <button class="btn-edit" onclick="editPass(${p.id})">✏️</button>
+            <button class="btn-del" onclick="deletePass(${p.id})">🗑️</button>
           </div>
         `;
         container.appendChild(item);
@@ -266,20 +268,48 @@
 
     function openModal() {
       const free = passes.find(p => !p.name);
+      document.getElementById('modalHeading').innerText = 'નવો પાસ ઈશ્યુ કરો';
       document.getElementById('mPassId').value = free ? free.id : 101;
+      document.getElementById('mPassId').disabled = false;
       document.getElementById('mName').value = '';
       document.getElementById('mPhone').value = '';
+      document.getElementById('modalClearBtn').style.display = 'none';
       document.getElementById('passModal').style.display = 'flex';
     }
+    
     function closeModal() { document.getElementById('passModal').style.display = 'none'; }
 
     function editPass(id) {
       const p = passes.find(item => item.id === id);
       if (!p) return;
+      document.getElementById('modalHeading').innerText = 'પાસ સુધારો (#BK-' + id + ')';
       document.getElementById('mPassId').value = p.id;
+      document.getElementById('mPassId').disabled = true;
       document.getElementById('mName').value = p.name;
       document.getElementById('mPhone').value = p.phone;
+      document.getElementById('modalClearBtn').style.display = p.name ? 'block' : 'none';
       document.getElementById('passModal').style.display = 'flex';
+    }
+
+    function deletePass(id) {
+      if (confirm('શું તમે પાસ #BK-' + id + ' ખાલી/રદ કરવા માંગો છો?')) {
+        const p = passes.find(item => item.id === id);
+        if (p) {
+          p.name = '';
+          p.phone = '';
+          p.status = 'AVAILABLE';
+          localStorage.setItem('cosmic_passes_data', JSON.stringify(passes));
+          // ક્લાઉડમાંથી ડિવાઇસ લૉક રીસેટ કરો
+          fetch(CLOUD_API_URL + '?action=reset&id=' + id).catch(e => {});
+          handleSearch();
+        }
+      }
+    }
+
+    function clearCurrentPass() {
+      const id = parseInt(document.getElementById('mPassId').value);
+      deletePass(id);
+      closeModal();
     }
 
     function saveModalPass() {
