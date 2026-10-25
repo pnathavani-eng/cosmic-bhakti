@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COSMIC ભક્તિ - Digital VIP Pass</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { background: #080503; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 16px; }
+    .card-wrap { width: 100%; max-width: 380px; border-radius: 26px; padding: 3px; background: linear-gradient(60deg, #ff9900, #ff0055, #00e5ff, #ff9900); background-size: 300% 300%; animation: glow 4s ease infinite; box-shadow: 0 0 35px rgba(255,140,0,0.35); }
+    @keyframes glow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    .card { background: #130b06; border-radius: 24px; padding: 24px 20px; text-align: center; border: 1px solid rgba(255,180,0,0.2); }
+    .brand { font-size: 11px; font-weight: 700; color: #ffb74d; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+    h1 { font-size: 32px; font-weight: 900; background: linear-gradient(to right, #ffe082, #ffb300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 2px; }
+    .guj-title { font-size: 36px; color: #ffe082; font-weight: 800; margin-top: -6px; }
+    .tagline { color: #bcaaa4; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+    .venue-badge { display: inline-block; background: rgba(255,179,0,0.12); color: #ffb300; border: 1px solid rgba(255,179,0,0.3); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin: 12px 0 16px; }
+    .guest-box { background: rgba(255,140,0,0.06); border-radius: 16px; padding: 16px; margin-bottom: 16px; border: 1px solid rgba(255,179,0,0.25); }
+    .pass-id { font-size: 12px; color: #ffb300; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; }
+    .guest-name { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+    .admit-info { font-size: 11px; color: #a1887f; font-weight: 600; }
+    .seat-badge { display: inline-block; background: #23160e; color: #ffe082; border: 1px solid #ffb300; padding: 2px 8px; border-radius: 6px; font-size: 10px; margin-top: 6px; }
+    .clock-box { background: #000; border-radius: 16px; padding: 14px; border: 2px solid #39ff14; margin-bottom: 18px; box-shadow: 0 0 15px rgba(57,255,20,0.2); }
+    .clock-label { font-size: 10px; color: #39ff14; letter-spacing: 1px; font-weight: 700; margin-bottom: 4px; }
+    .clock { font-size: 32px; font-weight: 900; color: #39ff14; font-family: monospace; letter-spacing: 1px; }
+    .today-date { font-size: 11px; color: #81c784; margin-top: 4px; }
+    .countdown-box { background: rgba(0,229,255,0.08); border-radius: 12px; padding: 8px; margin-bottom: 16px; border: 1px dashed rgba(0,229,255,0.3); font-size: 11px; color: #80deea; }
+    .btn-entry { background: #2e7d32; color: #fff; border: none; padding: 14px 20px; border-radius: 14px; font-size: 16px; font-weight: 700; width: 100%; cursor: pointer; box-shadow: 0 4px 15px rgba(46,125,50,0.4); }
+    .btn-entered { background: #424242; color: #9e9e9e; cursor: not-allowed; box-shadow: none; }
+    .error-card { background: #1a0808; border: 2px solid #ff5252; border-radius: 24px; padding: 30px 20px; text-align: center; }
+    .error-card h2 { color: #ff5252; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <div class="card-wrap" id="mainContainer">
+    <div class="card" id="cardContent">
+      <div class="brand">TWIN AURA PRESENTS</div>
+      <h1>COSMIC</h1>
+      <div class="guj-title">ભક્તિ</div>
+      <div class="tagline">Journey from inner peace to divine celebration</div>
+      <div class="venue-badge">📍 MORBI • 1 નવેમ્બર 2026</div>
+
+      <div class="guest-box">
+        <div class="pass-id" id="dispPassId">PASS ID: #BK-101</div>
+        <div class="guest-name" id="dispName">VALUED GUEST</div>
+        <div class="admit-info">ADMIT: 1 PERSON + DINNER</div>
+        <div class="seat-badge">OPEN SEATING (ખુલ્લી બેઠક)</div>
+      </div>
+
+      <div class="clock-box">
+        <div class="clock-label">● LIVE ACTIVE PASS (DO NOT SCREENSHOT)</div>
+        <div class="clock" id="liveTimer">--:--:--</div>
+        <div class="today-date" id="liveDate">આજનો લાઈવ સમય</div>
+      </div>
+
+      <div class="countdown-box" id="countdownTimer">
+        ભક્તિ સંધ્યા શરૂ થવામાં ગણતરી ચાલુ...
+      </div>
+
+      <button class="btn-entry" id="gateBtn" onclick="handleGateEntry()">ગેટ પર ટેપ કરો (GATE ENTRY)</button>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const passId = params.get('id') || '101';
+    const guestName = params.get('name') || 'Valued Guest';
+
+    document.getElementById('dispPassId').innerText = 'PASS ID: #BK-' + passId;
+    document.getElementById('dispName').innerText = guestName;
+
+    // ૧. ડિવાઇસ લોક સુરક્ષા
+    const lockKey = 'cosmic_pass_device_' + passId;
+    const currentDeviceToken = localStorage.getItem('device_fingerprint') || ('DEV_' + Math.random().toString(36).substring(2) + Date.now());
+    localStorage.setItem('device_fingerprint', currentDeviceToken);
+
+    const savedDevice = localStorage.getItem(lockKey);
+    if (!savedDevice) {
+      localStorage.setItem(lockKey, currentDeviceToken);
+    } else if (savedDevice !== currentDeviceToken) {
+      document.getElementById('mainContainer').innerHTML = `
+        <div class="error-card">
+          <div style="font-size: 50px;">⛔</div>
+          <h2>પ્રવેશ અમાન્ય છે!</h2>
+          <p style="color:#ffcdd2; font-size:14px; margin-top:8px;">આ ડિજિટલ પાસ પહેલેથી અન્ય ફોન પર એક્ટિવેટ થઈ ચૂક્યો છે.<br><br><b>સ્ક્રીનશોટ કે ફોરવર્ડ કરેલ પાસ ગેટ પર માન્ય નથી.</b></p>
+        </div>
+      `;
+    }
+
+    // ૨. એન્ટ્રી સ્ટેટસ ચેક
+    const entryKey = 'cosmic_pass_entered_' + passId;
+    if (localStorage.getItem(entryKey) === 'ENTERED') {
+      markAsEnteredUI();
+    }
+
+    function handleGateEntry() {
+      const pin = prompt("ગેટકીપર PIN દાખલ કરો:");
+      if (pin === "1234") {
+        localStorage.setItem(entryKey, 'ENTERED');
+        markAsEnteredUI();
+        alert("✅ એન્ટ્રી સફળ! મહેમાનને અંદર આવવા દો અને ડિનર બેન્ડ બાંધો.");
+      } else if (pin !== null) {
+        alert("❌ ખોટો PIN!");
+      }
+    }
+
+    function markAsEnteredUI() {
+      const btn = document.getElementById('gateBtn');
+      btn.innerText = "✓ પ્રવેશી ચૂક્યા છે (ENTERED)";
+      btn.className = "btn-entry btn-entered";
+      btn.disabled = true;
+    }
+
+    // ૩. લાઈવ ઘડિયાળ & કાઉન્ટડાઉન
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('liveTimer').innerText = now.toTimeString().split(' ')[0];
+      document.getElementById('liveDate').innerText = now.toLocaleDateString('gu-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+      // ૧ નવેમ્બર સાંજે ૪ વાગ્યા સુધીનું કાઉન્ટડાઉન
+      const eventTime = new Date('2026-11-01T16:00:00');
+      const diff = eventTime - now;
+
+      if (diff > 0) {
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diff / 1000 / 60) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+        document.getElementById('countdownTimer').innerText = `ઈવેન્ટ શરૂ થવામાં: ${d} દિવસ, ${h} કલાક, ${m} મિનિટ, ${s} સેકન્ડ`;
+      } else {
+        document.getElementById('countdownTimer').innerText = `🔥 ઈવેન્ટ લાઈવ શરૂ છે!`;
+      }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
