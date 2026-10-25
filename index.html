@@ -47,7 +47,7 @@
     .btn-entry { background: #2e7d32; color: #fff; border: none; padding: 14px 20px; border-radius: 14px; font-size: 16px; font-weight: 700; width: 100%; cursor: pointer; }
     .btn-entered { background: #424242; color: #9e9e9e; cursor: not-allowed; }
 
-    /* Blocked Fraud Screen */
+    /* Blocked Fraud / Cancelled Screen */
     .blocked-card { background: #1c0808; border: 2px solid #ff5252; border-radius: 24px; padding: 30px 20px; text-align: center; width: 100%; box-shadow: 0 0 30px rgba(255,82,82,0.4); }
 
     /* Modal */
@@ -58,7 +58,7 @@
 </head>
 <body>
 
-  <!-- ૧. નેવિગેશન બટનો (માત્ર ઓર્ગેનાઇઝર માટે) -->
+  <!-- ૧. ઓર્ગેનાઇઝર નેવિગેશન -->
   <div class="top-nav" id="navTabs">
     <button class="tab-btn active" id="tabSheet" onclick="switchView('sheet')">ઓર્ગેનાઇઝર શીટ</button>
     <button class="tab-btn" id="tabPass" onclick="switchView('pass')">ડેમો પાસ</button>
@@ -120,16 +120,16 @@
       </div>
     </div>
 
-    <!-- બ્લોક સ્ક્રીન (જો લિંક ફોરવર્ડ કરી હોય તો) -->
+    <!-- બ્લોક / રદ કરેલ સ્ક્રીન -->
     <div class="blocked-card" id="blockedScreen" style="display: none;">
       <div style="font-size: 50px;">⛔</div>
-      <h2 style="color: #ff5252; margin: 12px 0 8px;">પ્રવેશ અમાન્ય છે!</h2>
+      <h2 style="color: #ff5252; margin: 12px 0 8px;">પ્રવેશ અમાન્ય / પાસ રદ થયેલ!</h2>
       <p style="color: #ffcdd2; font-size: 14px; line-height: 1.5;">
-        આ ડિજિટલ પાસ અન્ય મોબાઈલ પર પહેલેથી એક્ટિવેટ થઈ ચૂક્યો છે.<br><br>
-        <b>સ્ક્રીનશોટ અથવા ફોરવર્ડ કરેલ પાસ ગેટ પર માન્ય નથી.</b>
+        આ ડિજિટલ પાસ ઓર્ગેનાઇઝર દ્વારા <b>રદ (Cancel) કરવામાં આવ્યો છે</b> અથવા અન્ય મોબાઈલ પર પહેલેથી એક્ટિવેટ થઈ ચૂક્યો છે.<br><br>
+        <b>આ પાસ હવે ગેટ પર માન્ય રહેશે નહીં.</b>
       </p>
       <div style="margin-top: 16px; font-size: 12px; color: #ef9a9a; border-top: 1px dashed rgba(255,82,82,0.3); padding-top: 10px;">
-        ઓરિજિનલ ફોન પરથી લિંક ખોલો અથવા ઓર્ગેનાઇઝરનો સંપર્ક કરો.
+        જો કોઈ પ્રશ્ન હોય તો COSMIC ભક્તિ આયોજકનો સંપર્ક કરો.
       </div>
     </div>
 
@@ -152,10 +152,9 @@
   </div>
 
   <script>
-    // ગૂગલ સ્ક્રિપ્ટ ક્લાઉડ લિંક
+    // તમારી Google Apps Script ક્લાઉડ લિંક
     const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbzLxXwwgHviDbNKLY1kcanoZQfIsqOqVyY_-VBpHIhr_1Assj3uRbWhTnSd9KwBpz5i/exec";
 
-    // ૬૦૦ પાસ ડેટાબેઝ
     let passes = JSON.parse(localStorage.getItem('cosmic_passes_data') || 'null');
     if (!passes) {
       passes = [];
@@ -169,7 +168,6 @@
     const guestPassId = params.get('id');
     const guestNameParam = params.get('name');
 
-    // ડિવાઇસ ઓળખ
     let myDevice = localStorage.getItem('cosmic_device_id');
     if (!myDevice) {
       myDevice = 'DEV_' + Math.random().toString(36).substring(2) + Date.now();
@@ -197,6 +195,7 @@
             markAsEntered();
             startClock();
           } else {
+            // ફોરવર્ડ કરેલ અથવા ડિલીટ/રદ કરેલ પાસ - સીધો બ્લોક!
             document.getElementById('blockedScreen').style.display = 'block';
           }
         })
@@ -215,7 +214,6 @@
       if (view === 'pass') startClock();
     }
 
-    // શીટ રેન્ડરિંગ & પેજિનેશન
     let currentPage = 1;
     const perPage = 20;
     let filteredList = [...passes];
@@ -230,7 +228,7 @@
 
       pageItems.forEach(p => {
         const passLink = baseUrl + '?id=' + p.id + (p.name ? '&name=' + encodeURIComponent(p.name) : '');
-        const waText = encodeURIComponent(`🌸 જય શ્રી કૃષ્ણ ${p.name || ''}! આપનો COSMIC ભક્તિ (મોરબી) સત્તાવાર ડિજિટલ પાસ લિંક: ${passLink}`);
+        const waText = encodeURIComponent(`🌸 જય શ્રી કૃષ્ણ ${p.name || ''}! આપનો COSMIC ભક્તિ (મોરબી) VIP પાસ લિંક: ${passLink}`);
         const waUrl = p.phone ? `https://wa.me/91${p.phone}?text=${waText}` : '#';
 
         const item = document.createElement('div');
@@ -291,17 +289,25 @@
       document.getElementById('passModal').style.display = 'flex';
     }
 
+    // પાસ કાયમ માટે રદ / ડિલીટ કરવો (મહેમાનની લિંક તરત બ્લોક થઈ જશે)
     function deletePass(id) {
-      if (confirm('શું તમે પાસ #BK-' + id + ' ખાલી/રદ કરવા માંગો છો?')) {
+      if (confirm('શું તમે પાસ #BK-' + id + ' કાયમ માટે રદ/ડિલીટ કરવા માંગો છો?\n(આ લિંક હવે કોઈ પણ ફોનમાં ખૂલશે નહીં)')) {
         const p = passes.find(item => item.id === id);
         if (p) {
           p.name = '';
           p.phone = '';
           p.status = 'AVAILABLE';
           localStorage.setItem('cosmic_passes_data', JSON.stringify(passes));
-          // ક્લાઉડમાંથી ડિવાઇસ લૉક રીસેટ કરો
-          fetch(CLOUD_API_URL + '?action=reset&id=' + id).catch(e => {});
+          
+          // ૧. ક્લાઉડમાંથી જૂનો લૉક સાફ કરીને કાયમી CANCEL લૉક લગાવો
+          fetch(CLOUD_API_URL + '?action=reset&id=' + id)
+            .then(() => {
+              return fetch(CLOUD_API_URL + '?action=check_lock&id=' + id + '&device=CANCELLED_BY_ADMIN');
+            })
+            .catch(e => {});
+
           handleSearch();
+          alert('✅ પાસ #BK-' + id + ' રદ થઈ ગયો છે! હવે મહેમાનની લિંક હંમેશા બ્લોક રહેશે.');
         }
       }
     }
@@ -322,6 +328,12 @@
         p.phone = phone;
         p.status = name ? 'ISSUED' : 'AVAILABLE';
         localStorage.setItem('cosmic_passes_data', JSON.stringify(passes));
+        
+        // જો નવો પાસ ઈશ્યુ થયો હોય તો જૂનો કેન્સલેશન લૉક હટાવીને ફ્રેશ કરો
+        if (name) {
+          fetch(CLOUD_API_URL + '?action=reset&id=' + id).catch(e => {});
+        }
+        
         closeModal();
         handleSearch();
       }
@@ -342,15 +354,25 @@
     function handleGateEntry() {
       const pin = prompt("ગેટકીપર PIN દાખલ કરો:");
       if (pin === "1234") {
-        fetch(CLOUD_API_URL + '?action=gate_entry&id=' + (guestPassId || '101') + '&pin=1234')
+        // ગેટ એન્ટ્રી આપતાં પહેલાં ક્લાઉડ લૉક ચેક કરો
+        fetch(CLOUD_API_URL + '?action=check_lock&id=' + (guestPassId || '101') + '&device=' + myDevice)
           .then(res => res.json())
-          .then(data => {
-            if (data.status === 'SUCCESS') {
-              markAsEntered();
-              alert("✅ એન્ટ્રી સફળ! મહેમાનને પ્રવેશ આપો.");
-            } else {
-              alert("❌ ગેટ એન્ટ્રી એરર");
+          .then(chk => {
+            if (chk.status === 'BLOCKED') {
+              alert("⛔ પ્રવેશ અમાન્ય! આ પાસ રદ (Cancel) કરવામાં આવેલ છે.");
+              location.reload();
+              return;
             }
+            fetch(CLOUD_API_URL + '?action=gate_entry&id=' + (guestPassId || '101') + '&pin=1234')
+              .then(res => res.json())
+              .then(data => {
+                if (data.status === 'SUCCESS') {
+                  markAsEntered();
+                  alert("✅ એન્ટ્રી સફળ! મહેમાનને પ્રવેશ આપો.");
+                } else {
+                  alert("❌ ગેટ એન્ટ્રી એરર");
+                }
+              });
           });
       } else if (pin !== null) {
         alert("❌ ખોટો PIN!");
