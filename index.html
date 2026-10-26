@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VIP Digital Pass & Event Management Platform</title>
-  <!-- Fast QR Code Library -->
+  <title>VIP Digital Pass & Event Platform</title>
+  <!-- High Speed Dynamic QR Code Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
@@ -23,7 +23,7 @@
     .stat-label { font-size: 9px; color: #a1887f; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
     .stat-green { color: #39ff14; }
 
-    /* Cards */
+    /* Panels & Cards */
     .panel-card { background: #130b06; border-radius: 20px; padding: 16px; border: 1px solid rgba(255,180,0,0.2); width: 100%; }
     .panel-title { font-size: 17px; font-weight: 800; color: #ffe082; margin-bottom: 12px; text-align: center; }
     .action-row { display: flex; gap: 8px; margin-bottom: 12px; }
@@ -34,7 +34,7 @@
     .btn-blue { background: #1565c0; color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
     .btn-danger { background: #c62828; color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
 
-    /* Search & Inputs */
+    /* Inputs */
     .search-box { width: 100%; padding: 11px 13px; background: #22140b; border: 1px solid #ffb300; border-radius: 12px; color: #fff; font-size: 14px; margin-bottom: 12px; outline: none; }
     .form-group { margin-bottom: 11px; text-align: left; }
     .form-label { font-size: 11px; font-weight: 700; color: #ffb74d; margin-bottom: 3px; display: block; text-transform: uppercase; }
@@ -59,7 +59,7 @@
     @keyframes glow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     .pass-card { background: #130b06; border-radius: 24px; padding: 20px 18px; text-align: center; border: 1px solid rgba(255,180,0,0.2); }
     
-    /* મોટો પ્રેઝન્ટર લોગો / હેડર */
+    /* મોટો પ્રેઝન્ટર લોગો / ટાઇટલ */
     .pass-brand { font-size: 13px; font-weight: 800; color: #ffe082; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3px; text-shadow: 0 0 8px rgba(255,224,130,0.4); }
     .pass-title { font-size: 26px; font-weight: 900; background: linear-gradient(to right, #ffe082, #ffb300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
@@ -120,8 +120,8 @@
       
       <div class="stats-bar">
         <div class="stat-card">
-          <div class="stat-num" id="statTotal">600</div>
-          <div class="stat-label">Total Passes</div>
+          <div class="stat-num" id="statTotal">10,000</div>
+          <div class="stat-label">Capacity</div>
         </div>
         <div class="stat-card">
           <div class="stat-num" id="statIssued">0</div>
@@ -135,7 +135,7 @@
 
       <div class="action-row">
         <button class="btn-green" style="flex: 1;" onclick="openPassModal()">➕ Issue Pass</button>
-        <button class="btn-sync" onclick="syncLiveCloud(true)">🔄 Sync</button>
+        <button class="btn-sync" onclick="syncFirebaseCloud(true)">🔄 Sync Cloud</button>
         <button class="btn-blue" onclick="exportCSVReport()">📥 Export</button>
       </div>
       
@@ -143,15 +143,15 @@
       
       <div id="passListContainer"></div>
       
-      <!-- Pagination -->
+      <!-- Pagination Controls for 10,000 Passes -->
       <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-size:13px; color:#ffb74d;">
         <button style="background:#26170d; border:1px solid #ffb300; color:#ffe082; padding:6px 14px; border-radius:8px; font-weight:700;" id="btnPrevPage" onclick="prevPage()">◀ Previous</button>
-        <span id="pageTracker">Page 1 / 30</span>
+        <span id="pageTracker">Page 1 / 500</span>
         <button style="background:#26170d; border:1px solid #ffb300; color:#ffe082; padding:6px 14px; border-radius:8px; font-weight:700;" id="btnNextPage" onclick="nextPage()">Next ▶</button>
       </div>
     </div>
 
-    <!-- 2. Dynamic Settings View (No-Code Admin Panel) -->
+    <!-- 2. Settings View (No-Code Admin Panel) -->
     <div id="viewSettings" class="panel-card" style="display: none;">
       <div class="panel-title">⚙️ Event & Monetization Settings</div>
       
@@ -193,7 +193,6 @@
         <input type="url" class="form-input" id="cfgMapsUrl" value="https://maps.google.com">
       </div>
 
-      <!-- Sponsor Customization Section for Pro Plan -->
       <div id="proSponsorSection" style="background: rgba(255,180,0,0.05); border: 1px dashed #ffb300; padding: 12px; border-radius: 12px; margin-bottom: 12px;">
         <label class="form-label" style="color: #39ff14;">👑 Pro Sponsors (Comma Separated)</label>
         <input type="text" class="form-input" id="cfgSponsors" value="👑 Maruti Buildcon, 💍 Royal Jewellers, 🍟 Fiesta Foods, 📻 92.7 Big FM, 🚗 Apex Motors">
@@ -230,36 +229,30 @@
           <div class="pass-brand" id="liveBrand">✨ TWIN AURA PRESENTS ✨</div>
           <div class="pass-title" id="liveTitle">COSMIC BHAKTI</div>
           
-          <!-- Organizer Instagram Button -->
           <a id="liveInstaLink" href="https://instagram.com" target="_blank" class="insta-btn">
             📸 Follow <span id="liveInstaHandle">@cosmic_bhakti</span>
           </a>
           
           <div><span class="venue-badge" id="liveVenue">📍 MORBI • NOV 1, 2026</span></div>
 
-          <!-- Guest Details -->
           <div class="guest-box">
             <div style="font-size: 11px; color: #ffb300; font-weight: 800;" id="livePassId">PASS ID: #BK-101</div>
             <div style="font-size: 20px; font-weight: 800; color: #fff; margin: 2px 0;" id="liveGuestName">Piyush Nathavani</div>
             <div style="font-size: 11px; color: #a1887f; font-weight: 600;">ADMIT: 1 PERSON + VIP DINNER</div>
           </div>
 
-          <!-- Compact Slim Live Timer -->
           <div class="clock-box">
             <span class="clock-label">● LIVE ACTIVE PASS</span>
             <span class="clock-time" id="liveTimerDisplay">--:--:--</span>
           </div>
 
-          <!-- Dynamic QR Code -->
           <div class="qr-container" id="qrContainer"></div>
 
-          <!-- 20+ Sponsors Live Scrolling Ticker -->
           <div class="ticker-header">⚡ OFFICIAL SPONSORS & PARTNERS</div>
           <div class="ticker-wrap">
             <div class="ticker-move" id="tickerContent"></div>
           </div>
 
-          <!-- Maps & Gate Entry -->
           <a id="btnMapsLink" href="https://maps.google.com" target="_blank" class="btn-maps">📍 Get Venue Directions (Maps)</a>
           <button class="btn-gate" id="btnGateAction" onclick="handleGatekeeperEntry()">GATE ENTRY (TAP TO VERIFY)</button>
         </div>
@@ -281,7 +274,7 @@
   <!-- Pass Modal -->
   <div class="modal-overlay" id="passModal" style="display: none;">
     <div class="modal-card">
-      <div style="font-size: 16px; font-weight: 800; color: #ffe082; margin-bottom: 12px; text-align: center;" id="modalHeading">Issue Digital Pass</div>
+      <div style="font-size: 16px; font-weight: 800; color: #ffe082; margin-bottom: 12px; text-align: center;" id="modalHeading">Issue VIP Pass</div>
       <input type="number" class="search-box" style="margin-bottom: 8px;" id="mPassId" placeholder="Pass Number">
       <input type="text" class="search-box" style="margin-bottom: 8px;" id="mName" placeholder="Guest Name">
       <input type="tel" class="search-box" style="margin-bottom: 12px;" id="mPhone" placeholder="Mobile Number (10 digits)">
@@ -294,21 +287,21 @@
   </div>
 
   <script>
-    // OPTIONAL: Paste Firebase Realtime Database URL here when ready (e.g. "https://your-project.firebaseio.com")
-    // If left empty, it runs with zero errors on high-speed cloud/local architecture!
-    const FIREBASE_DB_URL = "";
-    const FALLBACK_API_URL = "https://script.google.com/macros/s/AKfycbzLxXwwgHviDbNKLY1kcanoZQfIsqOqVyY_-VBpHIhr_1Assj3uRbWhTnSd9KwBpz5i/exec";
-
-    // 1. Multi-Event Identification via URL slug (?event=morbi)
+    // Live Firebase Realtime Database
+    const FIREBASE_DB_URL = "https://vip-pass-system-default-rtdb.firebaseio.com";
+    
+    // Multi-Event Identification via URL slug (?event=morbi)
     const urlParams = new URLSearchParams(window.location.search);
     const EVENT_ID = urlParams.get('event') || 'default_event';
     const guestPassId = urlParams.get('id');
     const guestNameParam = urlParams.get('name');
 
-    // Default System Sponsors (Budget Plan)
     const SYSTEM_DEFAULT_SPONSORS = "👑 Maruti Buildcon, 💍 Royal Jewellers, 🍟 Fiesta Foods, 📻 92.7 Big FM, 🚗 Apex Motors";
 
-    // Default Settings
+    // 10,000 Passes Capacity Structure
+    const TOTAL_CAPACITY = 10000;
+    const START_PASS_ID = 101;
+
     const defaultSettings = {
       plan: "BUDGET",
       brand: "✨ TWIN AURA PRESENTS ✨",
@@ -325,29 +318,29 @@
 
     let settings = JSON.parse(localStorage.getItem('ev_set_' + EVENT_ID) || 'null') || defaultSettings;
 
-    // Load Passes (Scalable 600 slots per event)
+    // Load Local Pass Registry
     let passes = JSON.parse(localStorage.getItem('ev_pass_' + EVENT_ID) || 'null');
-    if (!passes) {
+    if (!passes || passes.length < 500) {
       passes = [];
-      for (let i = 101; i <= 700; i++) {
+      // Initialize First Batch of 1,000 for lightning speed, auto-expands up to 10,000
+      for (let i = START_PASS_ID; i < START_PASS_ID + 1000; i++) {
         passes.push({ id: i, name: '', phone: '', status: 'AVAILABLE' });
       }
       localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
     }
 
-    // Device Fingerprint for Anti-Forwarding
+    // Device Fingerprint
     let myDevice = localStorage.getItem('user_device_id');
     if (!myDevice) {
       myDevice = 'DEV_' + Math.random().toString(36).substring(2) + Date.now();
       localStorage.setItem('user_device_id', myDevice);
     }
 
-    // Initialize Application
+    // App Initialization
     window.addEventListener('DOMContentLoaded', () => {
       applySettingsToUI();
 
       if (guestPassId) {
-        // Guest VIP Pass View
         document.getElementById('adminNavBar').style.display = 'none';
         document.getElementById('viewSheet').style.display = 'none';
         document.getElementById('loadingOverlay').style.display = 'block';
@@ -355,12 +348,11 @@
         document.getElementById('livePassId').innerText = 'PASS ID: #BK-' + guestPassId;
         document.getElementById('liveGuestName').innerText = guestNameParam || 'Valued Guest';
 
-        verifyPassAccess();
+        verifyPassAccessFirebase();
       } else {
-        // Organizer Dashboard View
         checkAdminExpiry();
         renderPassList();
-        syncLiveCloud(false);
+        syncFirebaseCloud(false);
       }
     });
 
@@ -380,7 +372,6 @@
       document.getElementById('liveVenue').innerText = "📍 " + settings.venue;
       document.getElementById('btnMapsLink').href = settings.mapsUrl;
 
-      // Populate Settings Inputs
       document.getElementById('cfgPlan').value = settings.plan;
       document.getElementById('cfgBrand').value = settings.brand;
       document.getElementById('cfgTitle').value = settings.title;
@@ -417,7 +408,6 @@
         const name = sp.trim();
         if (name) html += `<a href="${settings.instaUrl}" target="_blank" class="sponsor-tag">${name}</a>`;
       });
-      // Duplicate for smooth infinite loop
       tickerBox.innerHTML = html + html;
     }
 
@@ -460,7 +450,6 @@
       new QRCode(qrBox, { text: passUrl, width: 96, height: 96 });
     }
 
-    // Live Security Clock
     let timerInt;
     function startLiveTimer() {
       if (timerInt) clearInterval(timerInt);
@@ -472,44 +461,57 @@
       update();
     }
 
-    // Guest Pass Verification & Anti-Forwarding
-    function verifyPassAccess() {
-      fetch(FALLBACK_API_URL + '?action=check_lock&id=' + EVENT_ID + '_' + guestPassId + '&device=' + myDevice)
+    // Firebase High-Concurrency Pass Verification & Device Locking
+    function verifyPassAccessFirebase() {
+      const passRef = `${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${guestPassId}.json`;
+
+      fetch(passRef)
         .then(res => res.json())
         .then(data => {
           document.getElementById('loadingOverlay').style.display = 'none';
-          if (data.status === 'OK') {
+
+          if (!data || !data.device) {
+            // First time opened on this phone -> Lock to this device
+            fetch(passRef, {
+              method: 'PATCH',
+              body: JSON.stringify({ device: myDevice, firstSeen: new Date().toISOString() }),
+              headers: { 'Content-Type': 'application/json' }
+            });
             showGuestPass();
-          } else if (data.status === 'ALREADY_ENTERED') {
+          } else if (data.device === myDevice) {
+            // Authorized device
             showGuestPass();
-            markEnteredBadge();
+            if (data.status === 'ENTERED') markEnteredBadge();
           } else {
+            // Forwarded or unauthorized device!
             document.getElementById('blockedScreen').style.display = 'block';
           }
         })
         .catch(() => {
+          // Graceful fallback
           document.getElementById('loadingOverlay').style.display = 'none';
           showGuestPass();
         });
     }
 
+    // Gate Entry PIN Verification with Firebase
     function handleGatekeeperEntry() {
       const pin = prompt("Enter Gatekeeper PIN:");
       if (pin === settings.gatePin) {
-        fetch(FALLBACK_API_URL + '?action=gate_entry&id=' + EVENT_ID + '_' + (guestPassId || '101') + '&pin=1234')
-          .then(res => res.json())
-          .then(data => {
-            if (data.status === 'SUCCESS' || data.status === 'OK') {
-              markEnteredBadge();
-              alert("✅ ENTRY APPROVED! Guest verified.");
-            } else {
-              alert("❌ Entry Error or Pass Revoked.");
-            }
-          })
-          .catch(() => {
-            markEnteredBadge();
-            alert("✅ Guest entry approved offline.");
-          });
+        const pId = guestPassId || '101';
+        fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${pId}.json`, {
+          method: 'PATCH',
+          body: JSON.stringify({ status: 'ENTERED', enteredAt: new Date().toISOString() }),
+          headers: { 'Content-Type': 'application/json' }
+        })
+        .then(() => {
+          markEnteredBadge();
+          alert("✅ ENTRY APPROVED! Guest verified.");
+        })
+        .catch(() => {
+          markEnteredBadge();
+          alert("✅ Guest entry approved offline.");
+        });
       } else if (pin !== null) {
         alert("❌ Incorrect PIN!");
       }
@@ -537,38 +539,56 @@
       settings.adminExpiry = document.getElementById('cfgAdminExpiry').value;
 
       localStorage.setItem('ev_set_' + EVENT_ID, JSON.stringify(settings));
+      
+      // Save settings to Firebase Cloud
+      fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/settings.json`, {
+        method: 'PUT',
+        body: JSON.stringify(settings),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
       applySettingsToUI();
-      alert("✅ All Event Settings Saved Successfully!");
+      alert("✅ All Event Settings Saved Successfully to Firebase Cloud!");
     }
 
     function wipeAndResetEvent() {
-      if (confirm("⚠️ CAUTION: This will wipe all passes for event [" + EVENT_ID + "] clean for a fresh start. Continue?")) {
+      if (confirm("⚠️ CAUTION: Clean slate this event? This resets all passes.")) {
         passes = [];
-        for (let i = 101; i <= 700; i++) passes.push({ id: i, name: '', phone: '', status: 'AVAILABLE' });
+        for (let i = START_PASS_ID; i < START_PASS_ID + 1000; i++) passes.push({ id: i, name: '', phone: '', status: 'AVAILABLE' });
         localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
+        
+        fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes.json`, { method: 'DELETE' });
         renderPassList();
         alert("✅ Event wiped cleanly!");
         switchTab('sheet');
       }
     }
 
-    // Cloud Sync
-    function syncLiveCloud(showAlert = false) {
-      fetch(FALLBACK_API_URL + '?action=get_all_statuses')
+    // Realtime Cloud Sync
+    function syncFirebaseCloud(showAlert = false) {
+      fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes.json`)
         .then(res => res.json())
-        .then(cloudData => {
-          passes.forEach(p => {
-            if (cloudData['entered_' + EVENT_ID + '_' + p.id] === 'YES') {
-              p.status = 'ENTERED';
-            } else if (p.name && p.status !== 'ENTERED') {
-              p.status = 'ISSUED';
-            }
-          });
-          localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
-          handleSearch();
-          if (showAlert) alert('✅ Cloud Synchronized Successfully!');
+        .then(cloudPasses => {
+          if (cloudPasses) {
+            Object.keys(cloudPasses).forEach(id => {
+              const cp = cloudPasses[id];
+              let p = passes.find(item => item.id == id);
+              if (!p) {
+                p = { id: parseInt(id), name: cp.name || '', phone: cp.phone || '', status: cp.status || 'AVAILABLE' };
+                passes.push(p);
+              } else {
+                if (cp.status) p.status = cp.status;
+                if (cp.name) p.name = cp.name;
+                if (cp.phone) p.phone = cp.phone;
+              }
+            });
+            passes.sort((a,b) => a.id - b.id);
+            localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
+            handleSearch();
+          }
+          if (showAlert) alert('✅ Firebase Synchronized Instantly!');
         })
-        .catch(() => { if (showAlert) alert('Synced with device cache.'); });
+        .catch(() => { if (showAlert) alert('Synced with offline cache.'); });
     }
 
     // Pagination & Search
@@ -631,7 +651,7 @@
     function openPassModal() {
       const free = passes.find(p => !p.name);
       document.getElementById('modalHeading').innerText = 'Issue VIP Pass';
-      document.getElementById('mPassId').value = free ? free.id : 101;
+      document.getElementById('mPassId').value = free ? free.id : START_PASS_ID;
       document.getElementById('mPassId').disabled = false;
       document.getElementById('mName').value = '';
       document.getElementById('mPhone').value = '';
@@ -657,15 +677,30 @@
       const id = parseInt(document.getElementById('mPassId').value);
       const name = document.getElementById('mName').value.trim();
       const phone = document.getElementById('mPhone').value.trim();
-      const p = passes.find(item => item.id === id);
-      if (p) {
+      let p = passes.find(item => item.id === id);
+      
+      // Auto expand beyond 1,000 up to 10,000 on demand
+      if (!p && id <= TOTAL_CAPACITY + START_PASS_ID) {
+        p = { id: id, name: name, phone: phone, status: name ? 'ISSUED' : 'AVAILABLE' };
+        passes.push(p);
+        passes.sort((a,b) => a.id - b.id);
+      } else if (p) {
         p.name = name;
         p.phone = phone;
         p.status = name ? 'ISSUED' : 'AVAILABLE';
-        localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
-        closePassModal();
-        handleSearch();
       }
+
+      localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
+      
+      // Sync to Firebase
+      fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${id}.json`, {
+        method: 'PATCH',
+        body: JSON.stringify({ name: name, phone: phone, status: p.status }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      closePassModal();
+      handleSearch();
     }
 
     function clearCurrentPass() {
@@ -676,6 +711,8 @@
         p.phone = '';
         p.status = 'AVAILABLE';
         localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
+        
+        fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${id}.json`, { method: 'DELETE' });
         closePassModal();
         handleSearch();
         alert('Pass revoked.');
@@ -684,11 +721,11 @@
 
     function exportCSVReport() {
       let csv = "Pass ID,Guest Name,Mobile,Status\n";
-      passes.forEach(p => { csv += `${p.id},"${p.name}","${p.phone}",${p.status}\n`; });
+      passes.forEach(p => { if (p.name) csv += `${p.id},"${p.name}","${p.phone}",${p.status}\n`; });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.setAttribute("download", `${settings.title.replace(/\s+/g, '_')}_Report.csv`);
+      link.setAttribute("download", `${settings.title.replace(/\s+/g, '_')}_10K_Passes.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
