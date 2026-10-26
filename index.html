@@ -11,7 +11,7 @@
     .container { width: 100%; max-width: 440px; margin: 0 auto; }
     
     /* Top Navigation Tabs */
-    .top-nav { display: flex; gap: 6px; width: 100%; max-width: 440px; margin-bottom: 16px; background: #180f08; padding: 5px; border-radius: 14px; border: 1px solid rgba(255,180,0,0.25); }
+    .top-nav { display: flex; gap: 6px; width: 100%; max-width: 440px; margin-bottom: 14px; background: #180f08; padding: 5px; border-radius: 14px; border: 1px solid rgba(255,180,0,0.25); }
     .tab-btn { flex: 1; padding: 10px 4px; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; color: #d7ccc8; background: transparent; text-align: center; }
     .tab-btn.active { background: #ff8f00; color: #000; box-shadow: 0 2px 10px rgba(255,143,0,0.4); }
 
@@ -38,7 +38,6 @@
     .pass-info { flex: 1; }
     .pass-tag { font-size: 11px; font-weight: 800; color: #ffb300; display: flex; align-items: center; gap: 6px; }
     .badge-entered { background: #2e7d32; color: #fff; padding: 2px 6px; border-radius: 6px; font-size: 10px; font-weight: 800; }
-    .badge-issued { background: #ef6c00; color: #fff; padding: 2px 6px; border-radius: 6px; font-size: 10px; }
     .badge-avail { background: #424242; color: #bbb; padding: 2px 6px; border-radius: 6px; font-size: 10px; }
     .pass-name { font-size: 15px; font-weight: 700; color: #fff; margin: 3px 0; }
     .pass-phone { font-size: 12px; color: #a1887f; }
@@ -49,33 +48,36 @@
     /* VIP Pass Styling */
     .pass-outer { width: 100%; border-radius: 26px; padding: 3px; background: linear-gradient(60deg, #ff9900, #ff0055, #00e5ff, #ff9900); background-size: 300% 300%; animation: glow 4s ease infinite; box-shadow: 0 0 35px rgba(255,140,0,0.35); }
     @keyframes glow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    .pass-card { background: #130b06; border-radius: 24px; padding: 22px 18px; text-align: center; border: 1px solid rgba(255,180,0,0.2); }
-    .pass-brand { font-size: 10px; font-weight: 700; color: #ffb74d; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
-    .pass-title { font-size: 26px; font-weight: 900; background: linear-gradient(to right, #ffe082, #ffb300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .pass-card { background: #130b06; border-radius: 24px; padding: 20px 18px; text-align: center; border: 1px solid rgba(255,180,0,0.2); }
+    
+    /* મોટો પ્રેઝન્ટર લોગો / હેડર */
+    .pass-brand { font-size: 13px; font-weight: 800; color: #ffe082; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 4px; text-shadow: 0 0 8px rgba(255,224,130,0.4); }
+    .pass-title { font-size: 27px; font-weight: 900; background: linear-gradient(to right, #ffe082, #ffb300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
     /* Instagram Follow Button */
     .insta-btn { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; text-decoration: none; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; margin: 6px 0 10px; box-shadow: 0 2px 10px rgba(220,39,67,0.3); }
 
-    .venue-badge { display: inline-block; background: rgba(255,179,0,0.12); color: #ffb300; border: 1px solid rgba(255,179,0,0.3); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 12px; }
-    .guest-box { background: rgba(255,140,0,0.06); border-radius: 16px; padding: 12px; margin-bottom: 12px; border: 1px solid rgba(255,179,0,0.25); }
+    .venue-badge { display: inline-block; background: rgba(255,179,0,0.12); color: #ffb300; border: 1px solid rgba(255,179,0,0.3); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 10px; }
+    .guest-box { background: rgba(255,140,0,0.06); border-radius: 14px; padding: 10px; margin-bottom: 10px; border: 1px solid rgba(255,179,0,0.25); }
     
-    /* Security Live Clock */
-    .clock-box { background: #000; border-radius: 14px; padding: 10px; border: 2px solid #39ff14; margin-bottom: 12px; box-shadow: 0 0 15px rgba(57,255,20,0.2); }
-    .clock-time { font-size: 28px; font-weight: 900; color: #39ff14; font-family: monospace; }
+    /* સહેજ નાનું અને કોમ્પેક્ટ લાઈવ ટાઈમર */
+    .clock-box { background: #000; border-radius: 12px; padding: 6px 12px; border: 1.5px solid #39ff14; margin-bottom: 10px; box-shadow: 0 0 10px rgba(57,255,20,0.2); display: flex; justify-content: space-between; align-items: center; }
+    .clock-label { font-size: 9px; color: #39ff14; font-weight: 700; letter-spacing: 0.5px; }
+    .clock-time { font-size: 20px; font-weight: 900; color: #39ff14; font-family: monospace; }
     
     /* QR Code */
-    .qr-container { display: flex; justify-content: center; align-items: center; background: #fff; padding: 8px; border-radius: 12px; width: 120px; height: 120px; margin: 0 auto 12px; }
+    .qr-container { display: flex; justify-content: center; align-items: center; background: #fff; padding: 8px; border-radius: 12px; width: 115px; height: 115px; margin: 0 auto 10px; }
     
-    /* Auto Scroll Ticker for 20+ Sponsors */
-    .ticker-header { font-size: 10px; color: #ffb74d; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin: 12px 0 6px; }
-    .ticker-wrap { width: 100%; overflow: hidden; background: #1c1008; border: 1px solid rgba(255,180,0,0.3); border-radius: 12px; padding: 8px 0; margin-bottom: 12px; }
-    .ticker-move { display: flex; gap: 14px; width: max-content; animation: scrollTicker 14s linear infinite; }
+    /* સહેજ મોટા સ્પોન્સર્સ લોગો / ટિકર */
+    .ticker-header { font-size: 11px; color: #ffe082; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin: 10px 0 6px; }
+    .ticker-wrap { width: 100%; overflow: hidden; background: #1a0e07; border: 1.5px solid rgba(255,180,0,0.35); border-radius: 14px; padding: 10px 0; margin-bottom: 12px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+    .ticker-move { display: flex; gap: 16px; width: max-content; animation: scrollTicker 14s linear infinite; }
     .ticker-wrap:hover .ticker-move, .ticker-wrap:active .ticker-move { animation-play-state: paused; }
-    .sponsor-tag { background: #28170d; border: 1px solid #ffb300; color: #ffe082; padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; white-space: nowrap; text-decoration: none; }
+    .sponsor-tag { background: #2b170b; border: 1.5px solid #ffb300; color: #ffe082; padding: 8px 16px; border-radius: 10px; font-size: 13.5px; font-weight: 800; white-space: nowrap; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
     @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-    .btn-maps { background: #212121; color: #ffe082; border: 1px solid #ffb300; padding: 10px 14px; border-radius: 12px; font-size: 12px; font-weight: 700; width: 100%; text-decoration: none; display: block; margin-bottom: 10px; }
-    .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 12px 18px; border-radius: 12px; font-size: 15px; font-weight: 800; width: 100%; cursor: pointer; }
+    .btn-maps { background: #212121; color: #ffe082; border: 1px solid #ffb300; padding: 10px 14px; border-radius: 12px; font-size: 12px; font-weight: 700; width: 100%; text-decoration: none; display: block; margin-bottom: 8px; }
+    .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 12px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; width: 100%; cursor: pointer; }
     .btn-entered-state { background: #424242 !important; color: #9e9e9e !important; cursor: not-allowed; }
 
     /* Modal Overlay */
@@ -127,7 +129,9 @@
     <div id="viewPass" style="display: none;">
       <div class="pass-outer">
         <div class="pass-card">
-          <div class="pass-brand">TWIN AURA PRESENTS</div>
+          
+          <!-- મોટું પ્રેઝન્ટર નામ / બ્રાન્ડ -->
+          <div class="pass-brand">✨ TWIN AURA PRESENTS ✨</div>
           <div class="pass-title">COSMIC BHAKTI</div>
           
           <!-- Organizer Instagram Button -->
@@ -140,21 +144,21 @@
           <!-- Guest Details -->
           <div class="guest-box">
             <div style="font-size: 11px; color: #ffb300; font-weight: 800;">PASS ID: #BK-101</div>
-            <div style="font-size: 20px; font-weight: 800; color: #fff; margin: 3px 0;">Piyush Nathavani</div>
+            <div style="font-size: 20px; font-weight: 800; color: #fff; margin: 2px 0;">Piyush Nathavani</div>
             <div style="font-size: 11px; color: #a1887f; font-weight: 600;">ADMIT: 1 PERSON + VIP DINNER</div>
           </div>
 
-          <!-- Live Anti-Screenshot Clock -->
+          <!-- સ્લિમ લાઈવ એન્ટિ-સ્ક્રીનશોટ ટાઈમર -->
           <div class="clock-box">
-            <div style="font-size: 9px; color: #39ff14; letter-spacing: 1px; font-weight: 700; margin-bottom: 2px;">● LIVE ACTIVE PASS (DO NOT SCREENSHOT)</div>
-            <div class="clock-time" id="liveTimerDisplay">--:--:--</div>
+            <span class="clock-label">● LIVE ACTIVE PASS</span>
+            <span class="clock-time" id="liveTimerDisplay">--:--:--</span>
           </div>
 
-          <!-- QR Code -->
+          <!-- Dynamic QR Code -->
           <div class="qr-container" id="qrContainer"></div>
 
-          <!-- 20+ Sponsors Live Scrolling Ticker -->
-          <div class="ticker-header">⚡ OFFICIAL SPONSORS & PARTNERS (TAP TO VIEW)</div>
+          <!-- મોટા સ્પોન્સર્સ સાથેનું લાઈવ સ્ક્રોલિંગ ટિકર -->
+          <div class="ticker-header">⚡ OFFICIAL SPONSORS & PARTNERS</div>
           <div class="ticker-wrap">
             <div class="ticker-move">
               <a href="https://instagram.com" target="_blank" class="sponsor-tag">👑 Maruti Buildcon</a>
@@ -162,14 +166,14 @@
               <a href="https://instagram.com" target="_blank" class="sponsor-tag">🍟 Fiesta Foods</a>
               <a href="https://instagram.com" target="_blank" class="sponsor-tag">📻 92.7 Big FM</a>
               <a href="https://instagram.com" target="_blank" class="sponsor-tag">🚗 Apex Motors</a>
-              <!-- Repeat for loop -->
+              <!-- લૂપ માટે રીપીટ -->
               <a href="https://instagram.com" target="_blank" class="sponsor-tag">👑 Maruti Buildcon</a>
               <a href="https://instagram.com" target="_blank" class="sponsor-tag">💍 Royal Jewellers</a>
               <a href="https://instagram.com" target="_blank" class="sponsor-tag">🍟 Fiesta Foods</a>
             </div>
           </div>
 
-          <!-- Action Buttons -->
+          <!-- Maps & Gate Action -->
           <a href="https://maps.google.com" target="_blank" class="btn-maps">📍 Get Venue Directions (Maps)</a>
           <button class="btn-gate btn-entered-state" id="btnGateAction" disabled>✓ CHECKED-IN (ENTRY VERIFIED)</button>
         </div>
@@ -214,7 +218,7 @@
     function generateQRCode(id) {
       const qrBox = document.getElementById('qrContainer');
       qrBox.innerHTML = '';
-      new QRCode(qrBox, { text: window.location.href, width: 104, height: 104 });
+      new QRCode(qrBox, { text: window.location.href, width: 99, height: 99 });
     }
 
     function renderPassList() {
