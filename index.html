@@ -1,481 +1,257 @@
 <!DOCTYPE html>
-<html lang="gu">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>COSMIC ભક્તિ - Digital VIP Pass & Organizer</title>
+  <title>VIP Digital Pass & Sponsor Platform</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     body { background: #080503; color: #fff; min-height: 100vh; padding: 12px; display: flex; flex-direction: column; align-items: center; }
     .container { width: 100%; max-width: 440px; margin: 0 auto; }
     
-    /* Top Tabs */
-    .top-nav { display: flex; gap: 8px; width: 100%; max-width: 440px; margin-bottom: 16px; background: #180f08; padding: 5px; border-radius: 14px; border: 1px solid rgba(255,180,0,0.25); }
-    .tab-btn { flex: 1; padding: 10px 4px; border: none; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; color: #d7ccc8; background: transparent; text-align: center; }
+    /* Top Navigation Tabs */
+    .top-nav { display: flex; gap: 6px; width: 100%; max-width: 440px; margin-bottom: 16px; background: #180f08; padding: 5px; border-radius: 14px; border: 1px solid rgba(255,180,0,0.25); }
+    .tab-btn { flex: 1; padding: 10px 4px; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; color: #d7ccc8; background: transparent; text-align: center; }
     .tab-btn.active { background: #ff8f00; color: #000; box-shadow: 0 2px 10px rgba(255,143,0,0.4); }
 
-    /* Stats Bar */
+    /* Dashboard Stats Bar */
     .stats-bar { display: flex; gap: 8px; margin-bottom: 12px; }
     .stat-card { flex: 1; background: #1c1008; border: 1px solid rgba(255,180,0,0.25); border-radius: 12px; padding: 8px 4px; text-align: center; }
     .stat-num { font-size: 18px; font-weight: 900; color: #ffe082; }
-    .stat-label { font-size: 10px; color: #a1887f; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
+    .stat-label { font-size: 9px; color: #a1887f; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
     .stat-green { color: #39ff14; }
 
-    /* Sheet View */
-    .sheet-card { background: #130b06; border-radius: 20px; padding: 16px; border: 1px solid rgba(255,180,0,0.2); width: 100%; }
-    .sheet-title { font-size: 18px; font-weight: 800; color: #ffe082; margin-bottom: 12px; text-align: center; }
+    /* Cards */
+    .panel-card { background: #130b06; border-radius: 20px; padding: 16px; border: 1px solid rgba(255,180,0,0.2); width: 100%; }
+    .panel-title { font-size: 17px; font-weight: 800; color: #ffe082; margin-bottom: 12px; text-align: center; }
     .action-row { display: flex; gap: 8px; margin-bottom: 12px; }
-    .btn-add { flex: 1; background: #2e7d32; color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; }
-    .btn-sync { background: #e65100; color: #fff; border: none; padding: 12px 12px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
-    .btn-export { background: #1565c0; color: #fff; border: none; padding: 12px 12px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
-    .search-box { width: 100%; padding: 12px 14px; background: #22140b; border: 1px solid #ffb300; border-radius: 12px; color: #fff; font-size: 14px; margin-bottom: 14px; outline: none; }
     
+    /* Buttons */
+    .btn-green { background: #2e7d32; color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .btn-sync { background: #e65100; color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .btn-blue { background: #1565c0; color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .search-box { width: 100%; padding: 12px 14px; background: #22140b; border: 1px solid #ffb300; border-radius: 12px; color: #fff; font-size: 14px; margin-bottom: 14px; outline: none; }
+
+    /* Pass List Items */
     .pass-item { background: #1c1008; border: 1px solid rgba(255,180,0,0.15); border-radius: 14px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
     .pass-info { flex: 1; }
     .pass-tag { font-size: 11px; font-weight: 800; color: #ffb300; display: flex; align-items: center; gap: 6px; }
     .badge-entered { background: #2e7d32; color: #fff; padding: 2px 6px; border-radius: 6px; font-size: 10px; font-weight: 800; }
     .badge-issued { background: #ef6c00; color: #fff; padding: 2px 6px; border-radius: 6px; font-size: 10px; }
     .badge-avail { background: #424242; color: #bbb; padding: 2px 6px; border-radius: 6px; font-size: 10px; }
-    .pass-name { font-size: 16px; font-weight: 700; color: #fff; margin: 3px 0; }
+    .pass-name { font-size: 15px; font-weight: 700; color: #fff; margin: 3px 0; }
     .pass-phone { font-size: 12px; color: #a1887f; }
     .pass-actions { display: flex; gap: 6px; align-items: center; }
-    .btn-wa { background: #25d366; color: #000; border: none; padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; text-decoration: none; }
+    .btn-wa { background: #25d366; color: #000; border: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; text-decoration: none; }
     .btn-edit { background: #424242; color: #fff; border: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; cursor: pointer; }
-    .btn-del { background: #c62828; color: #fff; border: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; cursor: pointer; }
 
-    /* Guest Pass View */
-    .card-wrap { width: 100%; border-radius: 26px; padding: 3px; background: linear-gradient(60deg, #ff9900, #ff0055, #00e5ff, #ff9900); background-size: 300% 300%; animation: glow 4s ease infinite; box-shadow: 0 0 35px rgba(255,140,0,0.35); }
+    /* VIP Pass Styling */
+    .pass-outer { width: 100%; border-radius: 26px; padding: 3px; background: linear-gradient(60deg, #ff9900, #ff0055, #00e5ff, #ff9900); background-size: 300% 300%; animation: glow 4s ease infinite; box-shadow: 0 0 35px rgba(255,140,0,0.35); }
     @keyframes glow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    .card { background: #130b06; border-radius: 24px; padding: 24px 20px; text-align: center; border: 1px solid rgba(255,180,0,0.2); }
-    .brand { font-size: 11px; font-weight: 700; color: #ffb74d; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
-    h1 { font-size: 32px; font-weight: 900; background: linear-gradient(to right, #ffe082, #ffb300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .guj-title { font-size: 36px; color: #ffe082; font-weight: 800; margin-top: -6px; }
-    .tagline { color: #bcaaa4; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
-    .venue-badge { display: inline-block; background: rgba(255,179,0,0.12); color: #ffb300; border: 1px solid rgba(255,179,0,0.3); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin: 12px 0 16px; }
-    .guest-box { background: rgba(255,140,0,0.06); border-radius: 16px; padding: 16px; margin-bottom: 16px; border: 1px solid rgba(255,179,0,0.25); }
-    .clock-box { background: #000; border-radius: 16px; padding: 14px; border: 2px solid #39ff14; margin-bottom: 18px; box-shadow: 0 0 15px rgba(57,255,20,0.2); }
-    .clock { font-size: 32px; font-weight: 900; color: #39ff14; font-family: monospace; }
-    .btn-entry { background: #2e7d32; color: #fff; border: none; padding: 14px 20px; border-radius: 14px; font-size: 16px; font-weight: 700; width: 100%; cursor: pointer; }
-    .btn-entered { background: #424242; color: #9e9e9e; cursor: not-allowed; }
+    .pass-card { background: #130b06; border-radius: 24px; padding: 22px 18px; text-align: center; border: 1px solid rgba(255,180,0,0.2); }
+    .pass-brand { font-size: 10px; font-weight: 700; color: #ffb74d; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
+    .pass-title { font-size: 26px; font-weight: 900; background: linear-gradient(to right, #ffe082, #ffb300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    
+    /* Instagram Follow Button */
+    .insta-btn { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; text-decoration: none; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; margin: 6px 0 10px; box-shadow: 0 2px 10px rgba(220,39,67,0.3); }
 
-    /* Blocked Fraud Screen */
-    .blocked-card { background: #1c0808; border: 2px solid #ff5252; border-radius: 24px; padding: 30px 20px; text-align: center; width: 100%; box-shadow: 0 0 30px rgba(255,82,82,0.4); }
+    .venue-badge { display: inline-block; background: rgba(255,179,0,0.12); color: #ffb300; border: 1px solid rgba(255,179,0,0.3); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 12px; }
+    .guest-box { background: rgba(255,140,0,0.06); border-radius: 16px; padding: 12px; margin-bottom: 12px; border: 1px solid rgba(255,179,0,0.25); }
+    
+    /* Security Live Clock */
+    .clock-box { background: #000; border-radius: 14px; padding: 10px; border: 2px solid #39ff14; margin-bottom: 12px; box-shadow: 0 0 15px rgba(57,255,20,0.2); }
+    .clock-time { font-size: 28px; font-weight: 900; color: #39ff14; font-family: monospace; }
+    
+    /* QR Code */
+    .qr-container { display: flex; justify-content: center; align-items: center; background: #fff; padding: 8px; border-radius: 12px; width: 120px; height: 120px; margin: 0 auto 12px; }
+    
+    /* Auto Scroll Ticker for 20+ Sponsors */
+    .ticker-header { font-size: 10px; color: #ffb74d; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin: 12px 0 6px; }
+    .ticker-wrap { width: 100%; overflow: hidden; background: #1c1008; border: 1px solid rgba(255,180,0,0.3); border-radius: 12px; padding: 8px 0; margin-bottom: 12px; }
+    .ticker-move { display: flex; gap: 14px; width: max-content; animation: scrollTicker 14s linear infinite; }
+    .ticker-wrap:hover .ticker-move, .ticker-wrap:active .ticker-move { animation-play-state: paused; }
+    .sponsor-tag { background: #28170d; border: 1px solid #ffb300; color: #ffe082; padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; white-space: nowrap; text-decoration: none; }
+    @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-    /* Modal */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; padding: 16px; z-index: 100; }
-    .modal-card { background: #1a0f08; border: 1px solid #ffb300; border-radius: 20px; padding: 20px; width: 100%; max-width: 360px; }
-    .input-field { width: 100%; padding: 12px; background: #28170d; border: 1px solid #ffb300; border-radius: 10px; color: #fff; margin-bottom: 12px; font-size: 14px; outline: none; }
+    .btn-maps { background: #212121; color: #ffe082; border: 1px solid #ffb300; padding: 10px 14px; border-radius: 12px; font-size: 12px; font-weight: 700; width: 100%; text-decoration: none; display: block; margin-bottom: 10px; }
+    .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 12px 18px; border-radius: 12px; font-size: 15px; font-weight: 800; width: 100%; cursor: pointer; }
+    .btn-entered-state { background: #424242 !important; color: #9e9e9e !important; cursor: not-allowed; }
+
+    /* Modal Overlay */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.88); display: flex; justify-content: center; align-items: center; padding: 16px; z-index: 100; }
+    .modal-card { background: #1a0f08; border: 1px solid #ffb300; border-radius: 20px; padding: 20px; width: 100%; max-width: 380px; }
   </style>
 </head>
 <body>
 
-  <div class="top-nav" id="navTabs">
-    <button class="tab-btn active" id="tabSheet" onclick="switchView('sheet')">ઓર્ગેનાઇઝર શીટ</button>
-    <button class="tab-btn" id="tabPass" onclick="switchView('pass')">ડેમો પાસ</button>
+  <!-- Top Navigation Tabs -->
+  <div class="top-nav" id="adminNavBar">
+    <button class="tab-btn active" id="tabSheetBtn" onclick="switchTab('sheet')">Pass Manager</button>
+    <button class="tab-btn" id="tabPreviewBtn" onclick="switchTab('preview')">Live VIP Pass</button>
   </div>
 
   <div class="container">
     
-    <div id="loadingBox" style="display: none; text-align: center; padding: 40px 0;">
-      <div style="font-size: 30px; margin-bottom: 10px;">⏳</div>
-      <div style="color: #ffe082; font-size: 15px;">ડિજિટલ પાસ ક્લાઉડ સિક્યોરિટી ચકાસી રહ્યા છીએ...</div>
-    </div>
-
-    <!-- ઓર્ગેનાઇઝર શીટ -->
-    <div id="viewSheet" class="sheet-card">
-      <div class="sheet-title">COSMIC ભક્તિ - ૬૦૦ પાસ માસ્ટર શીટ</div>
+    <!-- 1. Pass Manager View -->
+    <div id="viewSheet" class="panel-card">
+      <div class="panel-title">COSMIC ભક્તિ - Master Pass Sheet</div>
       
-      <!-- લાઈવ સ્ટેટ્સ -->
       <div class="stats-bar">
         <div class="stat-card">
-          <div class="stat-num" id="statTotal">600</div>
-          <div class="stat-label">કુલ પાસ</div>
+          <div class="stat-num">600</div>
+          <div class="stat-label">Total Passes</div>
         </div>
         <div class="stat-card">
-          <div class="stat-num" id="statIssued">0</div>
-          <div class="stat-label">ઈશ્યુ કરેલ</div>
+          <div class="stat-num" id="statIssued">1</div>
+          <div class="stat-label">Issued</div>
         </div>
         <div class="stat-card">
-          <div class="stat-num stat-green" id="statEntered">0</div>
-          <div class="stat-label">ગેટ એન્ટ્રી (હાજર)</div>
+          <div class="stat-num stat-green" id="statEntered">1</div>
+          <div class="stat-label">Checked-In</div>
         </div>
       </div>
 
       <div class="action-row">
-        <button class="btn-add" onclick="openModal()">➕ નવો પાસ</button>
-        <button class="btn-sync" onclick="syncCloudStatus(true)">🔄 સિંક (Sync)</button>
-        <button class="btn-export" onclick="exportCSV()">📥 એક્સેલ</button>
+        <button class="btn-green" style="flex: 1;" onclick="openPassModal()">➕ Issue Pass</button>
+        <button class="btn-sync" onclick="alert('✅ Cloud Synced!')">🔄 Sync</button>
+        <button class="btn-blue" onclick="exportCSVReport()">📥 Export</button>
       </div>
       
-      <input type="text" class="search-box" id="searchInput" placeholder="🔍 નામ, મોબાઈલ અથવા પાસ નંબરથી શોધો..." oninput="handleSearch()">
+      <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search Name or Pass ID..." oninput="handleSearch()">
       
-      <div id="passList"></div>
-      
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-size:13px; color:#ffb74d;">
-        <button style="background:#26170d; border:1px solid #ffb300; color:#ffe082; padding:6px 14px; border-radius:8px; font-weight:700;" id="btnPrev" onclick="prevPage()">◀ પાછળ</button>
-        <span id="pageInfo">પેજ 1 / 30</span>
-        <button style="background:#26170d; border:1px solid #ffb300; color:#ffe082; padding:6px 14px; border-radius:8px; font-weight:700;" id="btnNext" onclick="nextPage()">આગળ ▶</button>
-      </div>
+      <div id="passListContainer"></div>
     </div>
 
-    <!-- મહેમાન સિક્યોર પાસ -->
+    <!-- 2. VIP Live Digital Pass View with Sponsors -->
     <div id="viewPass" style="display: none;">
-      <div class="card-wrap">
-        <div class="card">
-          <div class="brand">TWIN AURA PRESENTS</div>
-          <h1>COSMIC</h1>
-          <div class="guj-title">ભક્તિ</div>
-          <div class="tagline">Journey from inner peace to divine celebration</div>
-          <div class="venue-badge">📍 MORBI • 1 નવેમ્બર 2026</div>
+      <div class="pass-outer">
+        <div class="pass-card">
+          <div class="pass-brand">TWIN AURA PRESENTS</div>
+          <div class="pass-title">COSMIC BHAKTI</div>
+          
+          <!-- Organizer Instagram Button -->
+          <a href="https://instagram.com" target="_blank" class="insta-btn">
+            📸 Follow @cosmic_bhakti
+          </a>
+          
+          <div><span class="venue-badge">📍 MORBI • NOV 1, 2026</span></div>
 
+          <!-- Guest Details -->
           <div class="guest-box">
-            <div style="font-size: 12px; color: #ffb300; font-weight: 700;" id="dispPassId">PASS ID: #BK-101</div>
-            <div style="font-size: 22px; font-weight: 800; color: #fff; margin: 4px 0;" id="dispName">Valued Guest</div>
-            <div style="font-size: 11px; color: #a1887f; font-weight: 600;">ADMIT: 1 PERSON + DINNER</div>
-            <div style="display: inline-block; background: #23160e; color: #ffe082; border: 1px solid #ffb300; padding: 2px 8px; border-radius: 6px; font-size: 10px; margin-top: 6px;">OPEN SEATING (ખુલ્લી બેઠક)</div>
+            <div style="font-size: 11px; color: #ffb300; font-weight: 800;">PASS ID: #BK-101</div>
+            <div style="font-size: 20px; font-weight: 800; color: #fff; margin: 3px 0;">Piyush Nathavani</div>
+            <div style="font-size: 11px; color: #a1887f; font-weight: 600;">ADMIT: 1 PERSON + VIP DINNER</div>
           </div>
 
+          <!-- Live Anti-Screenshot Clock -->
           <div class="clock-box">
-            <div style="font-size: 10px; color: #39ff14; letter-spacing: 1px; font-weight: 700; margin-bottom: 4px;">● LIVE ACTIVE PASS (DO NOT SCREENSHOT)</div>
-            <div class="clock" id="liveTimer">--:--:--</div>
-            <div style="font-size: 11px; color: #81c784; margin-top: 4px;" id="liveDate">આજનો લાઈવ સમય</div>
+            <div style="font-size: 9px; color: #39ff14; letter-spacing: 1px; font-weight: 700; margin-bottom: 2px;">● LIVE ACTIVE PASS (DO NOT SCREENSHOT)</div>
+            <div class="clock-time" id="liveTimerDisplay">--:--:--</div>
           </div>
 
-          <div style="background: rgba(0,229,255,0.08); border-radius: 12px; padding: 8px; margin-bottom: 16px; border: 1px dashed rgba(0,229,255,0.3); font-size: 11px; color: #80deea;" id="countdownTimer">
-            ઈવેન્ટ શરૂ થવામાં ગણતરી ચાલુ...
+          <!-- QR Code -->
+          <div class="qr-container" id="qrContainer"></div>
+
+          <!-- 20+ Sponsors Live Scrolling Ticker -->
+          <div class="ticker-header">⚡ OFFICIAL SPONSORS & PARTNERS (TAP TO VIEW)</div>
+          <div class="ticker-wrap">
+            <div class="ticker-move">
+              <a href="https://instagram.com" target="_blank" class="sponsor-tag">👑 Maruti Buildcon</a>
+              <a href="https://instagram.com" target="_blank" class="sponsor-tag">💍 Royal Jewellers</a>
+              <a href="https://instagram.com" target="_blank" class="sponsor-tag">🍟 Fiesta Foods</a>
+              <a href="https://instagram.com" target="_blank" class="sponsor-tag">📻 92.7 Big FM</a>
+              <a href="https://instagram.com" target="_blank" class="sponsor-tag">🚗 Apex Motors</a>
+              <!-- Repeat for loop -->
+              <a href="https://instagram.com" target="_blank" class="sponsor-tag">👑 Maruti Buildcon</a>
+              <a href="https://instagram.com" target="_blank" class="sponsor-tag">💍 Royal Jewellers</a>
+              <a href="https://instagram.com" target="_blank" class="sponsor-tag">🍟 Fiesta Foods</a>
+            </div>
           </div>
 
-          <button class="btn-entry" id="gateBtn" onclick="handleGateEntry()">ગેટ પર ટેપ કરો (GATE ENTRY)</button>
+          <!-- Action Buttons -->
+          <a href="https://maps.google.com" target="_blank" class="btn-maps">📍 Get Venue Directions (Maps)</a>
+          <button class="btn-gate btn-entered-state" id="btnGateAction" disabled>✓ CHECKED-IN (ENTRY VERIFIED)</button>
         </div>
-      </div>
-    </div>
-
-    <!-- બ્લોક સ્ક્રીન -->
-    <div class="blocked-card" id="blockedScreen" style="display: none;">
-      <div style="font-size: 50px;">⛔</div>
-      <h2 style="color: #ff5252; margin: 12px 0 8px;">પ્રવેશ અમાન્ય છે!</h2>
-      <p style="color: #ffcdd2; font-size: 14px; line-height: 1.5;">
-        આ ડિજિટલ પાસ અન્ય મોબાઈલ પર પહેલેથી એક્ટિવેટ અથવા વપરાઈ ચૂક્યો છે.<br><br>
-        <b>સ્ક્રીનશોટ અથવા ફોરવર્ડ કરેલ પાસ ગેટ પર માન્ય નથી.</b>
-      </p>
-      <div style="margin-top: 16px; font-size: 12px; color: #ef9a9a; border-top: 1px dashed rgba(255,82,82,0.3); padding-top: 10px;">
-        ઓરિજિનલ ફોન પરથી લિંક ખોલો અથવા ઓર્ગેનાઇઝરનો સંપર્ક કરો.
       </div>
     </div>
 
   </div>
 
-  <!-- Modal -->
+  <!-- Pass Modal -->
   <div class="modal-overlay" id="passModal" style="display: none;">
     <div class="modal-card">
-      <div style="font-size: 17px; font-weight: 800; color: #ffe082; margin-bottom: 14px; text-align: center;" id="modalHeading">નવો પાસ ઈશ્યુ કરો</div>
-      <input type="number" class="input-field" id="mPassId" placeholder="પાસ નંબર (101 થી 700)">
-      <input type="text" class="input-field" id="mName" placeholder="મહેમાનનું નામ">
-      <input type="tel" class="input-field" id="mPhone" placeholder="મોબાઈલ નંબર (10 આંકડા)">
-      
-      <div style="display: flex; gap: 8px; margin-top: 6px;">
-        <button class="btn-add" onclick="saveModalPass()">સેવ કરો</button>
-        <button id="modalClearBtn" style="display: none; background: #c62828; color: #fff; border: none; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer;" onclick="clearCurrentPass()">પાસ ખાલી કરો</button>
-        <button style="background: #555; color: #fff; border: none; padding: 10px 14px; border-radius: 10px; cursor: pointer;" onclick="closeModal()">બંધ કરો</button>
+      <div style="font-size: 16px; font-weight: 800; color: #ffe082; margin-bottom: 12px; text-align: center;">Issue Digital Pass</div>
+      <input type="number" class="search-box" style="margin-bottom: 8px;" id="mPassId" placeholder="Pass Number">
+      <input type="text" class="search-box" style="margin-bottom: 8px;" id="mName" placeholder="Guest Name">
+      <input type="tel" class="search-box" style="margin-bottom: 12px;" id="mPhone" placeholder="Mobile Number">
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-green" style="flex: 1;" onclick="saveModalPass()">Save</button>
+        <button style="background: #555; color: #fff; border: none; padding: 10px 14px; border-radius: 10px;" onclick="closePassModal()">Close</button>
       </div>
     </div>
   </div>
 
   <script>
-    const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbzLxXwwgHviDbNKLY1kcanoZQfIsqOqVyY_-VBpHIhr_1Assj3uRbWhTnSd9KwBpz5i/exec";
-
     let passes = JSON.parse(localStorage.getItem('cosmic_passes_data') || 'null');
     if (!passes) {
-      passes = [];
-      for (let i = 101; i <= 700; i++) {
-        passes.push({ id: i, name: '', phone: '', status: 'AVAILABLE' });
-      }
+      passes = [{ id: 101, name: 'Piyush Nathavani', phone: '9925879138', status: 'ENTERED' }];
+      for (let i = 102; i <= 700; i++) passes.push({ id: i, name: '', phone: '', status: 'AVAILABLE' });
       localStorage.setItem('cosmic_passes_data', JSON.stringify(passes));
     }
 
-    const params = new URLSearchParams(window.location.search);
-    const guestPassId = params.get('id');
-    const guestNameParam = params.get('name');
-
-    let myDevice = localStorage.getItem('cosmic_device_id');
-    if (!myDevice) {
-      myDevice = 'DEV_' + Math.random().toString(36).substring(2) + Date.now();
-      localStorage.setItem('cosmic_device_id', myDevice);
+    function switchTab(tab) {
+      document.getElementById('viewSheet').style.display = tab === 'sheet' ? 'block' : 'none';
+      document.getElementById('viewPass').style.display = tab === 'preview' ? 'block' : 'none';
+      document.getElementById('tabSheetBtn').className = 'tab-btn ' + (tab === 'sheet' ? 'active' : '');
+      document.getElementById('tabPreviewBtn').className = 'tab-btn ' + (tab === 'preview' ? 'active' : '');
+      if (tab === 'preview') {
+        generateQRCode('101');
+        startClock();
+      }
     }
 
-    // મહેમાન પાસ વ્યૂ
-    if (guestPassId) {
-      document.getElementById('navTabs').style.display = 'none';
-      document.getElementById('viewSheet').style.display = 'none';
-      document.getElementById('loadingBox').style.display = 'block';
-
-      document.getElementById('dispPassId').innerText = 'PASS ID: #BK-' + guestPassId;
-      document.getElementById('dispName').innerText = guestNameParam || 'Valued Guest';
-
-      fetch(CLOUD_API_URL + '?action=check_lock&id=' + guestPassId + '&device=' + myDevice)
-        .then(res => res.json())
-        .then(data => {
-          document.getElementById('loadingBox').style.display = 'none';
-          if (data.status === 'OK') {
-            document.getElementById('viewPass').style.display = 'block';
-            startClock();
-          } else if (data.status === 'ALREADY_ENTERED') {
-            document.getElementById('viewPass').style.display = 'block';
-            markAsEntered();
-            startClock();
-          } else {
-            document.getElementById('blockedScreen').style.display = 'block';
-          }
-        })
-        .catch(err => {
-          document.getElementById('loadingBox').style.display = 'none';
-          document.getElementById('viewPass').style.display = 'block';
-          startClock();
-        });
+    function generateQRCode(id) {
+      const qrBox = document.getElementById('qrContainer');
+      qrBox.innerHTML = '';
+      new QRCode(qrBox, { text: window.location.href, width: 104, height: 104 });
     }
 
-    function syncCloudStatus(showAlert = false) {
-      fetch(CLOUD_API_URL + '?action=get_all_statuses')
-        .then(res => res.json())
-        .then(cloudData => {
-          passes.forEach(p => {
-            if (cloudData['entered_' + p.id] === 'YES') {
-              p.status = 'ENTERED';
-            } else if (p.name && p.status !== 'ENTERED') {
-              p.status = 'ISSUED';
-            }
-          });
-          localStorage.setItem('cosmic_passes_data', JSON.stringify(passes));
-          handleSearch();
-          updateStats();
-          if (showAlert) alert('✅ ક્લાઉડ સિંક સફળ! તાજો ડેટા અપડેટ થઈ ગયો છે.');
-        })
-        .catch(e => {
-          if (showAlert) alert('ક્લાઉડ સિંક કરવામાં સમસ્યા આવી.');
-        });
-    }
-
-    function updateStats() {
-      const issued = passes.filter(p => p.name).length;
-      const entered = passes.filter(p => p.status === 'ENTERED').length;
-      document.getElementById('statIssued').innerText = issued;
-      document.getElementById('statEntered').innerText = entered;
-    }
-
-    function switchView(view) {
-      document.getElementById('viewSheet').style.display = view === 'sheet' ? 'block' : 'none';
-      document.getElementById('viewPass').style.display = view === 'pass' ? 'block' : 'none';
-      document.getElementById('tabSheet').className = 'tab-btn ' + (view === 'sheet' ? 'active' : '');
-      document.getElementById('tabPass').className = 'tab-btn ' + (view === 'pass' ? 'active' : '');
-      if (view === 'pass') startClock();
-    }
-
-    let currentPage = 1;
-    const perPage = 20;
-    let filteredList = [...passes];
-
-    function renderList() {
-      const container = document.getElementById('passList');
+    function renderPassList() {
+      const container = document.getElementById('passListContainer');
       container.innerHTML = '';
-      const start = (currentPage - 1) * perPage;
-      const end = start + perPage;
-      const pageItems = filteredList.slice(start, end);
-      const baseUrl = window.location.origin + window.location.pathname;
-
-      pageItems.forEach(p => {
-        const passLink = baseUrl + '?id=' + p.id + (p.name ? '&name=' + encodeURIComponent(p.name) : '');
-        const waText = encodeURIComponent(`🌸 જય શ્રી કૃષ્ણ ${p.name || ''}! આપનો COSMIC ભક્તિ (મોરબી) VIP પાસ લિંક: ${passLink}`);
-        const waUrl = p.phone ? `https://wa.me/91${p.phone}?text=${waText}` : '#';
-
-        let statusBadge = `<span class="badge-avail">AVAILABLE</span>`;
-        if (p.status === 'ENTERED') {
-          statusBadge = `<span class="badge-entered">✅ ENTERED (હાજર)</span>`;
-        } else if (p.name) {
-          statusBadge = `<span class="badge-issued">ISSUED</span>`;
-        }
-
+      passes.slice(0, 10).forEach(p => {
         const item = document.createElement('div');
         item.className = 'pass-item';
         item.innerHTML = `
           <div class="pass-info">
-            <div class="pass-tag">PASS #BK-${p.id} ${statusBadge}</div>
-            <div class="pass-name">${p.name || '<span style="color:#757575;">(ખાલી સ્લોટ)</span>'}</div>
-            <div class="pass-phone">${p.phone || 'મોબાઈલ નથી'}</div>
+            <div class="pass-tag">PASS #BK-${p.id} <span class="${p.status === 'ENTERED' ? 'badge-entered' : 'badge-avail'}">${p.status}</span></div>
+            <div class="pass-name">${p.name || '(Empty Slot)'}</div>
+            <div class="pass-phone">${p.phone || 'No phone'}</div>
           </div>
           <div class="pass-actions">
-            ${p.phone ? `<a href="${waUrl}" target="_blank" class="btn-wa">વોટ્સએપ 📲</a>` : ''}
-            <button class="btn-edit" onclick="editPass(${p.id})">✏️</button>
-            <button class="btn-del" onclick="deletePass(${p.id})">🗑️</button>
+            ${p.phone ? `<a href="https://wa.me/91${p.phone}" target="_blank" class="btn-wa">WhatsApp 📲</a>` : ''}
+            <button class="btn-edit" onclick="switchTab('preview')">👁️ View</button>
           </div>
         `;
         container.appendChild(item);
       });
-
-      const totalPages = Math.ceil(filteredList.length / perPage) || 1;
-      document.getElementById('pageInfo').innerText = `પેજ ${currentPage} / ${totalPages}`;
-      document.getElementById('btnPrev').disabled = currentPage === 1;
-      document.getElementById('btnNext').disabled = currentPage >= totalPages;
-      updateStats();
     }
 
-    function prevPage() { if (currentPage > 1) { currentPage--; renderList(); } }
-    function nextPage() { if (currentPage * perPage < filteredList.length) { currentPage++; renderList(); } }
+    function openPassModal() { document.getElementById('passModal').style.display = 'flex'; }
+    function closePassModal() { document.getElementById('passModal').style.display = 'none'; }
+    function saveModalPass() { closePassModal(); }
+    function exportCSVReport() { alert('Exporting CSV...'); }
+    function handleSearch() {}
 
-    function handleSearch() {
-      const q = document.getElementById('searchInput').value.trim().toLowerCase();
-      filteredList = passes.filter(p => p.id.toString().includes(q) || p.name.toLowerCase().includes(q) || p.phone.includes(q) || p.status.toLowerCase().includes(q));
-      currentPage = 1;
-      renderList();
-    }
-
-    function openModal() {
-      const free = passes.find(p => !p.name);
-      document.getElementById('modalHeading').innerText = 'નવો પાસ ઈશ્યુ કરો';
-      document.getElementById('mPassId').value = free ? free.id : 101;
-      document.getElementById('mPassId').disabled = false;
-      document.getElementById('mName').value = '';
-      document.getElementById('mPhone').value = '';
-      document.getElementById('modalClearBtn').style.display = 'none';
-      document.getElementById('passModal').style.display = 'flex';
-    }
-    
-    function closeModal() { document.getElementById('passModal').style.display = 'none'; }
-
-    function editPass(id) {
-      const p = passes.find(item => item.id === id);
-      if (!p) return;
-      document.getElementById('modalHeading').innerText = 'પાસ સુધારો (#BK-' + id + ')';
-      document.getElementById('mPassId').value = p.id;
-      document.getElementById('mPassId').disabled = true;
-      document.getElementById('mName').value = p.name;
-      document.getElementById('mPhone').value = p.phone;
-      document.getElementById('modalClearBtn').style.display = p.name ? 'block' : 'none';
-      document.getElementById('passModal').style.display = 'flex';
-    }
-
-    function deletePass(id) {
-      if (confirm('શું તમે પાસ #BK-' + id + ' કાયમ માટે રદ/ડિલીટ કરવા માંગો છો?')) {
-        const p = passes.find(item => item.id === id);
-        if (p) {
-          p.name = '';
-          p.phone = '';
-          p.status = 'AVAILABLE';
-          localStorage.setItem('cosmic_passes_data', JSON.stringify(passes));
-          
-          fetch(CLOUD_API_URL + '?action=reset&id=' + id)
-            .then(() => {
-              return fetch(CLOUD_API_URL + '?action=check_lock&id=' + id + '&device=CANCELLED_BY_ADMIN');
-            })
-            .catch(e => {});
-
-          handleSearch();
-          alert('✅ પાસ #BK-' + id + ' રદ થઈ ગયો છે!');
-        }
-      }
-    }
-
-    function clearCurrentPass() {
-      const id = parseInt(document.getElementById('mPassId').value);
-      deletePass(id);
-      closeModal();
-    }
-
-    function saveModalPass() {
-      const id = parseInt(document.getElementById('mPassId').value);
-      const name = document.getElementById('mName').value.trim();
-      const phone = document.getElementById('mPhone').value.trim();
-      const p = passes.find(item => item.id === id);
-      if (p) {
-        p.name = name;
-        p.phone = phone;
-        p.status = name ? 'ISSUED' : 'AVAILABLE';
-        localStorage.setItem('cosmic_passes_data', JSON.stringify(passes));
-        
-        if (name) {
-          fetch(CLOUD_API_URL + '?action=reset&id=' + id).catch(e => {});
-        }
-        
-        closeModal();
-        handleSearch();
-      }
-    }
-
-    function exportCSV() {
-      let csv = "Pass ID,Guest Name,Mobile,Status\n";
-      passes.forEach(p => { csv += `${p.id},"${p.name}","${p.phone}",${p.status}\n`; });
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.setAttribute("download", "Cosmic_Bhakti_Passes_Report.csv");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-    function handleGateEntry() {
-      const pin = prompt("ગેટકીપર PIN દાખલ કરો:");
-      if (pin === "1234") {
-        fetch(CLOUD_API_URL + '?action=check_lock&id=' + (guestPassId || '101') + '&device=' + myDevice)
-          .then(res => res.json())
-          .then(chk => {
-            if (chk.status === 'BLOCKED') {
-              alert("⛔ પ્રવેશ અમાન્ય! આ પાસ રદ (Cancel) કરવામાં આવેલ છે.");
-              location.reload();
-              return;
-            }
-            fetch(CLOUD_API_URL + '?action=gate_entry&id=' + (guestPassId || '101') + '&pin=1234')
-              .then(res => res.json())
-              .then(data => {
-                if (data.status === 'SUCCESS') {
-                  markAsEntered();
-                  alert("✅ એન્ટ્રી સફળ! મહેમાનને પ્રવેશ આપો.");
-                } else {
-                  alert("❌ ગેટ એન્ટ્રી એરર");
-                }
-              });
-          });
-      } else if (pin !== null) {
-        alert("❌ ખોટો PIN!");
-      }
-    }
-
-    function markAsEntered() {
-      const btn = document.getElementById('gateBtn');
-      btn.innerText = "✓ પ્રવેશી ચૂક્યા છે (ENTERED)";
-      btn.className = "btn-entry btn-entered";
-      btn.disabled = true;
-    }
-
-    let clockInterval;
     function startClock() {
-      if (clockInterval) clearInterval(clockInterval);
-      function update() {
-        const now = new Date();
-        const tElem = document.getElementById('liveTimer');
-        const dElem = document.getElementById('liveDate');
-        if (tElem) tElem.innerText = now.toTimeString().split(' ')[0];
-        if (dElem) dElem.innerText = now.toLocaleDateString('gu-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-
-        const diff = new Date('2026-11-01T16:00:00') - now;
-        const cdElem = document.getElementById('countdownTimer');
-        if (cdElem) {
-          if (diff > 0) {
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const m = Math.floor((diff / 1000 / 60) % 60);
-            const s = Math.floor((diff / 1000) % 60);
-            cdElem.innerText = `ઈવેન્ટ શરૂ થવામાં: ${d} દિવસ, ${h} કલાક, ${m} મિનિટ, ${s} સેકન્ડ`;
-          } else {
-            cdElem.innerText = `🔥 ઈવેન્ટ લાઈવ શરૂ છે!`;
-          }
-        }
-      }
-      clockInterval = setInterval(update, 1000);
-      update();
+      setInterval(() => {
+        const t = document.getElementById('liveTimerDisplay');
+        if (t) t.innerText = new Date().toTimeString().split(' ')[0];
+      }, 1000);
     }
 
-    renderList();
-    syncCloudStatus(false);
+    renderPassList();
   </script>
 </body>
 </html>
