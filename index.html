@@ -69,7 +69,7 @@
     .btn-wa { background: #25d366; color: #000; border: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; text-decoration: none; }
     .btn-edit { background: #424242; color: #fff; border: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; cursor: pointer; }
 
-    /* VIP Pass Outer Glow */
+    /* VIP Pass Styling */
     .pass-outer { width: 100%; border-radius: 26px; padding: 3px; background: linear-gradient(60deg, #ff9900, #ff0055, #00e5ff, #ff9900); background-size: 300% 300%; animation: glow 4s ease infinite; box-shadow: 0 0 35px rgba(255,140,0,0.35); }
     @keyframes glow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     .pass-card { background: #130b06; border-radius: 24px; padding: 20px 18px; text-align: center; border: 1px solid rgba(255,180,0,0.2); }
@@ -402,17 +402,25 @@
     let settings = JSON.parse(localStorage.getItem('ev_set_' + EVENT_ID) || 'null') || defaultSettings;
     if (!settings.sponsorImages) settings.sponsorImages = [];
 
-    let passes = JSON.parse(localStorage.getItem('ev_pass_' + EVENT_ID) || 'null');
-    if (!passes || passes.length !== parseInt(settings.quotaLimit)) {
+    let passes = JSON.parse(localStorage.getItem('ev_pass_' + EVENT_ID) || 'null') || [];
+    if (!passes.length || passes.length !== parseInt(settings.quotaLimit)) {
       initPassesArray();
     }
 
     function initPassesArray() {
+      const existingMap = {};
+      if (passes && passes.length) {
+        passes.forEach(p => { if (p && p.name) existingMap[p.id] = p; });
+      }
       passes = [];
       const s = parseInt(settings.startPass) || 1;
       const q = parseInt(settings.quotaLimit) || 150;
       for (let i = s; i < s + q; i++) {
-        passes.push({ id: i, name: '', phone: '', status: 'AVAILABLE', type: 'FULL' });
+        if (existingMap[i]) {
+          passes.push(existingMap[i]);
+        } else {
+          passes.push({ id: i, name: '', phone: '', status: 'AVAILABLE', type: 'FULL' });
+        }
       }
       localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
     }
@@ -516,6 +524,20 @@
 
     // App Initialization
     window.addEventListener('DOMContentLoaded', () => {
+      // 1. Fetch live settings from Firebase cloud first to ensure correct promoter quota
+      fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/settings.json`)
+        .then(res => res.json())
+        .then(cloudSettings => {
+          if (cloudSettings) {
+            settings = Object.assign(settings, cloudSettings);
+            localStorage.setItem('ev_set_' + EVENT_ID, JSON.stringify(settings));
+            initPassesArray();
+            applySettingsToUI();
+            renderPassList();
+          }
+        })
+        .catch(() => {});
+
       applySettingsToUI();
 
       if (guestPassId) {
@@ -664,7 +686,6 @@
         .then(data => {
           document.getElementById('loadingOverlay').style.display = 'none';
 
-          // 1. Pass must exist & be issued
           if (!data || !data.name) {
             document.getElementById('viewPass').style.display = 'none';
             document.getElementById('blockedReason').innerHTML = "This VIP pass has not been issued by the event organizer yet.";
@@ -672,7 +693,6 @@
             return;
           }
 
-          // 2. First-time open: permanently bind to this hardware device
           if (!data.device) {
             fetch(passRef, {
               method: 'PATCH',
@@ -685,12 +705,10 @@
             });
             showGuestPass(data);
           } 
-          // 3. Authorized device: open smoothly
           else if (data.device === myDevice) {
             showGuestPass(data);
             if (data.status === 'ENTERED') markEnteredBadge();
           } 
-          // 4. Forwarded or copied device: strictly block
           else {
             document.getElementById('viewPass').style.display = 'none';
             document.getElementById('blockedReason').innerHTML = "This VIP pass is <b>locked to another phone</b>.<br><br>Forwarded links and screenshots are strictly rejected at entry.";
@@ -698,10 +716,9 @@
           }
         })
         .catch(err => {
-          // Fail-Closed: Never open pass on error
           document.getElementById('loadingOverlay').style.display = 'none';
           document.getElementById('viewPass').style.display = 'none';
-          document.getElementById('blockedReason').innerHTML = "Security Verification Failed. Please verify your internet connection or show pass at the help desk.";
+          document.getElementById('blockedReason').innerHTML = "Security Verification Failed. Please check your internet connection or contact the event admin.";
           document.getElementById('blockedScreen').style.display = 'block';
         });
     }
@@ -874,6 +891,7 @@
         Object.keys(data).forEach(k => {
           const p = data[k];
           const directLink = `${baseUrl}?event=${p.slug}`;
+          // Fixed: Removed target="_blank" so iPhone Safari opens immediately without popup blocking
           html += `
             <div class="promoter-card">
               <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -885,9 +903,9 @@
               </div>
               <div style="font-size:11px; color:#ffb74d;">Pass: <code>${p.pass}</code> | PIN: <code>1234</code></div>
               <div style="display:flex; gap:6px; margin-top:8px;">
-                <a href="${directLink}" target="_blank" style="flex:1; background:#1565c0; color:#fff; padding:6px; border-radius:8px; font-size:11px; text-align:center; text-decoration:none; font-weight:700;">Open Portal</a>
-                <button onclick="sharePromoterCreds('${p.name}', '${directLink}', '${p.pass}', '${p.quota}', '${p.phone || ''}', '${p.startPass}', '${p.endPass}')" style="background:#25d366; color:#000; border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700; cursor:pointer;">WhatsApp 📲</button>
-                <button onclick="deletePromoter('${p.slug}')" style="background:#c62828; color:#fff; border:none; padding:6px 10px; border-radius:8px; font-size:11px; cursor:pointer;">Revoke</button>
+                <a href="${directLink}" style="flex:1; background:#1565c0; color:#fff; padding:8px 4px; border-radius:8px; font-size:11px; text-align:center; text-decoration:none; font-weight:700; display:inline-block;">Open Portal</a>
+                <button onclick="sharePromoterCreds('${p.name}', '${directLink}', '${p.pass}', '${p.quota}', '${p.phone || ''}', '${p.startPass}', '${p.endPass}')" style="background:#25d366; color:#000; border:none; padding:8px 10px; border-radius:8px; font-size:11px; font-weight:700; cursor:pointer;">WhatsApp 📲</button>
+                <button onclick="deletePromoter('${p.slug}')" style="background:#c62828; color:#fff; border:none; padding:8px 10px; border-radius:8px; font-size:11px; cursor:pointer;">Revoke</button>
               </div>
             </div>
           `;
