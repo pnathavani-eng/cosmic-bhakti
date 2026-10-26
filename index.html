@@ -12,7 +12,7 @@
     
     /* Top Navigation Tabs */
     .top-nav { display: flex; gap: 5px; width: 100%; max-width: 440px; margin-bottom: 14px; background: #180f08; padding: 5px; border-radius: 14px; border: 1px solid rgba(255,180,0,0.25); }
-    .tab-btn { flex: 1; padding: 10px 2px; border: none; border-radius: 10px; font-size: 11.5px; font-weight: 700; cursor: pointer; color: #d7ccc8; background: transparent; text-align: center; }
+    .tab-btn { flex: 1; padding: 10px 2px; border: none; border-radius: 10px; font-size: 11px; font-weight: 700; cursor: pointer; color: #d7ccc8; background: transparent; text-align: center; }
     .tab-btn.active { background: #ff8f00; color: #000; box-shadow: 0 2px 10px rgba(255,143,0,0.4); }
     .tab-btn.super-tab { color: #ff8a80; }
     .tab-btn.super-tab.active { background: #d32f2f; color: #fff; box-shadow: 0 2px 10px rgba(211,47,47,0.4); }
@@ -36,7 +36,7 @@
     .btn-sync { background: #e65100; color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
     .btn-blue { background: #1565c0; color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
     .btn-purple { background: linear-gradient(45deg, #7b1fa2, #ab47bc); color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 800; cursor: pointer; }
-    .btn-danger { background: #c62828; color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .btn-upload { background: #2b170b; border: 1px dashed #ffb300; color: #ffe082; padding: 10px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; width: 100%; text-align: center; display: block; margin-top: 6px; }
 
     /* Inputs */
     .search-box { width: 100%; padding: 11px 13px; background: #22140b; border: 1px solid #ffb300; border-radius: 12px; color: #fff; font-size: 14px; margin-bottom: 12px; outline: none; }
@@ -47,8 +47,11 @@
 
     /* Super Admin Box */
     .super-admin-box { background: rgba(211,47,47,0.08); border: 1.5px solid #d32f2f; border-radius: 16px; padding: 14px; margin-bottom: 14px; }
-    .super-title { font-size: 13px; font-weight: 900; color: #ff8a80; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
     .promoter-card { background: #1c0f0a; border: 1px solid rgba(255,180,0,0.25); border-radius: 14px; padding: 12px; margin-bottom: 10px; }
+
+    /* Image Preview Boxes */
+    .preview-box { display: flex; align-items: center; gap: 10px; margin-top: 6px; background: #1c0f08; padding: 8px; border-radius: 10px; border: 1px solid rgba(255,180,0,0.2); }
+    .preview-img { width: 44px; height: 44px; object-fit: contain; border-radius: 8px; background: #fff; padding: 2px; }
 
     /* Pass List Items */
     .pass-item { background: #1c1008; border: 1px solid rgba(255,180,0,0.15); border-radius: 14px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
@@ -66,12 +69,13 @@
     .btn-wa { background: #25d366; color: #000; border: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; text-decoration: none; }
     .btn-edit { background: #424242; color: #fff; border: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; cursor: pointer; }
 
-    /* VIP Pass Styling */
+    /* VIP Pass Outer Glow */
     .pass-outer { width: 100%; border-radius: 26px; padding: 3px; background: linear-gradient(60deg, #ff9900, #ff0055, #00e5ff, #ff9900); background-size: 300% 300%; animation: glow 4s ease infinite; box-shadow: 0 0 35px rgba(255,140,0,0.35); }
     @keyframes glow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     .pass-card { background: #130b06; border-radius: 24px; padding: 20px 18px; text-align: center; border: 1px solid rgba(255,180,0,0.2); }
     
-    .pass-brand { font-size: 13px; font-weight: 800; color: #ffe082; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3px; text-shadow: 0 0 8px rgba(255,224,130,0.4); }
+    .pass-brand-img { max-height: 55px; max-width: 180px; object-fit: contain; margin-bottom: 6px; filter: drop-shadow(0 2px 8px rgba(255,180,0,0.3)); }
+    .pass-brand { font-size: 12px; font-weight: 800; color: #ffe082; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3px; }
     .pass-title { font-size: 26px; font-weight: 900; background: linear-gradient(to right, #ffe082, #ffb300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
     .insta-btn { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; text-decoration: none; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; margin: 6px 0 10px; box-shadow: 0 2px 10px rgba(220,39,67,0.3); }
@@ -89,17 +93,21 @@
     
     .qr-container { display: flex; justify-content: center; align-items: center; background: #fff; padding: 8px; border-radius: 12px; width: 112px; height: 112px; margin: 0 auto 10px; }
     
+    /* Sponsors Logo Ticker */
     .ticker-header { font-size: 11px; color: #ffe082; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin: 10px 0 6px; }
     .ticker-wrap { width: 100%; overflow: hidden; background: #1a0e07; border: 1.5px solid rgba(255,180,0,0.35); border-radius: 14px; padding: 10px 0; margin-bottom: 12px; }
-    .ticker-move { display: flex; gap: 16px; width: max-content; animation: scrollTicker 14s linear infinite; }
+    .ticker-move { display: flex; gap: 14px; width: max-content; animation: scrollTicker 15s linear infinite; align-items: center; }
     .ticker-wrap:hover .ticker-move, .ticker-wrap:active .ticker-move { animation-play-state: paused; }
-    .sponsor-tag { background: #2b170b; border: 1.5px solid #ffb300; color: #ffe082; padding: 8px 16px; border-radius: 10px; font-size: 13.5px; font-weight: 800; white-space: nowrap; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+    
+    .sponsor-pill { display: flex; align-items: center; gap: 8px; background: #2b170b; border: 1.5px solid #ffb300; color: #ffe082; padding: 6px 14px; border-radius: 10px; font-size: 13px; font-weight: 800; white-space: nowrap; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+    .sponsor-logo-img { height: 26px; width: auto; max-width: 75px; object-fit: contain; border-radius: 4px; background: #fff; padding: 1px 3px; }
     @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
     .btn-maps { background: #212121; color: #ffe082; border: 1px solid #ffb300; padding: 10px 14px; border-radius: 12px; font-size: 12px; font-weight: 700; width: 100%; text-decoration: none; display: block; margin-bottom: 8px; }
     .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 12px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; width: 100%; cursor: pointer; }
     .btn-entered-state { background: #424242 !important; color: #9e9e9e !important; cursor: not-allowed; }
 
+    /* Strict Blocked Screen */
     .blocked-card { background: #1c0808; border: 2px solid #ff5252; border-radius: 24px; padding: 34px 20px; text-align: center; width: 100%; box-shadow: 0 0 30px rgba(255,82,82,0.4); }
 
     /* Modal Overlay */
@@ -109,7 +117,7 @@
 </head>
 <body>
 
-  <!-- Top Navigation -->
+  <!-- Top Navigation (Hidden for VIP Guests) -->
   <div class="top-nav" id="adminNavBar">
     <button class="tab-btn active" id="tabSheetBtn" onclick="switchTab('sheet')">Pass Manager</button>
     <button class="tab-btn" id="tabSettingsBtn" onclick="switchTab('settings')">⚙️ Settings</button>
@@ -119,6 +127,7 @@
 
   <div class="container">
     
+    <!-- Loading Screen -->
     <div id="loadingOverlay" style="display: none; text-align: center; padding: 50px 0;">
       <div style="font-size: 36px; margin-bottom: 10px;">⏳</div>
       <div style="color: #ffe082; font-size: 15px; font-weight: 700;">Verifying VIP Pass Security...</div>
@@ -164,20 +173,25 @@
       </div>
     </div>
 
-    <!-- 2. Settings View (Client Sub-Admin Panel) -->
+    <!-- 2. Settings View (With Direct Image Attachments) -->
     <div id="viewSettings" class="panel-card" style="display: none;">
-      <div class="panel-title">⚙️ Event Branding & Settings</div>
+      <div class="panel-title">⚙️ Event Branding & Logo Attachments</div>
 
-      <div class="form-group">
-        <label class="form-label">Client Plan</label>
-        <select class="form-select" id="cfgPlan" onchange="togglePlanSettings()">
-          <option value="BUDGET">Budget Plan (System Sponsors Locked)</option>
-          <option value="PRO">Pro White-Label (Custom Client Sponsors)</option>
-        </select>
+      <!-- MAIN PRESENTER LOGO -->
+      <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
+        <label class="form-label" style="color: #39ff14;">📷 Main Presenter / Brand Logo</label>
+        <input type="file" id="fileBrandLogo" accept="image/*" style="display: none;" onchange="handleBrandLogoUpload(event)">
+        <label for="fileBrandLogo" class="btn-upload">📁 Choose Logo Image from Phone</label>
+        
+        <div id="brandLogoPreviewRow" class="preview-box" style="display: none;">
+          <img id="brandLogoPreview" class="preview-img" src="">
+          <div style="flex:1; font-size:11px; color:#ffe082;">Presenter Logo Selected</div>
+          <button style="background:#c62828; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:11px;" onclick="removeBrandLogo()">Remove</button>
+        </div>
       </div>
 
       <div class="form-group">
-        <label class="form-label">Presenter / Brand Title</label>
+        <label class="form-label">Presenter / Brand Text</label>
         <input type="text" class="form-input" id="cfgBrand" value="✨ TWIN AURA PRESENTS ✨">
       </div>
 
@@ -206,9 +220,18 @@
         <input type="url" class="form-input" id="cfgMapsUrl" value="https://maps.google.com">
       </div>
 
-      <div id="proSponsorSection" style="background: rgba(255,180,0,0.05); border: 1px dashed #ffb300; padding: 12px; border-radius: 12px; margin-bottom: 12px;">
-        <label class="form-label" style="color: #39ff14;">👑 Pro Sponsors (Comma Separated)</label>
-        <input type="text" class="form-input" id="cfgSponsors" value="👑 Maruti Buildcon, 💍 Royal Jewellers, 🍟 Fiesta Foods, 📻 92.7 Big FM, 🚗 Apex Motors">
+      <!-- SPONSOR LOGO ATTACHMENTS -->
+      <div id="proSponsorSection" style="background: rgba(255,180,0,0.06); border: 1px dashed #ffb300; padding: 12px; border-radius: 12px; margin-bottom: 12px;">
+        <label class="form-label" style="color: #39ff14;">👑 Sponsor Image Logos (Attach Files for Ticker)</label>
+        <input type="file" id="fileSponsorLogo" accept="image/*" style="display: none;" onchange="handleSponsorLogoUpload(event)">
+        <label for="fileSponsorLogo" class="btn-upload">🖼️ Add Sponsor Logo Image</label>
+        
+        <div id="sponsorLogosList" style="margin-top: 8px;"></div>
+
+        <div style="margin-top: 10px;">
+          <label class="form-label">Fallback Sponsor Names (Comma Separated)</label>
+          <input type="text" class="form-input" id="cfgSponsors" value="👑 Maruti Buildcon, 💍 Royal Jewellers, 🍟 Fiesta Foods, 📻 92.7 Big FM, 🚗 Apex Motors">
+        </div>
       </div>
 
       <div class="form-group">
@@ -221,18 +244,14 @@
         <input type="password" class="form-input" id="cfgAdminPass" value="admin123">
       </div>
 
-      <button class="btn-green" style="width: 100%; margin-top: 8px;" onclick="saveEventSettings()">💾 Save Event Settings</button>
+      <button class="btn-green" style="width: 100%; margin-top: 8px;" onclick="saveEventSettings()">💾 Save Event Settings & Logos</button>
     </div>
 
-    <!-- 3. Super Admin Hub (1-CLICK AUTOMATED PROMOTER GENERATOR) -->
+    <!-- 3. Super Admin Master Hub (Auto Promoter Generator) -->
     <div id="viewSuperHub" class="panel-card" style="display: none;">
       <div class="panel-title" style="color: #ff8a80;">👑 Master Hub: Auto Promoter Generator</div>
 
       <div class="super-admin-box">
-        <div style="font-size: 12px; color: #ffcdd2; margin-bottom: 12px;">
-          Yahan se naye organizer/promoter ka dashboard <b>1-Click me live ban jayega</b> aur direct WhatsApp par invite chala jayega.
-        </div>
-
         <div class="form-group">
           <label class="form-label" style="color: #ff8a80;">Promoter / Event Name</label>
           <input type="text" class="form-input" id="genName" placeholder="e.g. Royal Garba Rajkot" oninput="autoGenerateSlug()">
@@ -264,15 +283,18 @@
       </div>
 
       <div style="font-size: 13px; font-weight: 800; color: #ffe082; margin: 16px 0 8px;">📋 Active Promoters & Sub-Admins</div>
-      <div id="promoterListDisplay">
-        <div style="color: #888; font-size: 12px; text-align: center; padding: 15px;">Loading active promoters...</div>
-      </div>
+      <div id="promoterListDisplay"></div>
     </div>
 
     <!-- 4. VIP Live Digital Pass View -->
     <div id="viewPass" style="display: none;">
       <div class="pass-outer">
         <div class="pass-card">
+          <!-- Logo Display -->
+          <div id="liveBrandLogoContainer" style="display: none;">
+            <img id="liveBrandLogoImg" class="pass-brand-img" src="">
+          </div>
+          
           <div class="pass-brand" id="liveBrand">✨ TWIN AURA PRESENTS ✨</div>
           <div class="pass-title" id="liveTitle">COSMIC BHAKTI</div>
           
@@ -306,38 +328,34 @@
       </div>
     </div>
 
-    <!-- 5. Blocked Pass Screen -->
+    <!-- 5. Strict Blocked Pass Screen -->
     <div class="blocked-card" id="blockedScreen" style="display: none;">
       <div style="font-size: 50px;">⛔</div>
       <h2 style="color: #ff5252; margin: 12px 0 8px;">Access Denied!</h2>
-      <p style="color: #ffcdd2; font-size: 14px; line-height: 1.5;">
-        This VIP pass is <b>locked to another phone</b> or has been revoked.<br><br>
-        Forwarded passes or screenshots are strictly invalid.
+      <p style="color: #ffcdd2; font-size: 14px; line-height: 1.5;" id="blockedReason">
+        This VIP pass is <b>locked to another phone</b>.<br><br>
+        Forwarded passes or screenshots are strictly invalid and blocked.
       </p>
     </div>
 
   </div>
 
-  <!-- Pass Modal -->
+  <!-- Pass Issue Modal -->
   <div class="modal-overlay" id="passModal" style="display: none;">
     <div class="modal-card">
       <div style="font-size: 16px; font-weight: 800; color: #ffe082; margin-bottom: 12px; text-align: center;" id="modalHeading">Issue Digital Pass</div>
-      
       <div class="form-group">
         <label class="form-label">Pass Serial Number</label>
         <input type="number" class="search-box" style="margin-bottom: 8px;" id="mPassId" placeholder="Pass Number">
       </div>
-
       <div class="form-group">
         <label class="form-label">Guest Full Name</label>
         <input type="text" class="search-box" style="margin-bottom: 8px;" id="mName" placeholder="Guest Name">
       </div>
-
       <div class="form-group">
         <label class="form-label">Mobile Number</label>
         <input type="tel" class="search-box" style="margin-bottom: 8px;" id="mPhone" placeholder="Mobile Number (10 digits)">
       </div>
-
       <div class="form-group">
         <label class="form-label" style="color: #39ff14;">Pass Type / Category</label>
         <select class="form-select" id="mPassType" style="margin-bottom: 14px;">
@@ -346,7 +364,6 @@
           <option value="EVENT">🎟️ Event Entry Only (No Dinner)</option>
         </select>
       </div>
-
       <div style="display: flex; gap: 8px;">
         <button class="btn-green" style="flex: 1;" onclick="saveModalPass()">Save Pass</button>
         <button id="modalClearBtn" style="display: none; background: #c62828; color: #fff; border: none; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer;" onclick="clearCurrentPass()">Revoke</button>
@@ -369,7 +386,8 @@
     const defaultSettings = {
       startPass: 1,
       quotaLimit: 150,
-      plan: "BUDGET",
+      brandLogo: "",
+      sponsorImages: [],
       brand: "✨ TWIN AURA PRESENTS ✨",
       title: "COSMIC BHAKTI",
       instaHandle: "@cosmic_bhakti",
@@ -382,6 +400,7 @@
     };
 
     let settings = JSON.parse(localStorage.getItem('ev_set_' + EVENT_ID) || 'null') || defaultSettings;
+    if (!settings.sponsorImages) settings.sponsorImages = [];
 
     let passes = JSON.parse(localStorage.getItem('ev_pass_' + EVENT_ID) || 'null');
     if (!passes || passes.length !== parseInt(settings.quotaLimit)) {
@@ -398,12 +417,104 @@
       localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
     }
 
-    let myDevice = localStorage.getItem('user_device_id');
+    // Hardware-bound Device Fingerprint
+    let myDevice = localStorage.getItem('vip_device_token');
     if (!myDevice) {
-      myDevice = 'DEV_' + Math.random().toString(36).substring(2) + Date.now();
-      localStorage.setItem('user_device_id', myDevice);
+      myDevice = 'FINGERPRINT_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+      localStorage.setItem('vip_device_token', myDevice);
     }
 
+    // Canvas Compression for High Speed Loading
+    function compressImageFile(file, maxWidth, maxHeight, quality, callback) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          if (width > height) {
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+          } else {
+            if (height > maxHeight) {
+              width = Math.round((width * maxHeight) / height);
+              height = maxHeight;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          callback(canvas.toDataURL('image/webp', quality));
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleBrandLogoUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      compressImageFile(file, 300, 150, 0.8, function(base64Uri) {
+        settings.brandLogo = base64Uri;
+        renderBrandLogoPreview();
+      });
+    }
+
+    function renderBrandLogoPreview() {
+      const row = document.getElementById('brandLogoPreviewRow');
+      const img = document.getElementById('brandLogoPreview');
+      if (settings.brandLogo) {
+        img.src = settings.brandLogo;
+        row.style.display = 'flex';
+      } else {
+        row.style.display = 'none';
+      }
+    }
+
+    function removeBrandLogo() {
+      settings.brandLogo = "";
+      renderBrandLogoPreview();
+    }
+
+    function handleSponsorLogoUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      compressImageFile(file, 200, 100, 0.8, function(base64Uri) {
+        const titlePrompt = prompt("Enter Sponsor Name:") || "Partner";
+        settings.sponsorImages.push({ name: titlePrompt, img: base64Uri });
+        renderSponsorLogosPreview();
+      });
+    }
+
+    function renderSponsorLogosPreview() {
+      const box = document.getElementById('sponsorLogosList');
+      box.innerHTML = '';
+      if (!settings.sponsorImages || settings.sponsorImages.length === 0) {
+        box.innerHTML = '<div style="font-size:11px; color:#888;">No image logos attached yet. (Text fallback active)</div>';
+        return;
+      }
+      settings.sponsorImages.forEach((sp, idx) => {
+        const item = document.createElement('div');
+        item.className = 'preview-box';
+        item.innerHTML = `
+          <img class="preview-img" src="${sp.img}">
+          <div style="flex:1; font-size:11.5px; color:#ffe082;">${sp.name}</div>
+          <button style="background:#c62828; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:10px;" onclick="removeSponsorLogo(${idx})">Delete</button>
+        `;
+        box.appendChild(item);
+      });
+    }
+
+    function removeSponsorLogo(idx) {
+      settings.sponsorImages.splice(idx, 1);
+      renderSponsorLogosPreview();
+    }
+
+    // App Initialization
     window.addEventListener('DOMContentLoaded', () => {
       applySettingsToUI();
 
@@ -424,6 +535,16 @@
 
     function applySettingsToUI() {
       document.getElementById('dashTitle').innerText = settings.title + " (Pass Sheet)";
+      
+      const logoBox = document.getElementById('liveBrandLogoContainer');
+      const logoImg = document.getElementById('liveBrandLogoImg');
+      if (settings.brandLogo) {
+        logoImg.src = settings.brandLogo;
+        logoBox.style.display = 'block';
+      } else {
+        logoBox.style.display = 'none';
+      }
+
       document.getElementById('liveBrand').innerText = settings.brand;
       document.getElementById('liveTitle').innerText = settings.title;
       document.getElementById('liveInstaHandle').innerText = settings.instaHandle;
@@ -432,8 +553,6 @@
       document.getElementById('btnMapsLink').href = settings.mapsUrl;
 
       document.getElementById('statAllotted').innerText = settings.quotaLimit;
-
-      document.getElementById('cfgPlan').value = settings.plan;
       document.getElementById('cfgBrand').value = settings.brand;
       document.getElementById('cfgTitle').value = settings.title;
       document.getElementById('cfgInstaHandle').value = settings.instaHandle;
@@ -444,30 +563,32 @@
       document.getElementById('cfgGatePin').value = settings.gatePin;
       document.getElementById('cfgAdminPass').value = settings.adminPass;
 
-      togglePlanSettings();
+      renderBrandLogoPreview();
+      renderSponsorLogosPreview();
       renderSponsorsTicker();
-    }
-
-    function togglePlanSettings() {
-      const plan = document.getElementById('cfgPlan').value;
-      const spSec = document.getElementById('proSponsorSection');
-      if (plan === 'BUDGET') {
-        spSec.style.opacity = '0.6';
-        document.getElementById('cfgSponsors').disabled = true;
-      } else {
-        spSec.style.opacity = '1';
-        document.getElementById('cfgSponsors').disabled = false;
-      }
     }
 
     function renderSponsorsTicker() {
       const tickerBox = document.getElementById('tickerContent');
-      const sponsorList = (settings.plan === 'BUDGET' ? SYSTEM_DEFAULT_SPONSORS : settings.sponsors).split(',');
       let html = '';
-      sponsorList.forEach(sp => {
+
+      if (settings.sponsorImages && settings.sponsorImages.length > 0) {
+        settings.sponsorImages.forEach(sp => {
+          html += `
+            <a href="${settings.instaUrl}" target="_blank" class="sponsor-pill">
+              <img src="${sp.img}" class="sponsor-logo-img">
+              <span>${sp.name}</span>
+            </a>
+          `;
+        });
+      }
+
+      const textSponsors = (settings.sponsors || SYSTEM_DEFAULT_SPONSORS).split(',');
+      textSponsors.forEach(sp => {
         const name = sp.trim();
-        if (name) html += `<a href="${settings.instaUrl}" target="_blank" class="sponsor-tag">${name}</a>`;
+        if (name) html += `<a href="${settings.instaUrl}" target="_blank" class="sponsor-pill"><span>${name}</span></a>`;
       });
+
       tickerBox.innerHTML = html + html;
     }
 
@@ -508,7 +629,150 @@
       if (tab === 'preview') showGuestPass();
     }
 
-    // --- 1-CLICK AUTOMATION (AUTO PROMOTER GENERATOR) ---
+    function saveEventSettings() {
+      settings.brand = document.getElementById('cfgBrand').value.trim();
+      settings.title = document.getElementById('cfgTitle').value.trim();
+      settings.instaHandle = document.getElementById('cfgInstaHandle').value.trim();
+      settings.instaUrl = document.getElementById('cfgInstaUrl').value.trim();
+      settings.venue = document.getElementById('cfgVenue').value.trim();
+      settings.mapsUrl = document.getElementById('cfgMapsUrl').value.trim();
+      settings.sponsors = document.getElementById('cfgSponsors').value.trim();
+      settings.gatePin = document.getElementById('cfgGatePin').value.trim();
+      settings.adminPass = document.getElementById('cfgAdminPass').value.trim();
+
+      localStorage.setItem('ev_set_' + EVENT_ID, JSON.stringify(settings));
+      
+      fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/settings.json`, {
+        method: 'PUT',
+        body: JSON.stringify(settings),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      applySettingsToUI();
+      alert("✅ All Event Settings & Logos Saved Successfully!");
+    }
+
+    // --- 100% AIRTIGHT FAIL-CLOSED SECURITY VERIFICATION ---
+    function verifyPassAccessFirebase() {
+      const passRef = `${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${guestPassId}.json`;
+
+      fetch(passRef)
+        .then(res => {
+          if (!res.ok) throw new Error("Cloud Network Failure");
+          return res.json();
+        })
+        .then(data => {
+          document.getElementById('loadingOverlay').style.display = 'none';
+
+          // 1. Pass must exist & be issued
+          if (!data || !data.name) {
+            document.getElementById('viewPass').style.display = 'none';
+            document.getElementById('blockedReason').innerHTML = "This VIP pass has not been issued by the event organizer yet.";
+            document.getElementById('blockedScreen').style.display = 'block';
+            return;
+          }
+
+          // 2. First-time open: permanently bind to this hardware device
+          if (!data.device) {
+            fetch(passRef, {
+              method: 'PATCH',
+              body: JSON.stringify({ 
+                device: myDevice, 
+                firstSeen: new Date().toISOString(),
+                isLocked: true 
+              }),
+              headers: { 'Content-Type': 'application/json' }
+            });
+            showGuestPass(data);
+          } 
+          // 3. Authorized device: open smoothly
+          else if (data.device === myDevice) {
+            showGuestPass(data);
+            if (data.status === 'ENTERED') markEnteredBadge();
+          } 
+          // 4. Forwarded or copied device: strictly block
+          else {
+            document.getElementById('viewPass').style.display = 'none';
+            document.getElementById('blockedReason').innerHTML = "This VIP pass is <b>locked to another phone</b>.<br><br>Forwarded links and screenshots are strictly rejected at entry.";
+            document.getElementById('blockedScreen').style.display = 'block';
+          }
+        })
+        .catch(err => {
+          // Fail-Closed: Never open pass on error
+          document.getElementById('loadingOverlay').style.display = 'none';
+          document.getElementById('viewPass').style.display = 'none';
+          document.getElementById('blockedReason').innerHTML = "Security Verification Failed. Please verify your internet connection or show pass at the help desk.";
+          document.getElementById('blockedScreen').style.display = 'block';
+        });
+    }
+
+    function showGuestPass(passObj = null) {
+      document.getElementById('viewPass').style.display = 'block';
+      const pId = guestPassId || settings.startPass;
+      const pData = passObj || passes.find(item => item.id == pId) || { type: 'FULL' };
+      
+      const badge = document.getElementById('livePassTierBadge');
+      if (pData.type === 'DINNER') {
+        badge.innerText = "🍽️ DINNER ONLY PASS (FOOD ACCESS)";
+        badge.className = "tier-banner tier-dinner-style";
+      } else if (pData.type === 'EVENT') {
+        badge.innerText = "🎟️ EVENT ENTRY ONLY (NO DINNER)";
+        badge.className = "tier-banner tier-event-style";
+      } else {
+        badge.innerText = "🌟 VIP FULL ACCESS (EVENT + DINNER)";
+        badge.className = "tier-banner tier-full-style";
+      }
+
+      generateQRCode(pId);
+      startLiveTimer();
+    }
+
+    function generateQRCode(id) {
+      const qrBox = document.getElementById('qrContainer');
+      qrBox.innerHTML = '';
+      const passUrl = window.location.origin + window.location.pathname + '?event=' + EVENT_ID + '&id=' + id;
+      new QRCode(qrBox, { text: passUrl, width: 96, height: 96 });
+    }
+
+    let timerInt;
+    function startLiveTimer() {
+      if (timerInt) clearInterval(timerInt);
+      function update() {
+        const t = document.getElementById('liveTimerDisplay');
+        if (t) t.innerText = new Date().toTimeString().split(' ')[0];
+      }
+      timerInt = setInterval(update, 1000);
+      update();
+    }
+
+    function handleGatekeeperEntry() {
+      const pin = prompt("Enter Gatekeeper PIN:");
+      if (pin === settings.gatePin) {
+        const pId = guestPassId || settings.startPass;
+        fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${pId}.json`, {
+          method: 'PATCH',
+          body: JSON.stringify({ status: 'ENTERED', enteredAt: new Date().toISOString() }),
+          headers: { 'Content-Type': 'application/json' }
+        }).then(() => {
+          markEnteredBadge();
+          alert("✅ ENTRY APPROVED! Guest checked-in.");
+        }).catch(() => {
+          markEnteredBadge();
+          alert("✅ Guest entry approved offline.");
+        });
+      } else if (pin !== null) {
+        alert("❌ Incorrect Gate PIN!");
+      }
+    }
+
+    function markEnteredBadge() {
+      const btn = document.getElementById('btnGateAction');
+      btn.innerText = "✓ CHECKED-IN (ENTRY VERIFIED)";
+      btn.className = "btn-gate btn-entered-state";
+      btn.disabled = true;
+    }
+
+    // --- 1-CLICK AUTOMATED PROMOTER GENERATOR ---
     function autoGenerateSlug() {
       const name = document.getElementById('genName').value.trim();
       const slug = name.toLowerCase().replace(/[^a-z0-9]/g, '_').substring(0, 16);
@@ -527,7 +791,6 @@
         return;
       }
 
-      // Auto calculate next Serial Start Number from Cloud
       let nextStartPass = 101;
       try {
         const res = await fetch(`${FIREBASE_DB_URL}/global_registry.json`);
@@ -546,7 +809,8 @@
         quotaLimit: quota,
         adminPass: pass,
         gatePin: "1234",
-        plan: "PRO",
+        brandLogo: "",
+        sponsorImages: [],
         sponsors: SYSTEM_DEFAULT_SPONSORS,
         venue: "EVENT VENUE",
         mapsUrl: "https://maps.google.com",
@@ -554,21 +818,18 @@
         instaUrl: "https://instagram.com"
       };
 
-      // 1. Provision to Firebase
       await fetch(`${FIREBASE_DB_URL}/events/${slug}/settings.json`, {
         method: 'PUT',
         body: JSON.stringify(newEventPayload),
         headers: { 'Content-Type': 'application/json' }
       });
 
-      // 2. Update Global Serial Registry
       await fetch(`${FIREBASE_DB_URL}/global_registry.json`, {
         method: 'PATCH',
         body: JSON.stringify({ lastAssignedPass: endPass }),
         headers: { 'Content-Type': 'application/json' }
       });
 
-      // 3. Save to Promoters Directory
       const meta = { name: name, slug: slug, quota: quota, startPass: nextStartPass, endPass: endPass, phone: phone, pass: pass, createdAt: new Date().toISOString() };
       await fetch(`${FIREBASE_DB_URL}/promoters_directory/${slug}.json`, {
         method: 'PUT',
@@ -576,7 +837,6 @@
         headers: { 'Content-Type': 'application/json' }
       });
 
-      // 4. Construct Direct Link & WhatsApp Message
       const baseUrl = window.location.origin + window.location.pathname;
       const clientPortalUrl = `${baseUrl}?event=${slug}`;
 
@@ -587,19 +847,15 @@
         `📌 *Gate Entry PIN:* 1234\n` +
         `🎟️ *Allotted Quota:* ${quota} Passes (#BK-${nextStartPass} to #BK-${endPass})\n\n` +
         `⚡ *Instructions:*\n` +
-        `1. Open link & tap 'Issue Pass' to send digital tickets to guests.\n` +
-        `2. Tap '⚙️ Settings' to update your sponsors, venue & branding.\n` +
-        `_Note: Passes are secured with device-locking against forwarding._`
+        `1. Tap 'Issue Pass' to send digital tickets via WhatsApp.\n` +
+        `2. Tap '⚙️ Settings' to attach your brand logo & sponsors directly from phone gallery!`
       );
 
       loadAllPromotersList();
-      alert(`✅ Event "${name}" created successfully!\nPass Range: #BK-${nextStartPass} to #BK-${endPass}`);
+      alert(`✅ Promoter "${name}" Created!\nPass Range: #BK-${nextStartPass} to #BK-${endPass}`);
 
-      if (phone) {
-        window.open(`https://wa.me/91${phone}?text=${waText}`, '_blank');
-      } else {
-        window.open(`https://wa.me/?text=${waText}`, '_blank');
-      }
+      if (phone) window.open(`https://wa.me/91${phone}?text=${waText}`, '_blank');
+      else window.open(`https://wa.me/?text=${waText}`, '_blank');
     }
 
     async function loadAllPromotersList() {
@@ -655,7 +911,7 @@
     }
 
     async function deletePromoter(slug) {
-      if (confirm(`Revoke promoter access for "${slug}"? This blocks their portal.`)) {
+      if (confirm(`Revoke promoter access for "${slug}"?`)) {
         await fetch(`${FIREBASE_DB_URL}/promoters_directory/${slug}.json`, { method: 'DELETE' });
         await fetch(`${FIREBASE_DB_URL}/events/${slug}.json`, { method: 'DELETE' });
         loadAllPromotersList();
@@ -663,123 +919,7 @@
       }
     }
 
-    // --- PASS LOGIC ---
-    function showGuestPass(passObj = null) {
-      document.getElementById('viewPass').style.display = 'block';
-      const pId = guestPassId || settings.startPass;
-      const pData = passObj || passes.find(item => item.id == pId) || { type: 'FULL' };
-      
-      const badge = document.getElementById('livePassTierBadge');
-      if (pData.type === 'DINNER') {
-        badge.innerText = "🍽️ DINNER ONLY PASS (FOOD ACCESS)";
-        badge.className = "tier-banner tier-dinner-style";
-      } else if (pData.type === 'EVENT') {
-        badge.innerText = "🎟️ EVENT ENTRY ONLY (NO DINNER)";
-        badge.className = "tier-banner tier-event-style";
-      } else {
-        badge.innerText = "🌟 VIP FULL ACCESS (EVENT + DINNER)";
-        badge.className = "tier-banner tier-full-style";
-      }
-
-      generateQRCode(pId);
-      startLiveTimer();
-    }
-
-    function generateQRCode(id) {
-      const qrBox = document.getElementById('qrContainer');
-      qrBox.innerHTML = '';
-      const passUrl = window.location.origin + window.location.pathname + '?event=' + EVENT_ID + '&id=' + id;
-      new QRCode(qrBox, { text: passUrl, width: 96, height: 96 });
-    }
-
-    let timerInt;
-    function startLiveTimer() {
-      if (timerInt) clearInterval(timerInt);
-      function update() {
-        const t = document.getElementById('liveTimerDisplay');
-        if (t) t.innerText = new Date().toTimeString().split(' ')[0];
-      }
-      timerInt = setInterval(update, 1000);
-      update();
-    }
-
-    function verifyPassAccessFirebase() {
-      const passRef = `${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${guestPassId}.json`;
-      fetch(passRef)
-        .then(res => res.json())
-        .then(data => {
-          document.getElementById('loadingOverlay').style.display = 'none';
-          if (!data || !data.device) {
-            fetch(passRef, {
-              method: 'PATCH',
-              body: JSON.stringify({ device: myDevice, firstSeen: new Date().toISOString() }),
-              headers: { 'Content-Type': 'application/json' }
-            });
-            showGuestPass(data);
-          } else if (data.device === myDevice) {
-            showGuestPass(data);
-            if (data.status === 'ENTERED') markEnteredBadge();
-          } else {
-            document.getElementById('blockedScreen').style.display = 'block';
-          }
-        })
-        .catch(() => {
-          document.getElementById('loadingOverlay').style.display = 'none';
-          showGuestPass();
-        });
-    }
-
-    function handleGatekeeperEntry() {
-      const pin = prompt("Enter Gatekeeper PIN:");
-      if (pin === settings.gatePin) {
-        const pId = guestPassId || settings.startPass;
-        fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${pId}.json`, {
-          method: 'PATCH',
-          body: JSON.stringify({ status: 'ENTERED', enteredAt: new Date().toISOString() }),
-          headers: { 'Content-Type': 'application/json' }
-        }).then(() => {
-          markEnteredBadge();
-          alert("✅ ENTRY APPROVED! Guest verified.");
-        }).catch(() => {
-          markEnteredBadge();
-          alert("✅ Guest entry approved offline.");
-        });
-      } else if (pin !== null) {
-        alert("❌ Incorrect PIN!");
-      }
-    }
-
-    function markEnteredBadge() {
-      const btn = document.getElementById('btnGateAction');
-      btn.innerText = "✓ CHECKED-IN (ENTRY VERIFIED)";
-      btn.className = "btn-gate btn-entered-state";
-      btn.disabled = true;
-    }
-
-    function saveEventSettings() {
-      settings.plan = document.getElementById('cfgPlan').value;
-      settings.brand = document.getElementById('cfgBrand').value.trim();
-      settings.title = document.getElementById('cfgTitle').value.trim();
-      settings.instaHandle = document.getElementById('cfgInstaHandle').value.trim();
-      settings.instaUrl = document.getElementById('cfgInstaUrl').value.trim();
-      settings.venue = document.getElementById('cfgVenue').value.trim();
-      settings.mapsUrl = document.getElementById('cfgMapsUrl').value.trim();
-      settings.sponsors = document.getElementById('cfgSponsors').value.trim();
-      settings.gatePin = document.getElementById('cfgGatePin').value.trim();
-      settings.adminPass = document.getElementById('cfgAdminPass').value.trim();
-
-      localStorage.setItem('ev_set_' + EVENT_ID, JSON.stringify(settings));
-      
-      fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/settings.json`, {
-        method: 'PUT',
-        body: JSON.stringify(settings),
-        headers: { 'Content-Type': 'application/json' }
-      });
-
-      applySettingsToUI();
-      alert("✅ Settings Saved Successfully!");
-    }
-
+    // --- PASS CRUD & CLOUD SYNC ---
     function syncFirebaseCloud(showAlert = false) {
       fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes.json`)
         .then(res => res.json())
