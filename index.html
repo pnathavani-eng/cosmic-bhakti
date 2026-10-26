@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VIP Digital Pass & Event Platform</title>
-  <!-- High Speed Dynamic QR Code Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
@@ -22,6 +21,7 @@
     .stat-num { font-size: 18px; font-weight: 900; color: #ffe082; }
     .stat-label { font-size: 9px; color: #a1887f; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
     .stat-green { color: #39ff14; }
+    .stat-orange { color: #ff9100; }
 
     /* Panels & Cards */
     .panel-card { background: #130b06; border-radius: 20px; padding: 16px; border: 1px solid rgba(255,180,0,0.2); width: 100%; }
@@ -41,6 +41,10 @@
     .form-input { width: 100%; padding: 10px 12px; background: #22140b; border: 1px solid rgba(255,180,0,0.4); border-radius: 10px; color: #fff; font-size: 13px; outline: none; }
     .form-select { width: 100%; padding: 10px 12px; background: #22140b; border: 1px solid #ffb300; border-radius: 10px; color: #ffe082; font-size: 13px; font-weight: 700; outline: none; }
 
+    /* Super Admin Box */
+    .super-admin-box { background: rgba(255,82,82,0.08); border: 1.5px solid #ff5252; border-radius: 14px; padding: 14px; margin-bottom: 14px; }
+    .super-title { font-size: 12px; font-weight: 900; color: #ff5252; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
+
     /* Pass List Items */
     .pass-item { background: #1c1008; border: 1px solid rgba(255,180,0,0.15); border-radius: 14px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
     .pass-info { flex: 1; }
@@ -59,25 +63,19 @@
     @keyframes glow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     .pass-card { background: #130b06; border-radius: 24px; padding: 20px 18px; text-align: center; border: 1px solid rgba(255,180,0,0.2); }
     
-    /* મોટો પ્રેઝન્ટર લોગો / ટાઇટલ */
     .pass-brand { font-size: 13px; font-weight: 800; color: #ffe082; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3px; text-shadow: 0 0 8px rgba(255,224,130,0.4); }
     .pass-title { font-size: 26px; font-weight: 900; background: linear-gradient(to right, #ffe082, #ffb300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
-    /* Instagram Follow Button */
     .insta-btn { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; text-decoration: none; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; margin: 6px 0 10px; box-shadow: 0 2px 10px rgba(220,39,67,0.3); }
-
     .venue-badge { display: inline-block; background: rgba(255,179,0,0.12); color: #ffb300; border: 1px solid rgba(255,179,0,0.3); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 10px; }
     .guest-box { background: rgba(255,140,0,0.06); border-radius: 14px; padding: 10px; margin-bottom: 10px; border: 1px solid rgba(255,179,0,0.25); }
     
-    /* કોમ્પેક્ટ સ્લિમ લાઈવ ટાઈમર */
     .clock-box { background: #000; border-radius: 12px; padding: 6px 12px; border: 1.5px solid #39ff14; margin-bottom: 10px; box-shadow: 0 0 10px rgba(57,255,20,0.2); display: flex; justify-content: space-between; align-items: center; }
     .clock-label { font-size: 9px; color: #39ff14; font-weight: 700; letter-spacing: 0.5px; }
     .clock-time { font-size: 20px; font-weight: 900; color: #39ff14; font-family: monospace; }
     
-    /* QR Code */
     .qr-container { display: flex; justify-content: center; align-items: center; background: #fff; padding: 8px; border-radius: 12px; width: 112px; height: 112px; margin: 0 auto 10px; }
     
-    /* મોટા સ્પોન્સર્સ લોગો ટિકર */
     .ticker-header { font-size: 11px; color: #ffe082; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin: 10px 0 6px; }
     .ticker-wrap { width: 100%; overflow: hidden; background: #1a0e07; border: 1.5px solid rgba(255,180,0,0.35); border-radius: 14px; padding: 10px 0; margin-bottom: 12px; }
     .ticker-move { display: flex; gap: 16px; width: max-content; animation: scrollTicker 14s linear infinite; }
@@ -89,7 +87,6 @@
     .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 12px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; width: 100%; cursor: pointer; }
     .btn-entered-state { background: #424242 !important; color: #9e9e9e !important; cursor: not-allowed; }
 
-    /* Blocked Pass Screen */
     .blocked-card { background: #1c0808; border: 2px solid #ff5252; border-radius: 24px; padding: 34px 20px; text-align: center; width: 100%; box-shadow: 0 0 30px rgba(255,82,82,0.4); }
 
     /* Modal Overlay */
@@ -99,7 +96,6 @@
 </head>
 <body>
 
-  <!-- Top Navigation Tabs (Hidden for Guests) -->
   <div class="top-nav" id="adminNavBar">
     <button class="tab-btn active" id="tabSheetBtn" onclick="switchTab('sheet')">Pass Manager</button>
     <button class="tab-btn" id="tabSettingsBtn" onclick="switchTab('settings')">⚙️ Settings</button>
@@ -108,7 +104,6 @@
 
   <div class="container">
     
-    <!-- Loading Screen for Guests -->
     <div id="loadingOverlay" style="display: none; text-align: center; padding: 50px 0;">
       <div style="font-size: 36px; margin-bottom: 10px;">⏳</div>
       <div style="color: #ffe082; font-size: 15px; font-weight: 700;">Verifying VIP Pass Security...</div>
@@ -120,8 +115,8 @@
       
       <div class="stats-bar">
         <div class="stat-card">
-          <div class="stat-num" id="statTotal">10,000</div>
-          <div class="stat-label">Capacity</div>
+          <div class="stat-num stat-orange" id="statAllotted">500</div>
+          <div class="stat-label">Allotted Quota</div>
         </div>
         <div class="stat-card">
           <div class="stat-num" id="statIssued">0</div>
@@ -134,8 +129,8 @@
       </div>
 
       <div class="action-row">
-        <button class="btn-green" style="flex: 1;" onclick="openPassModal()">➕ Issue Pass</button>
-        <button class="btn-sync" onclick="syncFirebaseCloud(true)">🔄 Sync Cloud</button>
+        <button class="btn-green" style="flex: 1;" id="btnIssuePass" onclick="openPassModal()">➕ Issue Pass</button>
+        <button class="btn-sync" onclick="syncFirebaseCloud(true)">🔄 Sync</button>
         <button class="btn-blue" onclick="exportCSVReport()">📥 Export</button>
       </div>
       
@@ -143,28 +138,47 @@
       
       <div id="passListContainer"></div>
       
-      <!-- Pagination Controls for 10,000 Passes -->
       <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-size:13px; color:#ffb74d;">
         <button style="background:#26170d; border:1px solid #ffb300; color:#ffe082; padding:6px 14px; border-radius:8px; font-weight:700;" id="btnPrevPage" onclick="prevPage()">◀ Previous</button>
-        <span id="pageTracker">Page 1 / 500</span>
+        <span id="pageTracker">Page 1 / 25</span>
         <button style="background:#26170d; border:1px solid #ffb300; color:#ffe082; padding:6px 14px; border-radius:8px; font-weight:700;" id="btnNextPage" onclick="nextPage()">Next ▶</button>
       </div>
     </div>
 
-    <!-- 2. Settings View (No-Code Admin Panel) -->
+    <!-- 2. Settings View -->
     <div id="viewSettings" class="panel-card" style="display: none;">
-      <div class="panel-title">⚙️ Event & Monetization Settings</div>
+      <div class="panel-title">⚙️ Event & Quota Settings</div>
       
+      <!-- SUPER ADMIN MASTER QUOTA CONTROL (LOCKED FOR CLIENTS) -->
+      <div class="super-admin-box">
+        <div class="super-title">
+          <span>👑 Super Admin Master Quota</span>
+          <span style="font-size: 10px; color: #ffb74d; cursor: pointer;" onclick="unlockSuperAdmin()">🔓 Unlock</span>
+        </div>
+        
+        <div style="display: flex; gap: 8px;">
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label" style="color: #ff8a80;">Start Pass #</label>
+            <input type="number" class="form-input" id="cfgStartPass" value="101" disabled>
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label" style="color: #ff8a80;">Allotted Quota</label>
+            <input type="number" class="form-input" id="cfgQuotaLimit" value="500" disabled>
+          </div>
+        </div>
+        <div style="font-size: 10px; color: #cfd8dc;">Calculated Range: <b id="rangePreview" style="color:#ffe082;">#BK-101 to #BK-600</b></div>
+      </div>
+
       <div class="form-group">
-        <label class="form-label">Client Monetization Plan</label>
+        <label class="form-label">Client Plan</label>
         <select class="form-select" id="cfgPlan" onchange="togglePlanSettings()">
-          <option value="BUDGET">Budget Plan (System Default Sponsors Locked)</option>
+          <option value="BUDGET">Budget Plan (System Sponsors Locked)</option>
           <option value="PRO">Pro White-Label (Custom Client Sponsors)</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label class="form-label">Event Presenter / Brand Title</label>
+        <label class="form-label">Presenter / Brand Title</label>
         <input type="text" class="form-input" id="cfgBrand" value="✨ TWIN AURA PRESENTS ✨">
       </div>
 
@@ -174,7 +188,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">Organizer Instagram Handle (e.g. @cosmic_bhakti)</label>
+        <label class="form-label">Organizer Instagram Handle</label>
         <input type="text" class="form-input" id="cfgInstaHandle" value="@cosmic_bhakti">
       </div>
 
@@ -196,7 +210,6 @@
       <div id="proSponsorSection" style="background: rgba(255,180,0,0.05); border: 1px dashed #ffb300; padding: 12px; border-radius: 12px; margin-bottom: 12px;">
         <label class="form-label" style="color: #39ff14;">👑 Pro Sponsors (Comma Separated)</label>
         <input type="text" class="form-input" id="cfgSponsors" value="👑 Maruti Buildcon, 💍 Royal Jewellers, 🍟 Fiesta Foods, 📻 92.7 Big FM, 🚗 Apex Motors">
-        <div style="font-size: 10px; color: #a1887f; margin-top: 4px;">Separate sponsors with commas. They will automatically scroll on the pass.</div>
       </div>
 
       <div class="form-group">
@@ -205,12 +218,12 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">Admin Security Password</label>
+        <label class="form-label">Client Admin Password</label>
         <input type="password" class="form-input" id="cfgAdminPass" value="admin123">
       </div>
 
       <div class="form-group">
-        <label class="form-label">Admin Expiry Date (Auto-Lock Rights)</label>
+        <label class="form-label">Admin Expiry Date</label>
         <input type="date" class="form-input" id="cfgAdminExpiry" value="2026-11-05">
       </div>
 
@@ -218,14 +231,13 @@
 
       <hr style="border: 0; border-top: 1px dashed rgba(255,255,255,0.2); margin: 18px 0;">
 
-      <button class="btn-danger" style="width: 100%;" onclick="wipeAndResetEvent()">🗑️ Clean Slate & Start New Event</button>
+      <button class="btn-danger" style="width: 100%;" onclick="wipeAndResetEvent()">🗑️ Clean Slate Event</button>
     </div>
 
     <!-- 3. VIP Live Digital Pass View -->
     <div id="viewPass" style="display: none;">
       <div class="pass-outer">
         <div class="pass-card">
-          
           <div class="pass-brand" id="liveBrand">✨ TWIN AURA PRESENTS ✨</div>
           <div class="pass-title" id="liveTitle">COSMIC BHAKTI</div>
           
@@ -271,7 +283,7 @@
 
   </div>
 
-  <!-- Pass Modal -->
+  <!-- Pass Issue Modal -->
   <div class="modal-overlay" id="passModal" style="display: none;">
     <div class="modal-card">
       <div style="font-size: 16px; font-weight: 800; color: #ffe082; margin-bottom: 12px; text-align: center;" id="modalHeading">Issue VIP Pass</div>
@@ -287,10 +299,9 @@
   </div>
 
   <script>
-    // Live Firebase Realtime Database
     const FIREBASE_DB_URL = "https://vip-pass-system-default-rtdb.firebaseio.com";
+    const MASTER_SUPER_KEY = "super999"; // તમારો ગુપ્ત માસ્ટર પિન
     
-    // Multi-Event Identification via URL slug (?event=morbi)
     const urlParams = new URLSearchParams(window.location.search);
     const EVENT_ID = urlParams.get('event') || 'default_event';
     const guestPassId = urlParams.get('id');
@@ -298,11 +309,9 @@
 
     const SYSTEM_DEFAULT_SPONSORS = "👑 Maruti Buildcon, 💍 Royal Jewellers, 🍟 Fiesta Foods, 📻 92.7 Big FM, 🚗 Apex Motors";
 
-    // 10,000 Passes Capacity Structure
-    const TOTAL_CAPACITY = 10000;
-    const START_PASS_ID = 101;
-
     const defaultSettings = {
+      startPass: 101,
+      quotaLimit: 500, // ફાળવેલ મર્યાદા (૫૦૦)
       plan: "BUDGET",
       brand: "✨ TWIN AURA PRESENTS ✨",
       title: "COSMIC BHAKTI",
@@ -318,25 +327,28 @@
 
     let settings = JSON.parse(localStorage.getItem('ev_set_' + EVENT_ID) || 'null') || defaultSettings;
 
-    // Load Local Pass Registry
+    // Load Passes strictly matching allotted range
     let passes = JSON.parse(localStorage.getItem('ev_pass_' + EVENT_ID) || 'null');
-    if (!passes || passes.length < 500) {
+    if (!passes || passes.length !== settings.quotaLimit) {
+      initPassesArray();
+    }
+
+    function initPassesArray() {
       passes = [];
-      // Initialize First Batch of 1,000 for lightning speed, auto-expands up to 10,000
-      for (let i = START_PASS_ID; i < START_PASS_ID + 1000; i++) {
+      const s = parseInt(settings.startPass) || 101;
+      const q = parseInt(settings.quotaLimit) || 500;
+      for (let i = s; i < s + q; i++) {
         passes.push({ id: i, name: '', phone: '', status: 'AVAILABLE' });
       }
       localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
     }
 
-    // Device Fingerprint
     let myDevice = localStorage.getItem('user_device_id');
     if (!myDevice) {
       myDevice = 'DEV_' + Math.random().toString(36).substring(2) + Date.now();
       localStorage.setItem('user_device_id', myDevice);
     }
 
-    // App Initialization
     window.addEventListener('DOMContentLoaded', () => {
       applySettingsToUI();
 
@@ -359,18 +371,25 @@
     function checkAdminExpiry() {
       const today = new Date().toISOString().split('T')[0];
       if (settings.adminExpiry && today > settings.adminExpiry) {
-        document.body.innerHTML = '<div style="text-align:center; padding:50px 20px; color:#ff5252;"><h2>🔒 Admin Rights Expired</h2><p style="margin-top:10px;">The administration access period for this event has concluded.</p></div>';
+        document.body.innerHTML = '<div style="text-align:center; padding:50px 20px; color:#ff5252;"><h2>🔒 Admin Rights Expired</h2><p style="margin-top:10px;">The administration access period has concluded.</p></div>';
       }
     }
 
     function applySettingsToUI() {
-      document.getElementById('dashTitle').innerText = settings.title + " (Pass Sheet)";
+      document.getElementById('dashTitle').innerText = settings.title + " (Quota: " + settings.quotaLimit + ")";
       document.getElementById('liveBrand').innerText = settings.brand;
       document.getElementById('liveTitle').innerText = settings.title;
       document.getElementById('liveInstaHandle').innerText = settings.instaHandle;
       document.getElementById('liveInstaLink').href = settings.instaUrl;
       document.getElementById('liveVenue').innerText = "📍 " + settings.venue;
       document.getElementById('btnMapsLink').href = settings.mapsUrl;
+
+      document.getElementById('cfgStartPass').value = settings.startPass;
+      document.getElementById('cfgQuotaLimit').value = settings.quotaLimit;
+      const endPass = parseInt(settings.startPass) + parseInt(settings.quotaLimit) - 1;
+      document.getElementById('rangePreview').innerText = `#BK-${settings.startPass} to #BK-${endPass}`;
+
+      document.getElementById('statAllotted').innerText = settings.quotaLimit;
 
       document.getElementById('cfgPlan').value = settings.plan;
       document.getElementById('cfgBrand').value = settings.brand;
@@ -386,6 +405,17 @@
 
       togglePlanSettings();
       renderSponsorsTicker();
+    }
+
+    function unlockSuperAdmin() {
+      const k = prompt("Enter Super Admin Master Key to change quota:");
+      if (k === MASTER_SUPER_KEY) {
+        document.getElementById('cfgStartPass').disabled = false;
+        document.getElementById('cfgQuotaLimit').disabled = false;
+        alert("🔓 Super Admin Unlocked! You can now adjust Start Pass & Quota Limit.");
+      } else if (k !== null) {
+        alert("❌ Incorrect Super Admin Key!");
+      }
     }
 
     function togglePlanSettings() {
@@ -416,7 +446,7 @@
         const enteredPass = sessionStorage.getItem('admin_auth_' + EVENT_ID);
         if (!enteredPass) {
           const passPrompt = prompt("Enter Admin Password:");
-          if (passPrompt !== settings.adminPass) {
+          if (passPrompt !== settings.adminPass && passPrompt !== MASTER_SUPER_KEY) {
             alert("❌ Incorrect Admin Password!");
             return;
           }
@@ -432,14 +462,12 @@
       document.getElementById('tabSettingsBtn').className = 'tab-btn ' + (tab === 'settings' ? 'active' : '');
       document.getElementById('tabPreviewBtn').className = 'tab-btn ' + (tab === 'preview' ? 'active' : '');
 
-      if (tab === 'preview') {
-        showGuestPass();
-      }
+      if (tab === 'preview') showGuestPass();
     }
 
     function showGuestPass() {
       document.getElementById('viewPass').style.display = 'block';
-      generateQRCode(guestPassId || '101');
+      generateQRCode(guestPassId || settings.startPass);
       startLiveTimer();
     }
 
@@ -461,17 +489,13 @@
       update();
     }
 
-    // Firebase High-Concurrency Pass Verification & Device Locking
     function verifyPassAccessFirebase() {
       const passRef = `${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${guestPassId}.json`;
-
       fetch(passRef)
         .then(res => res.json())
         .then(data => {
           document.getElementById('loadingOverlay').style.display = 'none';
-
           if (!data || !data.device) {
-            // First time opened on this phone -> Lock to this device
             fetch(passRef, {
               method: 'PATCH',
               body: JSON.stringify({ device: myDevice, firstSeen: new Date().toISOString() }),
@@ -479,36 +503,30 @@
             });
             showGuestPass();
           } else if (data.device === myDevice) {
-            // Authorized device
             showGuestPass();
             if (data.status === 'ENTERED') markEnteredBadge();
           } else {
-            // Forwarded or unauthorized device!
             document.getElementById('blockedScreen').style.display = 'block';
           }
         })
         .catch(() => {
-          // Graceful fallback
           document.getElementById('loadingOverlay').style.display = 'none';
           showGuestPass();
         });
     }
 
-    // Gate Entry PIN Verification with Firebase
     function handleGatekeeperEntry() {
       const pin = prompt("Enter Gatekeeper PIN:");
       if (pin === settings.gatePin) {
-        const pId = guestPassId || '101';
+        const pId = guestPassId || settings.startPass;
         fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${pId}.json`, {
           method: 'PATCH',
           body: JSON.stringify({ status: 'ENTERED', enteredAt: new Date().toISOString() }),
           headers: { 'Content-Type': 'application/json' }
-        })
-        .then(() => {
+        }).then(() => {
           markEnteredBadge();
           alert("✅ ENTRY APPROVED! Guest verified.");
-        })
-        .catch(() => {
+        }).catch(() => {
           markEnteredBadge();
           alert("✅ Guest entry approved offline.");
         });
@@ -524,8 +542,15 @@
       btn.disabled = true;
     }
 
-    // Settings Operations
     function saveEventSettings() {
+      const oldStart = settings.startPass;
+      const oldQuota = settings.quotaLimit;
+
+      const newStart = parseInt(document.getElementById('cfgStartPass').value);
+      const newQuota = parseInt(document.getElementById('cfgQuotaLimit').value);
+
+      settings.startPass = newStart;
+      settings.quotaLimit = newQuota;
       settings.plan = document.getElementById('cfgPlan').value;
       settings.brand = document.getElementById('cfgBrand').value.trim();
       settings.title = document.getElementById('cfgTitle').value.trim();
@@ -538,9 +563,13 @@
       settings.adminPass = document.getElementById('cfgAdminPass').value.trim();
       settings.adminExpiry = document.getElementById('cfgAdminExpiry').value;
 
+      // Re-init array if Super Admin changed Start or Quota
+      if (oldStart !== newStart || oldQuota !== newQuota) {
+        initPassesArray();
+      }
+
       localStorage.setItem('ev_set_' + EVENT_ID, JSON.stringify(settings));
       
-      // Save settings to Firebase Cloud
       fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/settings.json`, {
         method: 'PUT',
         body: JSON.stringify(settings),
@@ -548,15 +577,13 @@
       });
 
       applySettingsToUI();
-      alert("✅ All Event Settings Saved Successfully to Firebase Cloud!");
+      renderPassList();
+      alert("✅ All Event Settings Saved Successfully!");
     }
 
     function wipeAndResetEvent() {
       if (confirm("⚠️ CAUTION: Clean slate this event? This resets all passes.")) {
-        passes = [];
-        for (let i = START_PASS_ID; i < START_PASS_ID + 1000; i++) passes.push({ id: i, name: '', phone: '', status: 'AVAILABLE' });
-        localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
-        
+        initPassesArray();
         fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes.json`, { method: 'DELETE' });
         renderPassList();
         alert("✅ Event wiped cleanly!");
@@ -564,7 +591,6 @@
       }
     }
 
-    // Realtime Cloud Sync
     function syncFirebaseCloud(showAlert = false) {
       fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes.json`)
         .then(res => res.json())
@@ -573,16 +599,12 @@
             Object.keys(cloudPasses).forEach(id => {
               const cp = cloudPasses[id];
               let p = passes.find(item => item.id == id);
-              if (!p) {
-                p = { id: parseInt(id), name: cp.name || '', phone: cp.phone || '', status: cp.status || 'AVAILABLE' };
-                passes.push(p);
-              } else {
+              if (p) {
                 if (cp.status) p.status = cp.status;
                 if (cp.name) p.name = cp.name;
                 if (cp.phone) p.phone = cp.phone;
               }
             });
-            passes.sort((a,b) => a.id - b.id);
             localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
             handleSearch();
           }
@@ -591,7 +613,6 @@
         .catch(() => { if (showAlert) alert('Synced with offline cache.'); });
     }
 
-    // Pagination & Search
     let currentPage = 1;
     const perPage = 20;
     let filteredList = [...passes];
@@ -633,8 +654,19 @@
       document.getElementById('btnPrevPage').disabled = currentPage === 1;
       document.getElementById('btnNextPage').disabled = currentPage >= totalPages;
 
-      document.getElementById('statIssued').innerText = passes.filter(p => p.name).length;
+      const issuedCount = passes.filter(p => p.name).length;
+      document.getElementById('statIssued').innerText = issuedCount;
       document.getElementById('statEntered').innerText = passes.filter(p => p.status === 'ENTERED').length;
+
+      // Auto-Cap Warning & Lock
+      const issueBtn = document.getElementById('btnIssuePass');
+      if (issuedCount >= settings.quotaLimit) {
+        issueBtn.innerText = "⛔ Quota Full (Limit Hit)";
+        issueBtn.style.background = "#555";
+      } else {
+        issueBtn.innerText = "➕ Issue Pass";
+        issueBtn.style.background = "#2e7d32";
+      }
     }
 
     function prevPage() { if (currentPage > 1) { currentPage--; renderPassList(); } }
@@ -647,11 +679,16 @@
       renderPassList();
     }
 
-    // Modal Operations
     function openPassModal() {
+      const issuedCount = passes.filter(p => p.name).length;
+      if (issuedCount >= settings.quotaLimit) {
+        alert("⚠️ તમારી ફાળવેલ ક્વોટા મર્યાદા (" + settings.quotaLimit + " પાસ) પૂરી થઈ ગઈ છે!\n\nવધુ પાસ ઇશ્યૂ કરવા માટે મુખ્ય સુપર એડમિનનો સંપર્ક કરો.");
+        return;
+      }
+
       const free = passes.find(p => !p.name);
       document.getElementById('modalHeading').innerText = 'Issue VIP Pass';
-      document.getElementById('mPassId').value = free ? free.id : START_PASS_ID;
+      document.getElementById('mPassId').value = free ? free.id : settings.startPass;
       document.getElementById('mPassId').disabled = false;
       document.getElementById('mName').value = '';
       document.getElementById('mPhone').value = '';
@@ -677,30 +714,29 @@
       const id = parseInt(document.getElementById('mPassId').value);
       const name = document.getElementById('mName').value.trim();
       const phone = document.getElementById('mPhone').value.trim();
+      const endPass = parseInt(settings.startPass) + parseInt(settings.quotaLimit) - 1;
+
+      if (id < settings.startPass || id > endPass) {
+        alert(`❌ અમાન્ય પાસ નંબર! તમારો ફાળવેલ ક્વોટા ફક્ત #BK-${settings.startPass} થી #BK-${endPass} સુધીનો છે.`);
+        return;
+      }
+
       let p = passes.find(item => item.id === id);
-      
-      // Auto expand beyond 1,000 up to 10,000 on demand
-      if (!p && id <= TOTAL_CAPACITY + START_PASS_ID) {
-        p = { id: id, name: name, phone: phone, status: name ? 'ISSUED' : 'AVAILABLE' };
-        passes.push(p);
-        passes.sort((a,b) => a.id - b.id);
-      } else if (p) {
+      if (p) {
         p.name = name;
         p.phone = phone;
         p.status = name ? 'ISSUED' : 'AVAILABLE';
+        localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
+        
+        fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${id}.json`, {
+          method: 'PATCH',
+          body: JSON.stringify({ name: name, phone: phone, status: p.status }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        closePassModal();
+        handleSearch();
       }
-
-      localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
-      
-      // Sync to Firebase
-      fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${id}.json`, {
-        method: 'PATCH',
-        body: JSON.stringify({ name: name, phone: phone, status: p.status }),
-        headers: { 'Content-Type': 'application/json' }
-      });
-
-      closePassModal();
-      handleSearch();
     }
 
     function clearCurrentPass() {
@@ -711,7 +747,6 @@
         p.phone = '';
         p.status = 'AVAILABLE';
         localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
-        
         fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${id}.json`, { method: 'DELETE' });
         closePassModal();
         handleSearch();
@@ -725,7 +760,7 @@
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.setAttribute("download", `${settings.title.replace(/\s+/g, '_')}_10K_Passes.csv`);
+      link.setAttribute("download", `${settings.title.replace(/\s+/g, '_')}_Report.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
