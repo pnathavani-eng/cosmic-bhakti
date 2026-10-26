@@ -16,12 +16,13 @@
     .tab-btn.active { background: #ff8f00; color: #000; box-shadow: 0 2px 10px rgba(255,143,0,0.4); }
 
     /* Dashboard Stats Bar */
-    .stats-bar { display: flex; gap: 8px; margin-bottom: 12px; }
-    .stat-card { flex: 1; background: #1c1008; border: 1px solid rgba(255,180,0,0.25); border-radius: 12px; padding: 8px 4px; text-align: center; }
-    .stat-num { font-size: 18px; font-weight: 900; color: #ffe082; }
-    .stat-label { font-size: 9px; color: #a1887f; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
+    .stats-bar { display: flex; gap: 6px; margin-bottom: 12px; }
+    .stat-card { flex: 1; background: #1c1008; border: 1px solid rgba(255,180,0,0.25); border-radius: 12px; padding: 8px 3px; text-align: center; }
+    .stat-num { font-size: 16px; font-weight: 900; color: #ffe082; }
+    .stat-label { font-size: 8.5px; color: #a1887f; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
     .stat-green { color: #39ff14; }
     .stat-orange { color: #ff9100; }
+    .stat-blue { color: #00e5ff; }
 
     /* Panels & Cards */
     .panel-card { background: #130b06; border-radius: 20px; padding: 16px; border: 1px solid rgba(255,180,0,0.2); width: 100%; }
@@ -48,10 +49,13 @@
     /* Pass List Items */
     .pass-item { background: #1c1008; border: 1px solid rgba(255,180,0,0.15); border-radius: 14px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
     .pass-info { flex: 1; }
-    .pass-tag { font-size: 11px; font-weight: 800; color: #ffb300; display: flex; align-items: center; gap: 6px; }
+    .pass-tag { font-size: 11px; font-weight: 800; color: #ffb300; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
     .badge-entered { background: #2e7d32; color: #fff; padding: 2px 6px; border-radius: 6px; font-size: 10px; font-weight: 800; }
     .badge-issued { background: #ef6c00; color: #fff; padding: 2px 6px; border-radius: 6px; font-size: 10px; }
     .badge-avail { background: #424242; color: #bbb; padding: 2px 6px; border-radius: 6px; font-size: 10px; }
+    .badge-tier-full { background: #ffb300; color: #000; padding: 1px 6px; border-radius: 6px; font-size: 9.5px; font-weight: 800; }
+    .badge-tier-dinner { background: #00e5ff; color: #000; padding: 1px 6px; border-radius: 6px; font-size: 9.5px; font-weight: 800; }
+    .badge-tier-event { background: #e040fb; color: #fff; padding: 1px 6px; border-radius: 6px; font-size: 9.5px; font-weight: 800; }
     .pass-name { font-size: 15px; font-weight: 700; color: #fff; margin: 3px 0; }
     .pass-phone { font-size: 12px; color: #a1887f; }
     .pass-actions { display: flex; gap: 6px; align-items: center; }
@@ -68,8 +72,14 @@
     
     .insta-btn { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; text-decoration: none; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; margin: 6px 0 10px; box-shadow: 0 2px 10px rgba(220,39,67,0.3); }
     .venue-badge { display: inline-block; background: rgba(255,179,0,0.12); color: #ffb300; border: 1px solid rgba(255,179,0,0.3); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 10px; }
-    .guest-box { background: rgba(255,140,0,0.06); border-radius: 14px; padding: 10px; margin-bottom: 10px; border: 1px solid rgba(255,179,0,0.25); }
+    .guest-box { background: rgba(255,140,0,0.06); border-radius: 14px; padding: 12px 10px; margin-bottom: 10px; border: 1px solid rgba(255,179,0,0.25); }
     
+    /* Dynamic Pass Category Display on Live Pass */
+    .tier-banner { display: block; padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 6px; }
+    .tier-full-style { background: linear-gradient(45deg, #ffb300, #ff8f00); color: #000; box-shadow: 0 0 10px rgba(255,179,0,0.4); }
+    .tier-dinner-style { background: linear-gradient(45deg, #00e5ff, #00b0ff); color: #000; box-shadow: 0 0 10px rgba(0,229,255,0.4); }
+    .tier-event-style { background: linear-gradient(45deg, #e040fb, #aa00ff); color: #fff; box-shadow: 0 0 10px rgba(224,64,251,0.4); }
+
     .clock-box { background: #000; border-radius: 12px; padding: 6px 12px; border: 1.5px solid #39ff14; margin-bottom: 10px; box-shadow: 0 0 10px rgba(57,255,20,0.2); display: flex; justify-content: space-between; align-items: center; }
     .clock-label { font-size: 9px; color: #39ff14; font-weight: 700; letter-spacing: 0.5px; }
     .clock-time { font-size: 20px; font-weight: 900; color: #39ff14; font-family: monospace; }
@@ -115,16 +125,20 @@
       
       <div class="stats-bar">
         <div class="stat-card">
-          <div class="stat-num stat-orange" id="statAllotted">500</div>
-          <div class="stat-label">Allotted Quota</div>
+          <div class="stat-num stat-orange" id="statAllotted">150</div>
+          <div class="stat-label">Quota</div>
         </div>
         <div class="stat-card">
-          <div class="stat-num" id="statIssued">0</div>
-          <div class="stat-label">Issued</div>
+          <div class="stat-num stat-blue" id="statFullCount">0</div>
+          <div class="stat-label">Full VIP</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="statDinnerCount">0</div>
+          <div class="stat-label">Dinner Only</div>
         </div>
         <div class="stat-card">
           <div class="stat-num stat-green" id="statEntered">0</div>
-          <div class="stat-label">Checked-In</div>
+          <div class="stat-label">Entered</div>
         </div>
       </div>
 
@@ -134,13 +148,13 @@
         <button class="btn-blue" onclick="exportCSVReport()">📥 Export</button>
       </div>
       
-      <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search Name, Phone, or Pass ID..." oninput="handleSearch()">
+      <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search Name, Phone, Pass ID or Type..." oninput="handleSearch()">
       
       <div id="passListContainer"></div>
       
       <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-size:13px; color:#ffb74d;">
         <button style="background:#26170d; border:1px solid #ffb300; color:#ffe082; padding:6px 14px; border-radius:8px; font-weight:700;" id="btnPrevPage" onclick="prevPage()">◀ Previous</button>
-        <span id="pageTracker">Page 1 / 25</span>
+        <span id="pageTracker">Page 1 / 8</span>
         <button style="background:#26170d; border:1px solid #ffb300; color:#ffe082; padding:6px 14px; border-radius:8px; font-weight:700;" id="btnNextPage" onclick="nextPage()">Next ▶</button>
       </div>
     </div>
@@ -149,7 +163,7 @@
     <div id="viewSettings" class="panel-card" style="display: none;">
       <div class="panel-title">⚙️ Event & Quota Settings</div>
       
-      <!-- SUPER ADMIN MASTER QUOTA CONTROL (LOCKED FOR CLIENTS) -->
+      <!-- SUPER ADMIN MASTER QUOTA CONTROL -->
       <div class="super-admin-box">
         <div class="super-title">
           <span>👑 Super Admin Master Quota</span>
@@ -159,14 +173,14 @@
         <div style="display: flex; gap: 8px;">
           <div class="form-group" style="flex: 1;">
             <label class="form-label" style="color: #ff8a80;">Start Pass #</label>
-            <input type="number" class="form-input" id="cfgStartPass" value="101" disabled>
+            <input type="number" class="form-input" id="cfgStartPass" value="1" oninput="updateRangeLive()" disabled>
           </div>
           <div class="form-group" style="flex: 1;">
             <label class="form-label" style="color: #ff8a80;">Allotted Quota</label>
-            <input type="number" class="form-input" id="cfgQuotaLimit" value="500" disabled>
+            <input type="number" class="form-input" id="cfgQuotaLimit" value="150" oninput="updateRangeLive()" disabled>
           </div>
         </div>
-        <div style="font-size: 10px; color: #cfd8dc;">Calculated Range: <b id="rangePreview" style="color:#ffe082;">#BK-101 to #BK-600</b></div>
+        <div style="font-size: 11px; color: #cfd8dc;">Calculated Range: <b id="rangePreview" style="color:#ffe082;">#BK-1 to #BK-150</b></div>
       </div>
 
       <div class="form-group">
@@ -249,8 +263,10 @@
 
           <div class="guest-box">
             <div style="font-size: 11px; color: #ffb300; font-weight: 800;" id="livePassId">PASS ID: #BK-101</div>
-            <div style="font-size: 20px; font-weight: 800; color: #fff; margin: 2px 0;" id="liveGuestName">Piyush Nathavani</div>
-            <div style="font-size: 11px; color: #a1887f; font-weight: 600;">ADMIT: 1 PERSON + VIP DINNER</div>
+            <div style="font-size: 20px; font-weight: 800; color: #fff; margin: 3px 0;" id="liveGuestName">Piyush Nathavani</div>
+            
+            <!-- Dynamic Category Tag -->
+            <div id="livePassTierBadge" class="tier-banner tier-full-style">🌟 VIP FULL ACCESS (EVENT + DINNER)</div>
           </div>
 
           <div class="clock-box">
@@ -283,15 +299,37 @@
 
   </div>
 
-  <!-- Pass Issue Modal -->
+  <!-- Pass Issue Modal with Type Selection -->
   <div class="modal-overlay" id="passModal" style="display: none;">
     <div class="modal-card">
-      <div style="font-size: 16px; font-weight: 800; color: #ffe082; margin-bottom: 12px; text-align: center;" id="modalHeading">Issue VIP Pass</div>
-      <input type="number" class="search-box" style="margin-bottom: 8px;" id="mPassId" placeholder="Pass Number">
-      <input type="text" class="search-box" style="margin-bottom: 8px;" id="mName" placeholder="Guest Name">
-      <input type="tel" class="search-box" style="margin-bottom: 12px;" id="mPhone" placeholder="Mobile Number (10 digits)">
+      <div style="font-size: 16px; font-weight: 800; color: #ffe082; margin-bottom: 12px; text-align: center;" id="modalHeading">Issue Digital Pass</div>
+      
+      <div class="form-group">
+        <label class="form-label">Pass Serial Number</label>
+        <input type="number" class="search-box" style="margin-bottom: 8px;" id="mPassId" placeholder="Pass Number">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Guest Full Name</label>
+        <input type="text" class="search-box" style="margin-bottom: 8px;" id="mName" placeholder="Guest Name">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Mobile Number</label>
+        <input type="tel" class="search-box" style="margin-bottom: 8px;" id="mPhone" placeholder="Mobile Number (10 digits)">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" style="color: #39ff14;">Pass Type / Category</label>
+        <select class="form-select" id="mPassType" style="margin-bottom: 14px;">
+          <option value="FULL">🌟 VIP Full Access (Event + Dinner)</option>
+          <option value="DINNER">🍽️ Dinner Only (Food Pass)</option>
+          <option value="EVENT">🎟️ Event Entry Only (No Dinner)</option>
+        </select>
+      </div>
+
       <div style="display: flex; gap: 8px;">
-        <button class="btn-green" style="flex: 1;" onclick="saveModalPass()">Save</button>
+        <button class="btn-green" style="flex: 1;" onclick="saveModalPass()">Save Pass</button>
         <button id="modalClearBtn" style="display: none; background: #c62828; color: #fff; border: none; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer;" onclick="clearCurrentPass()">Revoke</button>
         <button style="background: #555; color: #fff; border: none; padding: 10px 14px; border-radius: 10px;" onclick="closePassModal()">Close</button>
       </div>
@@ -300,7 +338,7 @@
 
   <script>
     const FIREBASE_DB_URL = "https://vip-pass-system-default-rtdb.firebaseio.com";
-    const MASTER_SUPER_KEY = "super999"; // તમારો ગુપ્ત માસ્ટર પિન
+    const MASTER_SUPER_KEY = "super999";
     
     const urlParams = new URLSearchParams(window.location.search);
     const EVENT_ID = urlParams.get('event') || 'default_event';
@@ -310,8 +348,8 @@
     const SYSTEM_DEFAULT_SPONSORS = "👑 Maruti Buildcon, 💍 Royal Jewellers, 🍟 Fiesta Foods, 📻 92.7 Big FM, 🚗 Apex Motors";
 
     const defaultSettings = {
-      startPass: 101,
-      quotaLimit: 500, // ફાળવેલ મર્યાદા (૫૦૦)
+      startPass: 1,
+      quotaLimit: 150,
       plan: "BUDGET",
       brand: "✨ TWIN AURA PRESENTS ✨",
       title: "COSMIC BHAKTI",
@@ -327,18 +365,18 @@
 
     let settings = JSON.parse(localStorage.getItem('ev_set_' + EVENT_ID) || 'null') || defaultSettings;
 
-    // Load Passes strictly matching allotted range
+    // Load Passes matching quota with pass type
     let passes = JSON.parse(localStorage.getItem('ev_pass_' + EVENT_ID) || 'null');
-    if (!passes || passes.length !== settings.quotaLimit) {
+    if (!passes || passes.length !== parseInt(settings.quotaLimit)) {
       initPassesArray();
     }
 
     function initPassesArray() {
       passes = [];
-      const s = parseInt(settings.startPass) || 101;
-      const q = parseInt(settings.quotaLimit) || 500;
+      const s = parseInt(settings.startPass) || 1;
+      const q = parseInt(settings.quotaLimit) || 150;
       for (let i = s; i < s + q; i++) {
-        passes.push({ id: i, name: '', phone: '', status: 'AVAILABLE' });
+        passes.push({ id: i, name: '', phone: '', status: 'AVAILABLE', type: 'FULL' });
       }
       localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
     }
@@ -375,8 +413,15 @@
       }
     }
 
+    function updateRangeLive() {
+      const s = parseInt(document.getElementById('cfgStartPass').value) || 1;
+      const q = parseInt(document.getElementById('cfgQuotaLimit').value) || 1;
+      const endPass = s + q - 1;
+      document.getElementById('rangePreview').innerText = `#BK-${s} to #BK-${endPass}`;
+    }
+
     function applySettingsToUI() {
-      document.getElementById('dashTitle').innerText = settings.title + " (Quota: " + settings.quotaLimit + ")";
+      document.getElementById('dashTitle').innerText = settings.title + " (Pass Sheet)";
       document.getElementById('liveBrand').innerText = settings.brand;
       document.getElementById('liveTitle').innerText = settings.title;
       document.getElementById('liveInstaHandle').innerText = settings.instaHandle;
@@ -384,10 +429,9 @@
       document.getElementById('liveVenue').innerText = "📍 " + settings.venue;
       document.getElementById('btnMapsLink').href = settings.mapsUrl;
 
-      document.getElementById('cfgStartPass').value = settings.startPass;
-      document.getElementById('cfgQuotaLimit').value = settings.quotaLimit;
-      const endPass = parseInt(settings.startPass) + parseInt(settings.quotaLimit) - 1;
-      document.getElementById('rangePreview').innerText = `#BK-${settings.startPass} to #BK-${endPass}`;
+      document.getElementById('cfgStartPass').value = parseInt(settings.startPass) || 1;
+      document.getElementById('cfgQuotaLimit').value = parseInt(settings.quotaLimit) || 150;
+      updateRangeLive();
 
       document.getElementById('statAllotted').innerText = settings.quotaLimit;
 
@@ -465,9 +509,24 @@
       if (tab === 'preview') showGuestPass();
     }
 
-    function showGuestPass() {
+    function showGuestPass(passObj = null) {
       document.getElementById('viewPass').style.display = 'block';
-      generateQRCode(guestPassId || settings.startPass);
+      const pId = guestPassId || settings.startPass;
+      const pData = passObj || passes.find(item => item.id == pId) || { type: 'FULL' };
+      
+      const badge = document.getElementById('livePassTierBadge');
+      if (pData.type === 'DINNER') {
+        badge.innerText = "🍽️ DINNER ONLY PASS (FOOD ACCESS)";
+        badge.className = "tier-banner tier-dinner-style";
+      } else if (pData.type === 'EVENT') {
+        badge.innerText = "🎟️ EVENT ENTRY ONLY (NO DINNER)";
+        badge.className = "tier-banner tier-event-style";
+      } else {
+        badge.innerText = "🌟 VIP FULL ACCESS (EVENT + DINNER)";
+        badge.className = "tier-banner tier-full-style";
+      }
+
+      generateQRCode(pId);
       startLiveTimer();
     }
 
@@ -501,9 +560,9 @@
               body: JSON.stringify({ device: myDevice, firstSeen: new Date().toISOString() }),
               headers: { 'Content-Type': 'application/json' }
             });
-            showGuestPass();
+            showGuestPass(data);
           } else if (data.device === myDevice) {
-            showGuestPass();
+            showGuestPass(data);
             if (data.status === 'ENTERED') markEnteredBadge();
           } else {
             document.getElementById('blockedScreen').style.display = 'block';
@@ -543,11 +602,11 @@
     }
 
     function saveEventSettings() {
-      const oldStart = settings.startPass;
-      const oldQuota = settings.quotaLimit;
+      const oldStart = parseInt(settings.startPass);
+      const oldQuota = parseInt(settings.quotaLimit);
 
-      const newStart = parseInt(document.getElementById('cfgStartPass').value);
-      const newQuota = parseInt(document.getElementById('cfgQuotaLimit').value);
+      const newStart = parseInt(document.getElementById('cfgStartPass').value) || 1;
+      const newQuota = parseInt(document.getElementById('cfgQuotaLimit').value) || 150;
 
       settings.startPass = newStart;
       settings.quotaLimit = newQuota;
@@ -563,7 +622,6 @@
       settings.adminPass = document.getElementById('cfgAdminPass').value.trim();
       settings.adminExpiry = document.getElementById('cfgAdminExpiry').value;
 
-      // Re-init array if Super Admin changed Start or Quota
       if (oldStart !== newStart || oldQuota !== newQuota) {
         initPassesArray();
       }
@@ -603,6 +661,7 @@
                 if (cp.status) p.status = cp.status;
                 if (cp.name) p.name = cp.name;
                 if (cp.phone) p.phone = cp.phone;
+                if (cp.type) p.type = cp.type;
               }
             });
             localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
@@ -625,19 +684,24 @@
       const baseUrl = window.location.origin + window.location.pathname;
 
       pageItems.forEach(p => {
+        const typeLabel = p.type === 'DINNER' ? '🍽️ DINNER ONLY' : (p.type === 'EVENT' ? '🎟️ EVENT ONLY' : '🌟 VIP FULL');
         const passLink = baseUrl + '?event=' + EVENT_ID + '&id=' + p.id + (p.name ? '&name=' + encodeURIComponent(p.name) : '');
-        const waMsg = encodeURIComponent(`Hello ${p.name || ''}! Here is your VIP Digital Pass for ${settings.title}: ${passLink}`);
+        const waMsg = encodeURIComponent(`Hello ${p.name || ''}! Here is your [${typeLabel}] Digital Pass for ${settings.title}: ${passLink}`);
         const waUrl = p.phone ? `https://wa.me/91${p.phone}?text=${waMsg}` : '#';
 
         let badge = `<span class="badge-avail">AVAILABLE</span>`;
         if (p.status === 'ENTERED') badge = `<span class="badge-entered">✅ CHECKED-IN</span>`;
         else if (p.name) badge = `<span class="badge-issued">ISSUED</span>`;
 
+        let tierTag = `<span class="badge-tier-full">FULL VIP</span>`;
+        if (p.type === 'DINNER') tierTag = `<span class="badge-tier-dinner">DINNER ONLY</span>`;
+        else if (p.type === 'EVENT') tierTag = `<span class="badge-tier-event">EVENT ONLY</span>`;
+
         const item = document.createElement('div');
         item.className = 'pass-item';
         item.innerHTML = `
           <div class="pass-info">
-            <div class="pass-tag">PASS #BK-${p.id} ${badge}</div>
+            <div class="pass-tag">PASS #BK-${p.id} ${badge} ${p.name ? tierTag : ''}</div>
             <div class="pass-name">${p.name || '<span style="color:#757575;">(Empty Slot)</span>'}</div>
             <div class="pass-phone">${p.phone || 'No phone recorded'}</div>
           </div>
@@ -654,13 +718,13 @@
       document.getElementById('btnPrevPage').disabled = currentPage === 1;
       document.getElementById('btnNextPage').disabled = currentPage >= totalPages;
 
-      const issuedCount = passes.filter(p => p.name).length;
-      document.getElementById('statIssued').innerText = issuedCount;
+      const issuedList = passes.filter(p => p.name);
+      document.getElementById('statFullCount').innerText = issuedList.filter(p => p.type === 'FULL' || !p.type).length;
+      document.getElementById('statDinnerCount').innerText = issuedList.filter(p => p.type === 'DINNER').length;
       document.getElementById('statEntered').innerText = passes.filter(p => p.status === 'ENTERED').length;
 
-      // Auto-Cap Warning & Lock
       const issueBtn = document.getElementById('btnIssuePass');
-      if (issuedCount >= settings.quotaLimit) {
+      if (issuedList.length >= settings.quotaLimit) {
         issueBtn.innerText = "⛔ Quota Full (Limit Hit)";
         issueBtn.style.background = "#555";
       } else {
@@ -674,7 +738,13 @@
 
     function handleSearch() {
       const q = document.getElementById('searchInput').value.trim().toLowerCase();
-      filteredList = passes.filter(p => p.id.toString().includes(q) || p.name.toLowerCase().includes(q) || p.phone.includes(q) || p.status.toLowerCase().includes(q));
+      filteredList = passes.filter(p => 
+        p.id.toString().includes(q) || 
+        p.name.toLowerCase().includes(q) || 
+        p.phone.includes(q) || 
+        (p.type && p.type.toLowerCase().includes(q)) || 
+        p.status.toLowerCase().includes(q)
+      );
       currentPage = 1;
       renderPassList();
     }
@@ -682,7 +752,7 @@
     function openPassModal() {
       const issuedCount = passes.filter(p => p.name).length;
       if (issuedCount >= settings.quotaLimit) {
-        alert("⚠️ તમારી ફાળવેલ ક્વોટા મર્યાદા (" + settings.quotaLimit + " પાસ) પૂરી થઈ ગઈ છે!\n\nવધુ પાસ ઇશ્યૂ કરવા માટે મુખ્ય સુપર એડમિનનો સંપર્ક કરો.");
+        alert("⚠️ તમારી ફાળવેલ ક્વોટા મર્યાદા (" + settings.quotaLimit + " પાસ) પૂરી થઈ ગઈ છે!\n\nવધુ પાસ માટે સુપર એડમિનનો સંપર્ક કરો.");
         return;
       }
 
@@ -692,6 +762,7 @@
       document.getElementById('mPassId').disabled = false;
       document.getElementById('mName').value = '';
       document.getElementById('mPhone').value = '';
+      document.getElementById('mPassType').value = 'FULL';
       document.getElementById('modalClearBtn').style.display = 'none';
       document.getElementById('passModal').style.display = 'flex';
     }
@@ -706,6 +777,7 @@
       document.getElementById('mPassId').disabled = true;
       document.getElementById('mName').value = p.name;
       document.getElementById('mPhone').value = p.phone;
+      document.getElementById('mPassType').value = p.type || 'FULL';
       document.getElementById('modalClearBtn').style.display = p.name ? 'block' : 'none';
       document.getElementById('passModal').style.display = 'flex';
     }
@@ -714,6 +786,7 @@
       const id = parseInt(document.getElementById('mPassId').value);
       const name = document.getElementById('mName').value.trim();
       const phone = document.getElementById('mPhone').value.trim();
+      const type = document.getElementById('mPassType').value;
       const endPass = parseInt(settings.startPass) + parseInt(settings.quotaLimit) - 1;
 
       if (id < settings.startPass || id > endPass) {
@@ -725,12 +798,13 @@
       if (p) {
         p.name = name;
         p.phone = phone;
+        p.type = type;
         p.status = name ? 'ISSUED' : 'AVAILABLE';
         localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
         
         fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${id}.json`, {
           method: 'PATCH',
-          body: JSON.stringify({ name: name, phone: phone, status: p.status }),
+          body: JSON.stringify({ name: name, phone: phone, type: type, status: p.status }),
           headers: { 'Content-Type': 'application/json' }
         });
 
@@ -745,6 +819,7 @@
       if (p) {
         p.name = '';
         p.phone = '';
+        p.type = 'FULL';
         p.status = 'AVAILABLE';
         localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
         fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${id}.json`, { method: 'DELETE' });
@@ -755,8 +830,10 @@
     }
 
     function exportCSVReport() {
-      let csv = "Pass ID,Guest Name,Mobile,Status\n";
-      passes.forEach(p => { if (p.name) csv += `${p.id},"${p.name}","${p.phone}",${p.status}\n`; });
+      let csv = "Pass ID,Guest Name,Mobile,Category Type,Status\n";
+      passes.forEach(p => { 
+        if (p.name) csv += `${p.id},"${p.name}","${p.phone}",${p.type || 'FULL'},${p.status}\n`; 
+      });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
