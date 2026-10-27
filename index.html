@@ -82,7 +82,7 @@
     .pass-brand { font-size: 12px; font-weight: 800; color: #ffe082; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3px; }
     .pass-title { font-size: 26px; font-weight: 900; background: linear-gradient(to right, #ffe082, #ffb300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
-    /* Direct Universal Instagram Button */
+    /* Direct Universal Instagram Button (NO @ IN TEXT) */
     .insta-btn { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; text-decoration: none; padding: 7px 18px; border-radius: 20px; font-size: 12px; font-weight: 700; margin: 6px 0 10px; box-shadow: 0 2px 10px rgba(220,39,67,0.35); }
     .venue-badge { display: inline-block; background: rgba(255,179,0,0.12); color: #ffb300; border: 1px solid rgba(255,179,0,0.3); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 10px; }
     .guest-box { background: rgba(255,140,0,0.06); border-radius: 14px; padding: 12px 10px; margin-bottom: 10px; border: 1px solid rgba(255,179,0,0.25); }
@@ -214,8 +214,8 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">Organizer Instagram Handle (e.g. twin_aura or twin_aura3)</label>
-        <input type="text" class="form-input" id="cfgInstaHandle" placeholder="Enter username without @ (e.g. twin_aura)">
+        <label class="form-label">Organizer Instagram Username (લિંક અથવા નામ, @ વગર)</label>
+        <input type="text" class="form-input" id="cfgInstaHandle" placeholder="twin_aura">
       </div>
 
       <div class="form-group">
@@ -306,9 +306,9 @@
           <div class="pass-brand" id="liveBrand">✨ TWIN AURA PRESENTS ✨</div>
           <div class="pass-title" id="liveTitle">COSMIC BHAKTI</div>
           
-          <!-- PURE UNIVERSAL INSTAGRAM LINK (NO @ IN URL, NO POPUP, NO ERROR) -->
+          <!-- ABSOLUTELY CLEAN INSTAGRAM LINK (NO @ ANYWHERE) -->
           <a id="liveInstaLink" href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="insta-btn">
-            📸 Follow <span id="liveInstaHandle">@twin_aura</span>
+            📸 Follow on Instagram: <span id="liveInstaHandle">twin_aura</span>
           </a>
           
           <div><span class="venue-badge" id="liveVenue">📍 MORBI • NOV 1, 2026</span></div>
@@ -445,25 +445,26 @@
       window.location.href = window.location.origin + window.location.pathname;
     }
 
-    // --- STRICT SANITIZER: 100% STRIPS '@' AND SPECIAL CHARACTERS ---
+    // --- 100% BULLETPROOF SANITIZER: STRIPS ALL '@', 'HTTP', AND SPACES ---
     function getCleanInstagramHandle() {
       let raw = (settings.instaHandle || '').trim();
-      if (!raw) return 'cosmic_bhakti';
+      if (!raw) return 'twin_aura';
 
-      // If user pasted a full link: https://www.instagram.com/twin_aura/?igsh=...
+      // If full URL was pasted (e.g. https://www.instagram.com/twin_aura/?igsh=...)
       if (raw.includes('instagram.com/')) {
         raw = raw.split('instagram.com/')[1];
       }
+      // Remove query parameters and slashes
       raw = raw.split('?')[0].split('/')[0].split('#')[0];
       
-      // STRICTLY remove ALL '@' symbols from beginning, middle or end
+      // ABSOLUTELY STRIP ALL '@' SIGNS EVERYWHERE
       raw = raw.replace(/@/g, '');
-      // Remove all spaces
+      // Remove spaces
       raw = raw.replace(/\s+/g, '');
-      // Only keep valid Instagram characters (letters, numbers, periods, underscores)
+      // Only keep safe characters
       raw = raw.replace(/[^a-zA-Z0-9._]/g, '');
 
-      return raw.toLowerCase() || 'cosmic_bhakti';
+      return raw.toLowerCase() || 'twin_aura';
     }
 
     function getCleanMapsUrl() {
@@ -620,11 +621,9 @@
       document.getElementById('liveBrand').innerText = settings.brand;
       document.getElementById('liveTitle').innerText = settings.title;
       
-      // Clean Username Extraction (Strictly NO '@' in URL)
+      // Clean Username (NO '@' in text, NO '@' in URL)
       const cleanHandle = getCleanInstagramHandle();
-      document.getElementById('liveInstaHandle').innerText = '@' + cleanHandle;
-      
-      // Pure Web Link WITHOUT '@'
+      document.getElementById('liveInstaHandle').innerText = cleanHandle;
       document.getElementById('liveInstaLink').href = 'https://www.instagram.com/' + cleanHandle + '/';
       
       document.getElementById('liveVenue').innerText = "📍 " + settings.venue;
@@ -709,7 +708,7 @@
     }
 
     function saveEventSettings() {
-      // Clean handle completely before saving
+      // 100% remove all @ and spaces before saving
       let rawHandle = document.getElementById('cfgInstaHandle').value.trim();
       let cleaned = rawHandle.replace(/@/g, '').replace(/\s+/g, '').replace(/[^a-zA-Z0-9._]/g, '').toLowerCase();
       
@@ -800,9 +799,9 @@
         badge.className = "tier-banner tier-full-style";
       }
 
-      // Re-apply latest clean links strictly without '@'
+      // Re-apply latest clean links (STRICTLY NO '@')
       const cleanHandle = getCleanInstagramHandle();
-      document.getElementById('liveInstaHandle').innerText = '@' + cleanHandle;
+      document.getElementById('liveInstaHandle').innerText = cleanHandle;
       document.getElementById('liveInstaLink').href = 'https://www.instagram.com/' + cleanHandle + '/';
       document.getElementById('btnMapsLink').href = getCleanMapsUrl();
 
