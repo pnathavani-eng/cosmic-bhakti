@@ -78,12 +78,39 @@
     @keyframes glow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     .pass-card { background: #130b06; border-radius: 24px; padding: 20px 18px; text-align: center; border: 1px solid rgba(255,180,0,0.2); }
     
-    .pass-brand-img { max-height: 55px; max-width: 180px; object-fit: contain; margin-bottom: 6px; filter: drop-shadow(0 2px 8px rgba(255,180,0,0.3)); }
-    .pass-brand { font-size: 12px; font-weight: 800; color: #ffe082; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3px; }
+    /* ENLARGED CIRCULAR BRANDING AREA (GOLDEN GLOW FRAME) */
+    .brand-logo-frame { display: inline-block; width: 90px; height: 90px; border-radius: 50%; padding: 4px; background: linear-gradient(45deg, #ffb300, #ff007f, #00e5ff, #ffb300); animation: pulseFrame 3s linear infinite; box-shadow: 0 0 15px rgba(255,179,0,0.6); margin-bottom: 8px; }
+    @keyframes pulseFrame { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    
+    .pass-brand-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 2px solid #000; background: #fff; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
+    .pass-brand { font-size: 11.5px; font-weight: 800; color: #ffe082; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3px; }
     .pass-title { font-size: 26px; font-weight: 900; background: linear-gradient(to right, #ffe082, #ffb300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
-    /* Direct Universal Instagram Button (NO @ IN TEXT) */
-    .insta-btn { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; text-decoration: none; padding: 7px 18px; border-radius: 20px; font-size: 12px; font-weight: 700; margin: 6px 0 10px; box-shadow: 0 2px 10px rgba(220,39,67,0.35); }
+    /* HIGHLY HIGHLIGHTED NEON INSTAGRAM BUTTON WITH PULSATING SHADOWS */
+    .insta-btn { 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 8px; 
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); 
+      color: #fff; 
+      text-decoration: none; 
+      padding: 10px 22px; 
+      border-radius: 24px; 
+      font-size: 13px; 
+      font-weight: 900; 
+      margin: 8px 0 12px; 
+      box-shadow: 0 0 20px rgba(220, 39, 67, 0.7), 0 0 6px rgba(255, 255, 255, 0.4); 
+      text-transform: uppercase; 
+      letter-spacing: 0.5px; 
+      border: 1.5px solid rgba(255, 255, 255, 0.85); 
+      animation: pulseInsta 2s infinite; 
+    }
+    @keyframes pulseInsta {
+      0% { transform: scale(1); box-shadow: 0 0 15px rgba(220, 39, 67, 0.6); }
+      50% { transform: scale(1.03); box-shadow: 0 0 26px rgba(220, 39, 67, 1), 0 0 12px rgba(255, 145, 0, 0.8); }
+      100% { transform: scale(1); box-shadow: 0 0 15px rgba(220, 39, 67, 0.6); }
+    }
+    
     .venue-badge { display: inline-block; background: rgba(255,179,0,0.12); color: #ffb300; border: 1px solid rgba(255,179,0,0.3); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 10px; }
     .guest-box { background: rgba(255,140,0,0.06); border-radius: 14px; padding: 12px 10px; margin-bottom: 10px; border: 1px solid rgba(255,179,0,0.25); }
     
@@ -96,7 +123,9 @@
     .clock-label { font-size: 9px; color: #39ff14; font-weight: 700; letter-spacing: 0.5px; }
     .clock-time { font-size: 20px; font-weight: 900; color: #39ff14; font-family: monospace; }
     
-    .qr-container { display: flex; justify-content: center; align-items: center; background: #fff; padding: 8px; border-radius: 12px; width: 112px; height: 112px; margin: 0 auto 10px; }
+    /* SPIRITUAL & CELESTIAL MUSIC ART BANNER */
+    .celestial-artwork-box { width: 100%; border-radius: 16px; overflow: hidden; border: 1.5px solid rgba(255,180,0,0.3); background: #0d0704; box-shadow: 0 0 15px rgba(255,140,0,0.2); margin: 6px auto 12px; display: block; position: relative; }
+    .celestial-artwork-img { width: 100%; height: auto; max-height: 145px; object-fit: cover; display: block; filter: contrast(1.1) brightness(0.95); }
     
     /* Sponsors Logo Ticker */
     .ticker-header { font-size: 11px; color: #ffe082; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin: 10px 0 6px; }
@@ -108,9 +137,13 @@
     .sponsor-logo-img { height: 26px; width: auto; max-width: 75px; object-fit: contain; border-radius: 4px; background: #fff; padding: 1px 3px; }
     @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
+    /* Schedule Bar (Timeline) */
+    .schedule-bar { width: 100%; padding: 7px; background: #000; border-radius: 10px; font-size: 10px; font-weight: 700; color: #ffe082; display: flex; justify-content: space-around; align-items: center; margin-bottom: 12px; border: 1px solid rgba(255, 180, 0, 0.15); }
+    .schedule-item { display: inline-flex; align-items: center; gap: 4px; }
+
     .btn-maps { background: #212121; color: #ffe082; border: 1.5px solid #ffb300; padding: 11px 14px; border-radius: 12px; font-size: 13px; font-weight: 800; width: 100%; text-decoration: none; display: block; margin-bottom: 8px; text-align: center; box-shadow: 0 2px 10px rgba(255,179,0,0.2); }
-    .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 12px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; width: 100%; cursor: pointer; }
-    .btn-entered-state { background: #424242 !important; color: #9e9e9e !important; cursor: not-allowed; }
+    .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 14px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; width: 100%; cursor: pointer; box-shadow: 0 3px 12px rgba(46,125,50,0.4); }
+    .btn-entered-state { background: #424242 !important; color: #9e9e9e !important; cursor: not-allowed; box-shadow: none !important; }
 
     /* Strict Blocked Screen */
     .blocked-card { background: #1c0808; border: 2px solid #ff5252; border-radius: 24px; padding: 34px 20px; text-align: center; width: 100%; box-shadow: 0 0 30px rgba(255,82,82,0.4); }
@@ -214,8 +247,8 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">Organizer Instagram Username (લિંક અથવા નામ, @ વગર)</label>
-        <input type="text" class="form-input" id="cfgInstaHandle" placeholder="twin_aura">
+        <label class="form-label">Organizer Instagram Username (twin_aura3)</label>
+        <input type="text" class="form-input" id="cfgInstaHandle" value="twin_aura3">
       </div>
 
       <div class="form-group">
@@ -240,11 +273,6 @@
           <label class="form-label">Fallback Sponsor Names (Comma Separated)</label>
           <input type="text" class="form-input" id="cfgSponsors" value="👑 Maruti Buildcon, 💍 Royal Jewellers, 🍟 Fiesta Foods, 📻 92.7 Big FM, 🚗 Apex Motors">
         </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Gatekeeper PIN</label>
-        <input type="text" class="form-input" id="cfgGatePin" value="1234">
       </div>
 
       <div class="form-group">
@@ -298,17 +326,17 @@
     <div id="viewPass" style="display: none;">
       <div class="pass-outer">
         <div class="pass-card">
-          <!-- Logo Display -->
-          <div id="liveBrandLogoContainer" style="display: none;">
+          <!-- Dynamically Sized Dynamic Identity Portal (Dynamic Logo) -->
+          <div class="brand-logo-frame" id="liveBrandLogoContainer" style="display: none;">
             <img id="liveBrandLogoImg" class="pass-brand-img" src="">
           </div>
           
           <div class="pass-brand" id="liveBrand">✨ TWIN AURA PRESENTS ✨</div>
           <div class="pass-title" id="liveTitle">COSMIC BHAKTI</div>
           
-          <!-- ABSOLUTELY CLEAN INSTAGRAM LINK (NO @ ANYWHERE) -->
-          <a id="liveInstaLink" href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="insta-btn">
-            📸 Follow on Instagram: <span id="liveInstaHandle">twin_aura</span>
+          <!-- ABSOLUTELY HIGH-HIGHLIGHTED INSTAGRAM LINK DIRECT TO twin_aura3 -->
+          <a id="liveInstaLink" href="https://www.instagram.com/twin_aura3/" target="_blank" rel="noopener noreferrer" class="insta-btn">
+            📸 Follow on Instagram: <span id="liveInstaHandle">twin_aura3</span>
           </a>
           
           <div><span class="venue-badge" id="liveVenue">📍 MORBI • NOV 1, 2026</span></div>
@@ -324,7 +352,17 @@
             <span class="clock-time" id="liveTimerDisplay">--:--:--</span>
           </div>
 
-          <div class="qr-container" id="qrContainer"></div>
+          <!-- Spiritual and Celestial Festive Music Artwork Banner -->
+          <div class="celestial-artwork-box">
+            <img class="celestial-artwork-img" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop" alt="Festive Cele">
+          </div>
+
+          <!-- Quick Access Event Timeline -->
+          <div class="schedule-bar">
+            <span class="schedule-item">🚪 GATES: 7:30 PM</span>
+            <span class="schedule-item">🍽️ DINNER: 8:00 PM</span>
+            <span class="schedule-item">🪔 BHAKTI: 9:30 PM</span>
+          </div>
 
           <div class="ticker-header">⚡ OFFICIAL SPONSORS & PARTNERS</div>
           <div class="ticker-wrap">
@@ -334,6 +372,7 @@
           <!-- DIRECT NATIVE MAPS LINK -->
           <a id="btnMapsLink" href="#" class="btn-maps">📍 Get Venue Directions (Maps)</a>
           
+          <!-- 1-TAP GATE ENTRY (NO PIN REQUIRED) -->
           <button class="btn-gate" id="btnGateAction" onclick="handleGatekeeperEntry()">GATE ENTRY (TAP TO VERIFY)</button>
         </div>
       </div>
@@ -401,11 +440,10 @@
       sponsorImages: [],
       brand: "✨ TWIN AURA PRESENTS ✨",
       title: "COSMIC BHAKTI",
-      instaHandle: "twin_aura",
+      instaHandle: "twin_aura3",
       venue: "MORBI • NOV 1, 2026",
       mapsUrl: "",
       sponsors: SYSTEM_DEFAULT_SPONSORS,
-      gatePin: "1234",
       adminPass: "admin123"
     };
 
@@ -445,26 +483,19 @@
       window.location.href = window.location.origin + window.location.pathname;
     }
 
-    // --- 100% BULLETPROOF SANITIZER: STRIPS ALL '@', 'HTTP', AND SPACES ---
+    // --- ACCURATE INSTAGRAM SANITIZER ---
     function getCleanInstagramHandle() {
       let raw = (settings.instaHandle || '').trim();
-      if (!raw) return 'twin_aura';
+      if (!raw) return 'twin_aura3';
 
-      // If full URL was pasted (e.g. https://www.instagram.com/twin_aura/?igsh=...)
       if (raw.includes('instagram.com/')) {
         raw = raw.split('instagram.com/')[1];
       }
-      // Remove query parameters and slashes
       raw = raw.split('?')[0].split('/')[0].split('#')[0];
-      
-      // ABSOLUTELY STRIP ALL '@' SIGNS EVERYWHERE
-      raw = raw.replace(/@/g, '');
-      // Remove spaces
-      raw = raw.replace(/\s+/g, '');
-      // Only keep safe characters
+      raw = raw.replace(/@/g, '').replace(/\s+/g, '');
       raw = raw.replace(/[^a-zA-Z0-9._]/g, '');
 
-      return raw.toLowerCase() || 'twin_aura';
+      return raw.toLowerCase() || 'twin_aura3';
     }
 
     function getCleanMapsUrl() {
@@ -580,6 +611,9 @@
         .then(cloudSettings => {
           if (cloudSettings) {
             settings = Object.assign(settings, cloudSettings);
+            if (!settings.instaHandle || settings.instaHandle.includes('twin_aura') && !settings.instaHandle.includes('3')) {
+              settings.instaHandle = 'twin_aura3';
+            }
             localStorage.setItem('ev_set_' + EVENT_ID, JSON.stringify(settings));
             initPassesArray();
             applySettingsToUI();
@@ -613,7 +647,7 @@
       const logoImg = document.getElementById('liveBrandLogoImg');
       if (settings.brandLogo) {
         logoImg.src = settings.brandLogo;
-        logoBox.style.display = 'block';
+        logoBox.style.display = 'inline-block';
       } else {
         logoBox.style.display = 'none';
       }
@@ -621,7 +655,6 @@
       document.getElementById('liveBrand').innerText = settings.brand;
       document.getElementById('liveTitle').innerText = settings.title;
       
-      // Clean Username (NO '@' in text, NO '@' in URL)
       const cleanHandle = getCleanInstagramHandle();
       document.getElementById('liveInstaHandle').innerText = cleanHandle;
       document.getElementById('liveInstaLink').href = 'https://www.instagram.com/' + cleanHandle + '/';
@@ -636,7 +669,6 @@
       document.getElementById('cfgVenue').value = settings.venue;
       document.getElementById('cfgMapsUrl').value = settings.mapsUrl || '';
       document.getElementById('cfgSponsors').value = settings.sponsors;
-      document.getElementById('cfgGatePin').value = settings.gatePin;
       document.getElementById('cfgAdminPass').value = settings.adminPass;
 
       renderBrandLogoPreview();
@@ -708,17 +740,15 @@
     }
 
     function saveEventSettings() {
-      // 100% remove all @ and spaces before saving
       let rawHandle = document.getElementById('cfgInstaHandle').value.trim();
       let cleaned = rawHandle.replace(/@/g, '').replace(/\s+/g, '').replace(/[^a-zA-Z0-9._]/g, '').toLowerCase();
       
       settings.brand = document.getElementById('cfgBrand').value.trim();
       settings.title = document.getElementById('cfgTitle').value.trim();
-      settings.instaHandle = cleaned || 'twin_aura';
+      settings.instaHandle = cleaned || 'twin_aura3';
       settings.venue = document.getElementById('cfgVenue').value.trim();
       settings.mapsUrl = document.getElementById('cfgMapsUrl').value.trim();
       settings.sponsors = document.getElementById('cfgSponsors').value.trim();
-      settings.gatePin = document.getElementById('cfgGatePin').value.trim();
       settings.adminPass = document.getElementById('cfgAdminPass').value.trim();
 
       localStorage.setItem('ev_set_' + EVENT_ID, JSON.stringify(settings));
@@ -730,7 +760,7 @@
       });
 
       applySettingsToUI();
-      alert("✅ Settings & Clean Instagram Link Saved Successfully!");
+      alert("✅ Settings & Instagram Link (twin_aura3) Saved Successfully!");
     }
 
     // --- FAIL-CLOSED HARDWARE VERIFICATION ---
@@ -799,21 +829,12 @@
         badge.className = "tier-banner tier-full-style";
       }
 
-      // Re-apply latest clean links (STRICTLY NO '@')
       const cleanHandle = getCleanInstagramHandle();
       document.getElementById('liveInstaHandle').innerText = cleanHandle;
       document.getElementById('liveInstaLink').href = 'https://www.instagram.com/' + cleanHandle + '/';
       document.getElementById('btnMapsLink').href = getCleanMapsUrl();
 
-      generateQRCode(pId);
       startLiveTimer();
-    }
-
-    function generateQRCode(id) {
-      const qrBox = document.getElementById('qrContainer');
-      qrBox.innerHTML = '';
-      const passUrl = window.location.origin + window.location.pathname + '?event=' + EVENT_ID + '&id=' + id;
-      new QRCode(qrBox, { text: passUrl, width: 96, height: 96 });
     }
 
     let timerInt;
@@ -827,9 +848,9 @@
       update();
     }
 
+    // --- 1-TAP FAST GATE VERIFY (NO PIN REQUIRED) ---
     function handleGatekeeperEntry() {
-      const pin = prompt("Enter Gatekeeper PIN:");
-      if (pin === settings.gatePin) {
+      if (confirm("Confirm Gate Entry? (મહેમાનની એન્ટ્રી વેરિફાઈ કરવી છે?)")) {
         const pId = guestPassId || settings.startPass;
         fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${pId}.json`, {
           method: 'PATCH',
@@ -837,13 +858,9 @@
           headers: { 'Content-Type': 'application/json' }
         }).then(() => {
           markEnteredBadge();
-          alert("✅ ENTRY APPROVED! Guest checked-in.");
         }).catch(() => {
           markEnteredBadge();
-          alert("✅ Guest entry approved offline.");
         });
-      } else if (pin !== null) {
-        alert("❌ Incorrect Gate PIN!");
       }
     }
 
@@ -890,13 +907,12 @@
         startPass: nextStartPass,
         quotaLimit: quota,
         adminPass: pass,
-        gatePin: "1234",
         brandLogo: "",
         sponsorImages: [],
         sponsors: SYSTEM_DEFAULT_SPONSORS,
         venue: "EVENT VENUE",
         mapsUrl: "",
-        instaHandle: "event"
+        instaHandle: "twin_aura3"
       };
 
       await fetch(`${FIREBASE_DB_URL}/events/${slug}/settings.json`, {
@@ -925,7 +941,6 @@
         `🌟 *Welcome ${name}! Your VIP Pass Portal is LIVE*\n\n` +
         `🔗 *Admin Dashboard Link:*\n${clientPortalUrl}\n\n` +
         `🔑 *Admin Password:* ${pass}\n` +
-        `📌 *Gate Entry PIN:* 1234\n` +
         `🎟️ *Allotted Quota:* ${quota} Passes (#BK-${nextStartPass} to #BK-${endPass})\n\n` +
         `⚡ *Instructions:*\n` +
         `1. Tap 'Issue Pass' to send digital tickets via WhatsApp.\n` +
@@ -964,7 +979,7 @@
               <div style="font-size:11.5px; color:#a1887f; margin: 4px 0;">
                 Quota: <b style="color:#fff;">${p.quota} Passes</b> (#BK-${p.startPass} - #${p.endPass})
               </div>
-              <div style="font-size:11px; color:#ffb74d;">Pass: <code>${p.pass}</code> | PIN: <code>1234</code></div>
+              <div style="font-size:11px; color:#ffb74d;">Pass: <code>${p.pass}</code></div>
               <div style="display:flex; gap:6px; margin-top:8px;">
                 <a href="${directLink}" style="flex:1; background:#1565c0; color:#fff; padding:8px 4px; border-radius:8px; font-size:11px; text-align:center; text-decoration:none; font-weight:700; display:inline-block;">Open Portal</a>
                 <button onclick="sharePromoterCreds('${p.name}', '${directLink}', '${p.pass}', '${p.quota}', '${p.phone || ''}', '${p.startPass}', '${p.endPass}')" style="background:#25d366; color:#000; border:none; padding:8px 10px; border-radius:8px; font-size:11px; font-weight:700; cursor:pointer;">WhatsApp 📲</button>
@@ -984,7 +999,6 @@
         `🌟 *Welcome ${name}! Your VIP Pass Portal is LIVE*\n\n` +
         `🔗 *Admin Dashboard Link:*\n${link}\n\n` +
         `🔑 *Admin Password:* ${pass}\n` +
-        `📌 *Gate Entry PIN:* 1234\n` +
         `🎟️ *Allotted Quota:* ${quota} Passes (#BK-${s} to #BK-${e})`
       );
       if (phone) window.open(`https://wa.me/91${phone}?text=${waText}`, '_blank');
