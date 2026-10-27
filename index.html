@@ -86,7 +86,7 @@
     .pass-brand { font-size: 11.5px; font-weight: 800; color: #ffe082; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3px; }
     .pass-title { font-size: 26px; font-weight: 900; background: linear-gradient(to right, #ffe082, #ffb300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
-    /* HIGHLY HIGHLIGHTED NEON INSTAGRAM BUTTON WITH PULSATING SHADOWS */
+    /* HIGHLY HIGHLIGHTED NEON INSTAGRAM BUTTON */
     .insta-btn { 
       display: inline-flex; 
       align-items: center; 
@@ -123,10 +123,14 @@
     .clock-label { font-size: 9px; color: #39ff14; font-weight: 700; letter-spacing: 0.5px; }
     .clock-time { font-size: 20px; font-weight: 900; color: #39ff14; font-family: monospace; }
     
-    /* SPIRITUAL & CELESTIAL MUSIC ART BANNER */
+    /* CUSTOM EVENT BANNER / POSTER (REPLACING QR) */
     .celestial-artwork-box { width: 100%; border-radius: 16px; overflow: hidden; border: 1.5px solid rgba(255,180,0,0.3); background: #0d0704; box-shadow: 0 0 15px rgba(255,140,0,0.2); margin: 6px auto 12px; display: block; position: relative; }
-    .celestial-artwork-img { width: 100%; height: auto; max-height: 145px; object-fit: cover; display: block; filter: contrast(1.1) brightness(0.95); }
+    .celestial-artwork-img { width: 100%; height: auto; max-height: 155px; object-fit: cover; display: block; }
     
+    /* Quick Access Event Timeline */
+    .schedule-bar { width: 100%; padding: 8px 4px; background: #000; border-radius: 10px; font-size: 10.5px; font-weight: 800; color: #ffe082; display: flex; justify-content: space-around; align-items: center; margin-bottom: 12px; border: 1px solid rgba(255, 180, 0, 0.2); }
+    .schedule-item { display: inline-flex; align-items: center; gap: 3px; }
+
     /* Sponsors Logo Ticker */
     .ticker-header { font-size: 11px; color: #ffe082; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin: 10px 0 6px; }
     .ticker-wrap { width: 100%; overflow: hidden; background: #1a0e07; border: 1.5px solid rgba(255,180,0,0.35); border-radius: 14px; padding: 10px 0; margin-bottom: 12px; }
@@ -136,10 +140,6 @@
     .sponsor-pill { display: flex; align-items: center; gap: 8px; background: #2b170b; border: 1.5px solid #ffb300; color: #ffe082; padding: 6px 14px; border-radius: 10px; font-size: 13px; font-weight: 800; white-space: nowrap; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
     .sponsor-logo-img { height: 26px; width: auto; max-width: 75px; object-fit: contain; border-radius: 4px; background: #fff; padding: 1px 3px; }
     @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-    /* Schedule Bar (Timeline) */
-    .schedule-bar { width: 100%; padding: 7px; background: #000; border-radius: 10px; font-size: 10px; font-weight: 700; color: #ffe082; display: flex; justify-content: space-around; align-items: center; margin-bottom: 12px; border: 1px solid rgba(255, 180, 0, 0.15); }
-    .schedule-item { display: inline-flex; align-items: center; gap: 4px; }
 
     .btn-maps { background: #212121; color: #ffe082; border: 1.5px solid #ffb300; padding: 11px 14px; border-radius: 12px; font-size: 13px; font-weight: 800; width: 100%; text-decoration: none; display: block; margin-bottom: 8px; text-align: center; box-shadow: 0 2px 10px rgba(255,179,0,0.2); }
     .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 14px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; width: 100%; cursor: pointer; box-shadow: 0 3px 12px rgba(46,125,50,0.4); }
@@ -221,18 +221,50 @@
 
     <!-- 2. Settings View -->
     <div id="viewSettings" class="panel-card" style="display: none;">
-      <div class="panel-title">⚙️ Event Branding & Links</div>
+      <div class="panel-title">⚙️ Event Branding & Custom Options</div>
 
       <!-- MAIN PRESENTER LOGO -->
       <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
-        <label class="form-label" style="color: #39ff14;">📷 Main Presenter / Brand Logo</label>
+        <label class="form-label" style="color: #39ff14;">📷 Main Presenter / Circular Logo (ટોચ પર ગોળ લોગો)</label>
         <input type="file" id="fileBrandLogo" accept="image/*" style="display: none;" onchange="handleBrandLogoUpload(event)">
-        <label for="fileBrandLogo" class="btn-upload">📁 Choose Logo Image from Phone</label>
+        <label for="fileBrandLogo" class="btn-upload">📁 Choose Top Logo from Phone</label>
         
         <div id="brandLogoPreviewRow" class="preview-box" style="display: none;">
           <img id="brandLogoPreview" class="preview-img" src="">
-          <div style="flex:1; font-size:11px; color:#ffe082;">Presenter Logo Selected</div>
-          <button style="background:#c62828; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:11px;" onclick="removeBrandLogo()">Remove</button>
+          <div style="flex:1; font-size:11px; color:#ffe082;">Top Logo Selected</div>
+          <button style="background:#c62828; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:11px; cursor:pointer;" onclick="removeBrandLogo()">Remove</button>
+        </div>
+      </div>
+
+      <!-- EVENT BANNER / POSTER (REPLACING QR CODE) -->
+      <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
+        <label class="form-label" style="color: #39ff14;">🎨 Event Banner / Poster (QR ની જગ્યાએ મોટો ફોટો/પોસ્ટર)</label>
+        <input type="file" id="fileEventBanner" accept="image/*" style="display: none;" onchange="handleBannerUpload(event)">
+        <label for="fileEventBanner" class="btn-upload">🖼️ Choose Banner / Poster Image from Phone</label>
+        
+        <div id="bannerPreviewRow" class="preview-box" style="display: none;">
+          <img id="bannerPreviewImg" class="preview-img" style="width: 70px; height: 40px; object-fit: cover;" src="">
+          <div style="flex:1; font-size:11px; color:#ffe082;">Custom Banner Selected</div>
+          <button style="background:#c62828; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:11px; cursor:pointer;" onclick="removeEventBanner()">Remove</button>
+        </div>
+      </div>
+
+      <!-- EVENT SCHEDULE / TIMINGS -->
+      <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
+        <label class="form-label" style="color: #39ff14;">⏰ Event Schedule / Timings (બેનર નીચે દેખાતા સમય)</label>
+        <div style="display: flex; gap: 6px;">
+          <div style="flex: 1;">
+            <span style="font-size: 10px; color: #ffb74d; font-weight:700;">🚪 Gate Time</span>
+            <input type="text" class="form-input" id="cfgTimeGate" value="7:30 PM">
+          </div>
+          <div style="flex: 1;">
+            <span style="font-size: 10px; color: #ffb74d; font-weight:700;">🍽️ Dinner Time</span>
+            <input type="text" class="form-input" id="cfgTimeDinner" value="8:00 PM">
+          </div>
+          <div style="flex: 1;">
+            <span style="font-size: 10px; color: #ffb74d; font-weight:700;">🪔 Event Time</span>
+            <input type="text" class="form-input" id="cfgTimeEvent" value="9:30 PM">
+          </div>
         </div>
       </div>
 
@@ -326,7 +358,7 @@
     <div id="viewPass" style="display: none;">
       <div class="pass-outer">
         <div class="pass-card">
-          <!-- Dynamically Sized Dynamic Identity Portal (Dynamic Logo) -->
+          <!-- Dynamically Sized Circular Logo Area -->
           <div class="brand-logo-frame" id="liveBrandLogoContainer" style="display: none;">
             <img id="liveBrandLogoImg" class="pass-brand-img" src="">
           </div>
@@ -334,7 +366,7 @@
           <div class="pass-brand" id="liveBrand">✨ TWIN AURA PRESENTS ✨</div>
           <div class="pass-title" id="liveTitle">COSMIC BHAKTI</div>
           
-          <!-- ABSOLUTELY HIGH-HIGHLIGHTED INSTAGRAM LINK DIRECT TO twin_aura3 -->
+          <!-- HIGHLY HIGHLIGHTED INSTAGRAM LINK DIRECT TO twin_aura3 -->
           <a id="liveInstaLink" href="https://www.instagram.com/twin_aura3/" target="_blank" rel="noopener noreferrer" class="insta-btn">
             📸 Follow on Instagram: <span id="liveInstaHandle">twin_aura3</span>
           </a>
@@ -352,16 +384,16 @@
             <span class="clock-time" id="liveTimerDisplay">--:--:--</span>
           </div>
 
-          <!-- Spiritual and Celestial Festive Music Artwork Banner -->
+          <!-- DYNAMIC CUSTOM EVENT BANNER / POSTER (REPLACING QR) -->
           <div class="celestial-artwork-box">
-            <img class="celestial-artwork-img" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop" alt="Festive Cele">
+            <img id="liveBannerImg" class="celestial-artwork-img" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop" alt="Event Banner">
           </div>
 
-          <!-- Quick Access Event Timeline -->
+          <!-- DYNAMIC EVENT TIMELINE -->
           <div class="schedule-bar">
-            <span class="schedule-item">🚪 GATES: 7:30 PM</span>
-            <span class="schedule-item">🍽️ DINNER: 8:00 PM</span>
-            <span class="schedule-item">🪔 BHAKTI: 9:30 PM</span>
+            <span class="schedule-item" id="liveGateTime">🚪 GATES: 7:30 PM</span>
+            <span class="schedule-item" id="liveDinnerTime">🍽️ DINNER: 8:00 PM</span>
+            <span class="schedule-item" id="liveEventTime">🪔 BHAKTI: 9:30 PM</span>
           </div>
 
           <div class="ticker-header">⚡ OFFICIAL SPONSORS & PARTNERS</div>
@@ -432,11 +464,16 @@
     const guestNameParam = urlParams.get('name');
 
     const SYSTEM_DEFAULT_SPONSORS = "👑 Maruti Buildcon, 💍 Royal Jewellers, 🍟 Fiesta Foods, 📻 92.7 Big FM, 🚗 Apex Motors";
+    const DEFAULT_BANNER_IMAGE = "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop";
 
     const defaultSettings = {
       startPass: 1,
       quotaLimit: 150,
       brandLogo: "",
+      eventBanner: "",
+      timeGate: "7:30 PM",
+      timeDinner: "8:00 PM",
+      timeEvent: "9:30 PM",
       sponsorImages: [],
       brand: "✨ TWIN AURA PRESENTS ✨",
       title: "COSMIC BHAKTI",
@@ -483,25 +520,19 @@
       window.location.href = window.location.origin + window.location.pathname;
     }
 
-    // --- ACCURATE INSTAGRAM SANITIZER ---
     function getCleanInstagramHandle() {
       let raw = (settings.instaHandle || '').trim();
       if (!raw) return 'twin_aura3';
-
-      if (raw.includes('instagram.com/')) {
-        raw = raw.split('instagram.com/')[1];
-      }
+      if (raw.includes('instagram.com/')) raw = raw.split('instagram.com/')[1];
       raw = raw.split('?')[0].split('/')[0].split('#')[0];
       raw = raw.replace(/@/g, '').replace(/\s+/g, '');
       raw = raw.replace(/[^a-zA-Z0-9._]/g, '');
-
       return raw.toLowerCase() || 'twin_aura3';
     }
 
     function getCleanMapsUrl() {
       let raw = (settings.mapsUrl || '').trim();
       let venue = (settings.venue || 'Event Venue').trim();
-
       if (raw.includes('+') || (!raw.startsWith('http://') && !raw.startsWith('https://') && raw.length > 0)) {
         return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(raw);
       }
@@ -511,7 +542,7 @@
       return raw;
     }
 
-    // Canvas Compression
+    // High Speed Canvas Compression
     function compressImageFile(file, maxWidth, maxHeight, quality, callback) {
       const reader = new FileReader();
       reader.onload = function(e) {
@@ -542,10 +573,11 @@
       reader.readAsDataURL(file);
     }
 
+    // 1. Top Logo Attachment
     function handleBrandLogoUpload(event) {
       const file = event.target.files[0];
       if (!file) return;
-      compressImageFile(file, 300, 150, 0.8, function(base64Uri) {
+      compressImageFile(file, 300, 300, 0.85, function(base64Uri) {
         settings.brandLogo = base64Uri;
         renderBrandLogoPreview();
       });
@@ -567,6 +599,33 @@
       renderBrandLogoPreview();
     }
 
+    // 2. Middle Event Banner/Poster Upload Handler
+    function handleBannerUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      compressImageFile(file, 640, 320, 0.85, function(base64Uri) {
+        settings.eventBanner = base64Uri;
+        renderBannerPreview();
+      });
+    }
+
+    function renderBannerPreview() {
+      const row = document.getElementById('bannerPreviewRow');
+      const img = document.getElementById('bannerPreviewImg');
+      if (settings.eventBanner) {
+        img.src = settings.eventBanner;
+        row.style.display = 'flex';
+      } else {
+        row.style.display = 'none';
+      }
+    }
+
+    function removeEventBanner() {
+      settings.eventBanner = "";
+      renderBannerPreview();
+    }
+
+    // 3. Sponsor Logo Handler
     function handleSponsorLogoUpload(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -590,7 +649,7 @@
         item.innerHTML = `
           <img class="preview-img" src="${sp.img}">
           <div style="flex:1; font-size:11.5px; color:#ffe082;">${sp.name}</div>
-          <button style="background:#c62828; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:10px;" onclick="removeSponsorLogo(${idx})">Delete</button>
+          <button style="background:#c62828; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:10px; cursor:pointer;" onclick="removeSponsorLogo(${idx})">Delete</button>
         `;
         box.appendChild(item);
       });
@@ -611,7 +670,7 @@
         .then(cloudSettings => {
           if (cloudSettings) {
             settings = Object.assign(settings, cloudSettings);
-            if (!settings.instaHandle || settings.instaHandle.includes('twin_aura') && !settings.instaHandle.includes('3')) {
+            if (!settings.instaHandle || (settings.instaHandle.includes('twin_aura') && !settings.instaHandle.includes('3'))) {
               settings.instaHandle = 'twin_aura3';
             }
             localStorage.setItem('ev_set_' + EVENT_ID, JSON.stringify(settings));
@@ -643,6 +702,7 @@
     function applySettingsToUI() {
       document.getElementById('dashTitle').innerText = settings.title + " (Pass Sheet)";
       
+      // Top Circular Logo
       const logoBox = document.getElementById('liveBrandLogoContainer');
       const logoImg = document.getElementById('liveBrandLogoImg');
       if (settings.brandLogo) {
@@ -651,6 +711,20 @@
       } else {
         logoBox.style.display = 'none';
       }
+
+      // Middle Event Banner / Poster (Replacing QR)
+      const liveBanner = document.getElementById('liveBannerImg');
+      liveBanner.src = settings.eventBanner || DEFAULT_BANNER_IMAGE;
+
+      // Schedule Timings on Pass
+      document.getElementById('liveGateTime').innerText = "🚪 GATES: " + (settings.timeGate || "7:30 PM");
+      document.getElementById('liveDinnerTime').innerText = "🍽️ DINNER: " + (settings.timeDinner || "8:00 PM");
+      document.getElementById('liveEventTime').innerText = "🪔 BHAKTI: " + (settings.timeEvent || "9:30 PM");
+
+      // Settings Inputs
+      document.getElementById('cfgTimeGate').value = settings.timeGate || "7:30 PM";
+      document.getElementById('cfgTimeDinner').value = settings.timeDinner || "8:00 PM";
+      document.getElementById('cfgTimeEvent').value = settings.timeEvent || "9:30 PM";
 
       document.getElementById('liveBrand').innerText = settings.brand;
       document.getElementById('liveTitle').innerText = settings.title;
@@ -672,6 +746,7 @@
       document.getElementById('cfgAdminPass').value = settings.adminPass;
 
       renderBrandLogoPreview();
+      renderBannerPreview();
       renderSponsorLogosPreview();
       renderSponsorsTicker();
     }
@@ -751,6 +826,11 @@
       settings.sponsors = document.getElementById('cfgSponsors').value.trim();
       settings.adminPass = document.getElementById('cfgAdminPass').value.trim();
 
+      // Save Timings
+      settings.timeGate = document.getElementById('cfgTimeGate').value.trim() || "7:30 PM";
+      settings.timeDinner = document.getElementById('cfgTimeDinner').value.trim() || "8:00 PM";
+      settings.timeEvent = document.getElementById('cfgTimeEvent').value.trim() || "9:30 PM";
+
       localStorage.setItem('ev_set_' + EVENT_ID, JSON.stringify(settings));
       
       fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/settings.json`, {
@@ -760,7 +840,7 @@
       });
 
       applySettingsToUI();
-      alert("✅ Settings & Instagram Link (twin_aura3) Saved Successfully!");
+      alert("✅ All Event Settings, Banner & Timings Saved Successfully!");
     }
 
     // --- FAIL-CLOSED HARDWARE VERIFICATION ---
@@ -833,6 +913,12 @@
       document.getElementById('liveInstaHandle').innerText = cleanHandle;
       document.getElementById('liveInstaLink').href = 'https://www.instagram.com/' + cleanHandle + '/';
       document.getElementById('btnMapsLink').href = getCleanMapsUrl();
+
+      // Show Custom Banner & Timings on Guest View
+      document.getElementById('liveBannerImg').src = settings.eventBanner || DEFAULT_BANNER_IMAGE;
+      document.getElementById('liveGateTime').innerText = "🚪 GATES: " + (settings.timeGate || "7:30 PM");
+      document.getElementById('liveDinnerTime').innerText = "🍽️ DINNER: " + (settings.timeDinner || "8:00 PM");
+      document.getElementById('liveEventTime').innerText = "🪔 BHAKTI: " + (settings.timeEvent || "9:30 PM");
 
       startLiveTimer();
     }
@@ -908,6 +994,10 @@
         quotaLimit: quota,
         adminPass: pass,
         brandLogo: "",
+        eventBanner: "",
+        timeGate: "7:30 PM",
+        timeDinner: "8:00 PM",
+        timeEvent: "9:30 PM",
         sponsorImages: [],
         sponsors: SYSTEM_DEFAULT_SPONSORS,
         venue: "EVENT VENUE",
@@ -944,7 +1034,7 @@
         `🎟️ *Allotted Quota:* ${quota} Passes (#BK-${nextStartPass} to #BK-${endPass})\n\n` +
         `⚡ *Instructions:*\n` +
         `1. Tap 'Issue Pass' to send digital tickets via WhatsApp.\n` +
-        `2. Tap '⚙️ Settings' to attach your brand logo, Instagram & Google Maps link!`
+        `2. Tap '⚙️ Settings' to attach your brand logo, event poster, schedule timings & Maps link!`
       );
 
       loadAllPromotersList();
