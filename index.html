@@ -82,8 +82,8 @@
     .pass-brand { font-size: 12px; font-weight: 800; color: #ffe082; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3px; }
     .pass-title { font-size: 26px; font-weight: 900; background: linear-gradient(to right, #ffe082, #ffb300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
-    /* Native App Trigger Buttons */
-    .insta-btn { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; text-decoration: none; padding: 6px 16px; border-radius: 20px; font-size: 11.5px; font-weight: 700; margin: 6px 0 10px; box-shadow: 0 2px 10px rgba(220,39,67,0.35); cursor: pointer; border: none; }
+    /* Native App Trigger Buttons (Universal Links) */
+    .insta-btn { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; text-decoration: none; padding: 7px 18px; border-radius: 20px; font-size: 12px; font-weight: 700; margin: 6px 0 10px; box-shadow: 0 2px 10px rgba(220,39,67,0.35); }
     .venue-badge { display: inline-block; background: rgba(255,179,0,0.12); color: #ffb300; border: 1px solid rgba(255,179,0,0.3); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 10px; }
     .guest-box { background: rgba(255,140,0,0.06); border-radius: 14px; padding: 12px 10px; margin-bottom: 10px; border: 1px solid rgba(255,179,0,0.25); }
     
@@ -108,7 +108,7 @@
     .sponsor-logo-img { height: 26px; width: auto; max-width: 75px; object-fit: contain; border-radius: 4px; background: #fff; padding: 1px 3px; }
     @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-    .btn-maps { background: #212121; color: #ffe082; border: 1.5px solid #ffb300; padding: 11px 14px; border-radius: 12px; font-size: 13px; font-weight: 800; width: 100%; text-decoration: none; display: block; margin-bottom: 8px; text-align: center; box-shadow: 0 2px 10px rgba(255,179,0,0.2); cursor: pointer; border: none; }
+    .btn-maps { background: #212121; color: #ffe082; border: 1.5px solid #ffb300; padding: 11px 14px; border-radius: 12px; font-size: 13px; font-weight: 800; width: 100%; text-decoration: none; display: block; margin-bottom: 8px; text-align: center; box-shadow: 0 2px 10px rgba(255,179,0,0.2); }
     .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 12px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; width: 100%; cursor: pointer; }
     .btn-entered-state { background: #424242 !important; color: #9e9e9e !important; cursor: not-allowed; }
 
@@ -122,7 +122,7 @@
 </head>
 <body>
 
-  <!-- Dedicated Return to Master Hub Bar -->
+  <!-- Return to Master Hub Bar -->
   <div class="return-hub-bar" id="returnHubBar">
     <button class="btn-return-hub" onclick="goToMasterHub()">
       <span>⬅️</span>
@@ -160,7 +160,7 @@
           <div class="stat-label">Full VIP</div>
         </div>
         <div class="stat-card">
-          <div class="stat-num stat-dinnerCount" id="statDinnerCount">0</div>
+          <div class="stat-num" id="statDinnerCount">0</div>
           <div class="stat-label">Dinner Only</div>
         </div>
         <div class="stat-card">
@@ -214,13 +214,13 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">Organizer Instagram Handle (e.g. @cosmic_bhakti)</label>
+        <label class="form-label">Organizer Instagram Handle (e.g. twin_aura3 or @twin_aura3)</label>
         <input type="text" class="form-input" id="cfgInstaHandle" value="@cosmic_bhakti">
       </div>
 
       <div class="form-group">
         <label class="form-label">Organizer Instagram Profile URL</label>
-        <input type="text" class="form-input" id="cfgInstaUrl" placeholder="https://instagram.com/your_handle">
+        <input type="text" class="form-input" id="cfgInstaUrl" placeholder="https://instagram.com/twin_aura3">
       </div>
 
       <div class="form-group">
@@ -311,10 +311,10 @@
           <div class="pass-brand" id="liveBrand">✨ TWIN AURA PRESENTS ✨</div>
           <div class="pass-title" id="liveTitle">COSMIC BHAKTI</div>
           
-          <!-- NATIVE INSTAGRAM APP BUTTON -->
-          <button id="liveInstaLink" class="insta-btn" onclick="openNativeInstagram()">
+          <!-- FIXED DIRECT UNIVERSAL INSTAGRAM LINK (NO POPUP, NO ERROR) -->
+          <a id="liveInstaLink" href="#" class="insta-btn">
             📸 Follow <span id="liveInstaHandle">@cosmic_bhakti</span>
-          </button>
+          </a>
           
           <div><span class="venue-badge" id="liveVenue">📍 MORBI • NOV 1, 2026</span></div>
 
@@ -336,8 +336,8 @@
             <div class="ticker-move" id="tickerContent"></div>
           </div>
 
-          <!-- NATIVE MAPS APP BUTTON -->
-          <button class="btn-maps" onclick="openNativeMaps()">📍 Get Venue Directions (Maps)</button>
+          <!-- DIRECT NATIVE MAPS LINK -->
+          <a id="btnMapsLink" href="#" class="btn-maps">📍 Get Venue Directions (Maps)</a>
           
           <button class="btn-gate" id="btnGateAction" onclick="handleGatekeeperEntry()">GATE ENTRY (TAP TO VERIFY)</button>
         </div>
@@ -451,33 +451,46 @@
       window.location.href = window.location.origin + window.location.pathname;
     }
 
-    // --- DEEP LINK HANDLERS (OPENS DIRECTLY IN APPS, NOT IN SAFARI) ---
-    function openNativeInstagram() {
-      let handle = settings.instaHandle || 'cosmic_bhakti';
-      handle = handle.replace('@', '').trim();
-      
-      // 1. Try launching Instagram Native App
-      window.location.href = 'instagram://user?username=' + handle;
-
-      // 2. Fallback to web profile if app is not installed
-      setTimeout(() => {
-        window.open('https://www.instagram.com/' + handle + '/', '_blank');
-      }, 1000);
+    // --- SMART PARSER: AUTO-CLEAN INSTAGRAM HANDLE & URL ---
+    function cleanInstagramUsername(input) {
+      if (!input) return '';
+      let str = input.trim();
+      // Remove URL wrapper if full link was pasted
+      if (str.includes('instagram.com/')) {
+        str = str.split('instagram.com/')[1];
+      }
+      // Remove query parameters, slashes, hashes
+      str = str.split('?')[0].split('/')[0].split('#')[0];
+      // Remove @ sign
+      str = str.replace(/^@+/, '');
+      // Replace accidental spaces with underscore
+      str = str.replace(/\s+/g, '_');
+      // Strictly filter to valid Instagram characters (letters, numbers, periods, underscores)
+      str = str.replace(/[^a-zA-Z0-9._]/g, '');
+      return str;
     }
 
-    function openNativeMaps() {
+    function getCleanInstagramUrl() {
+      let u = cleanInstagramUsername(settings.instaHandle);
+      if (!u && settings.instaUrl) {
+        u = cleanInstagramUsername(settings.instaUrl);
+      }
+      if (!u) u = 'cosmic_bhakti';
+      return 'https://www.instagram.com/' + u + '/';
+    }
+
+    function getCleanMapsUrl() {
       let raw = (settings.mapsUrl || '').trim();
       let venue = (settings.venue || 'Event Venue').trim();
 
-      // If user pasted a Google Plus Code (e.g. 7jjg7q9v+89) or place name
+      // Detect Plus Code (e.g. 7jjg7q9v+89) or address without protocol
       if (raw.includes('+') || (!raw.startsWith('http://') && !raw.startsWith('https://') && raw.length > 0)) {
-        raw = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(raw);
-      } else if (!raw) {
-        raw = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(venue);
+        return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(raw);
       }
-
-      // Automatically launch in Apple Maps or Google Maps native app
-      window.location.href = raw;
+      if (!raw) {
+        return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(venue);
+      }
+      return raw;
     }
 
     // Canvas Compression
@@ -620,8 +633,17 @@
 
       document.getElementById('liveBrand').innerText = settings.brand;
       document.getElementById('liveTitle').innerText = settings.title;
-      document.getElementById('liveInstaHandle').innerText = settings.instaHandle || '@event';
+      
+      const cleanUser = cleanInstagramUsername(settings.instaHandle) || 'cosmic_bhakti';
+      document.getElementById('liveInstaHandle').innerText = '@' + cleanUser;
+
+      // Pure Universal Links: iOS opens native Instagram & Maps automatically without prompts
+      const finalInstaUrl = getCleanInstagramUrl();
+      const finalMapsUrl = getCleanMapsUrl();
+
+      document.getElementById('liveInstaLink').href = finalInstaUrl;
       document.getElementById('liveVenue').innerText = "📍 " + settings.venue;
+      document.getElementById('btnMapsLink').href = finalMapsUrl;
 
       document.getElementById('statAllotted').innerText = settings.quotaLimit;
       document.getElementById('cfgBrand').value = settings.brand;
@@ -642,14 +664,15 @@
     function renderSponsorsTicker() {
       const tickerBox = document.getElementById('tickerContent');
       let html = '';
+      const finalInstaUrl = getCleanInstagramUrl();
 
       if (settings.sponsorImages && settings.sponsorImages.length > 0) {
         settings.sponsorImages.forEach(sp => {
           html += `
-            <div class="sponsor-pill" onclick="openNativeInstagram()">
+            <a href="${finalInstaUrl}" class="sponsor-pill">
               <img src="${sp.img}" class="sponsor-logo-img">
               <span>${sp.name}</span>
-            </div>
+            </a>
           `;
         });
       }
@@ -657,7 +680,7 @@
       const textSponsors = (settings.sponsors || SYSTEM_DEFAULT_SPONSORS).split(',');
       textSponsors.forEach(sp => {
         const name = sp.trim();
-        if (name) html += `<div class="sponsor-pill" onclick="openNativeInstagram()"><span>${name}</span></div>`;
+        if (name) html += `<a href="${finalInstaUrl}" class="sponsor-pill"><span>${name}</span></a>`;
       });
 
       tickerBox.innerHTML = html + html;
@@ -701,9 +724,13 @@
     }
 
     function saveEventSettings() {
+      // Auto clean handle before saving
+      let rawHandle = document.getElementById('cfgInstaHandle').value.trim();
+      let cleaned = cleanInstagramUsername(rawHandle);
+      
       settings.brand = document.getElementById('cfgBrand').value.trim();
       settings.title = document.getElementById('cfgTitle').value.trim();
-      settings.instaHandle = document.getElementById('cfgInstaHandle').value.trim();
+      settings.instaHandle = cleaned ? '@' + cleaned : '@cosmic_bhakti';
       settings.instaUrl = document.getElementById('cfgInstaUrl').value.trim();
       settings.venue = document.getElementById('cfgVenue').value.trim();
       settings.mapsUrl = document.getElementById('cfgMapsUrl').value.trim();
@@ -788,6 +815,10 @@
         badge.innerText = "🌟 VIP FULL ACCESS (EVENT + DINNER)";
         badge.className = "tier-banner tier-full-style";
       }
+
+      // Re-apply latest sanitized Universal Links
+      document.getElementById('liveInstaLink').href = getCleanInstagramUrl();
+      document.getElementById('btnMapsLink').href = getCleanMapsUrl();
 
       generateQRCode(pId);
       startLiveTimer();
