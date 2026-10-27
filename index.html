@@ -10,6 +10,10 @@
     body { background: #080503; color: #fff; min-height: 100vh; padding: 12px; display: flex; flex-direction: column; align-items: center; }
     .container { width: 100%; max-width: 440px; margin: 0 auto; }
     
+    /* Top Exit / Return to Master Bar */
+    .return-hub-bar { width: 100%; max-width: 440px; margin-bottom: 10px; display: none; }
+    .btn-return-hub { width: 100%; background: #240c0c; border: 1.5px solid #ff5252; color: #ff8a80; padding: 9px 12px; border-radius: 12px; font-size: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 2px 10px rgba(255,82,82,0.25); }
+
     /* Top Navigation Tabs */
     .top-nav { display: flex; gap: 5px; width: 100%; max-width: 440px; margin-bottom: 14px; background: #180f08; padding: 5px; border-radius: 14px; border: 1px solid rgba(255,180,0,0.25); }
     .tab-btn { flex: 1; padding: 10px 2px; border: none; border-radius: 10px; font-size: 11px; font-weight: 700; cursor: pointer; color: #d7ccc8; background: transparent; text-align: center; }
@@ -78,7 +82,7 @@
     .pass-brand { font-size: 12px; font-weight: 800; color: #ffe082; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3px; }
     .pass-title { font-size: 26px; font-weight: 900; background: linear-gradient(to right, #ffe082, #ffb300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
-    .insta-btn { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; text-decoration: none; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; margin: 6px 0 10px; box-shadow: 0 2px 10px rgba(220,39,67,0.3); }
+    .insta-btn { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; text-decoration: none; padding: 6px 16px; border-radius: 20px; font-size: 11.5px; font-weight: 700; margin: 6px 0 10px; box-shadow: 0 2px 10px rgba(220,39,67,0.35); cursor: pointer; }
     .venue-badge { display: inline-block; background: rgba(255,179,0,0.12); color: #ffb300; border: 1px solid rgba(255,179,0,0.3); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 10px; }
     .guest-box { background: rgba(255,140,0,0.06); border-radius: 14px; padding: 12px 10px; margin-bottom: 10px; border: 1px solid rgba(255,179,0,0.25); }
     
@@ -103,7 +107,7 @@
     .sponsor-logo-img { height: 26px; width: auto; max-width: 75px; object-fit: contain; border-radius: 4px; background: #fff; padding: 1px 3px; }
     @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-    .btn-maps { background: #212121; color: #ffe082; border: 1px solid #ffb300; padding: 10px 14px; border-radius: 12px; font-size: 12px; font-weight: 700; width: 100%; text-decoration: none; display: block; margin-bottom: 8px; }
+    .btn-maps { background: #212121; color: #ffe082; border: 1.5px solid #ffb300; padding: 11px 14px; border-radius: 12px; font-size: 13px; font-weight: 800; width: 100%; text-decoration: none; display: block; margin-bottom: 8px; text-align: center; box-shadow: 0 2px 10px rgba(255,179,0,0.2); }
     .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 12px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; width: 100%; cursor: pointer; }
     .btn-entered-state { background: #424242 !important; color: #9e9e9e !important; cursor: not-allowed; }
 
@@ -117,7 +121,15 @@
 </head>
 <body>
 
-  <!-- Top Navigation (Hidden for VIP Guests) -->
+  <!-- Return to Master Hub Bar -->
+  <div class="return-hub-bar" id="returnHubBar">
+    <button class="btn-return-hub" onclick="goToMasterHub()">
+      <span>⬅️</span>
+      <span>Exit to Master Hub (મુખ્ય પેજ પર પાછા જાઓ)</span>
+    </button>
+  </div>
+
+  <!-- Top Navigation -->
   <div class="top-nav" id="adminNavBar">
     <button class="tab-btn active" id="tabSheetBtn" onclick="switchTab('sheet')">Pass Manager</button>
     <button class="tab-btn" id="tabSettingsBtn" onclick="switchTab('settings')">⚙️ Settings</button>
@@ -173,9 +185,9 @@
       </div>
     </div>
 
-    <!-- 2. Settings View (With Direct Image Attachments) -->
+    <!-- 2. Settings View -->
     <div id="viewSettings" class="panel-card" style="display: none;">
-      <div class="panel-title">⚙️ Event Branding & Logo Attachments</div>
+      <div class="panel-title">⚙️ Event Branding & Links</div>
 
       <!-- MAIN PRESENTER LOGO -->
       <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
@@ -201,13 +213,13 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">Organizer Instagram Handle</label>
+        <label class="form-label">Organizer Instagram Handle (e.g. @cosmic_bhakti)</label>
         <input type="text" class="form-input" id="cfgInstaHandle" value="@cosmic_bhakti">
       </div>
 
       <div class="form-group">
-        <label class="form-label">Organizer Instagram URL</label>
-        <input type="url" class="form-input" id="cfgInstaUrl" value="https://instagram.com">
+        <label class="form-label">Organizer Instagram Profile URL</label>
+        <input type="text" class="form-input" id="cfgInstaUrl" placeholder="https://instagram.com/your_handle">
       </div>
 
       <div class="form-group">
@@ -217,7 +229,7 @@
 
       <div class="form-group">
         <label class="form-label">Google Maps Link</label>
-        <input type="url" class="form-input" id="cfgMapsUrl" value="https://maps.google.com">
+        <input type="text" class="form-input" id="cfgMapsUrl" placeholder="https://maps.app.goo.gl/... or https://maps.google.com/...">
       </div>
 
       <!-- SPONSOR LOGO ATTACHMENTS -->
@@ -247,7 +259,7 @@
       <button class="btn-green" style="width: 100%; margin-top: 8px;" onclick="saveEventSettings()">💾 Save Event Settings & Logos</button>
     </div>
 
-    <!-- 3. Super Admin Master Hub (Auto Promoter Generator) -->
+    <!-- 3. Super Admin Master Hub -->
     <div id="viewSuperHub" class="panel-card" style="display: none;">
       <div class="panel-title" style="color: #ff8a80;">👑 Master Hub: Auto Promoter Generator</div>
 
@@ -298,7 +310,8 @@
           <div class="pass-brand" id="liveBrand">✨ TWIN AURA PRESENTS ✨</div>
           <div class="pass-title" id="liveTitle">COSMIC BHAKTI</div>
           
-          <a id="liveInstaLink" href="https://instagram.com" target="_blank" class="insta-btn">
+          <!-- FIXED INSTAGRAM LINK -->
+          <a id="liveInstaLink" href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="insta-btn">
             📸 Follow <span id="liveInstaHandle">@cosmic_bhakti</span>
           </a>
           
@@ -322,7 +335,8 @@
             <div class="ticker-move" id="tickerContent"></div>
           </div>
 
-          <a id="btnMapsLink" href="https://maps.google.com" target="_blank" class="btn-maps">📍 Get Venue Directions (Maps)</a>
+          <!-- FIXED GOOGLE MAPS LINK -->
+          <a id="btnMapsLink" href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="btn-maps">📍 Get Venue Directions (Maps)</a>
           <button class="btn-gate" id="btnGateAction" onclick="handleGatekeeperEntry()">GATE ENTRY (TAP TO VERIFY)</button>
         </div>
       </div>
@@ -391,9 +405,9 @@
       brand: "✨ TWIN AURA PRESENTS ✨",
       title: "COSMIC BHAKTI",
       instaHandle: "@cosmic_bhakti",
-      instaUrl: "https://instagram.com",
+      instaUrl: "",
       venue: "MORBI • NOV 1, 2026",
-      mapsUrl: "https://maps.google.com",
+      mapsUrl: "",
       sponsors: SYSTEM_DEFAULT_SPONSORS,
       gatePin: "1234",
       adminPass: "admin123"
@@ -425,14 +439,48 @@
       localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
     }
 
-    // Hardware-bound Device Fingerprint
     let myDevice = localStorage.getItem('vip_device_token');
     if (!myDevice) {
       myDevice = 'FINGERPRINT_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
       localStorage.setItem('vip_device_token', myDevice);
     }
 
-    // Canvas Compression for High Speed Loading
+    function goToMasterHub() {
+      window.location.href = window.location.origin + window.location.pathname;
+    }
+
+    // --- SMART LINK SANITIZERS (FIXES FOR INSTAGRAM & GOOGLE MAPS) ---
+    function sanitizeWebUrl(url) {
+      if (!url) return '';
+      url = url.trim();
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        return 'https://' + url;
+      }
+      return url;
+    }
+
+    function resolveInstagramUrl() {
+      if (settings.instaUrl && settings.instaUrl.trim() !== '' && settings.instaUrl.trim() !== 'https://instagram.com') {
+        return sanitizeWebUrl(settings.instaUrl);
+      }
+      if (settings.instaHandle && settings.instaHandle.trim() !== '') {
+        const cleanHandle = settings.instaHandle.replace('@', '').trim();
+        if (cleanHandle) return 'https://instagram.com/' + cleanHandle;
+      }
+      return 'https://instagram.com';
+    }
+
+    function resolveMapsUrl() {
+      if (settings.mapsUrl && settings.mapsUrl.trim() !== '' && settings.mapsUrl.trim() !== 'https://maps.google.com') {
+        return sanitizeWebUrl(settings.mapsUrl);
+      }
+      if (settings.venue && settings.venue.trim() !== '') {
+        return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(settings.venue.trim());
+      }
+      return 'https://maps.google.com';
+    }
+
+    // Canvas Compression
     function compressImageFile(file, maxWidth, maxHeight, quality, callback) {
       const reader = new FileReader();
       reader.onload = function(e) {
@@ -522,9 +570,12 @@
       renderSponsorLogosPreview();
     }
 
-    // App Initialization
     window.addEventListener('DOMContentLoaded', () => {
-      // 1. Fetch live settings from Firebase cloud first to ensure correct promoter quota
+      if (urlParams.get('event') && !guestPassId) {
+        document.getElementById('returnHubBar').style.display = 'block';
+      }
+
+      // Fetch live cloud settings
       fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/settings.json`)
         .then(res => res.json())
         .then(cloudSettings => {
@@ -541,6 +592,7 @@
       applySettingsToUI();
 
       if (guestPassId) {
+        document.getElementById('returnHubBar').style.display = 'none';
         document.getElementById('adminNavBar').style.display = 'none';
         document.getElementById('viewSheet').style.display = 'none';
         document.getElementById('loadingOverlay').style.display = 'block';
@@ -569,18 +621,20 @@
 
       document.getElementById('liveBrand').innerText = settings.brand;
       document.getElementById('liveTitle').innerText = settings.title;
-      document.getElementById('liveInstaHandle').innerText = settings.instaHandle;
-      document.getElementById('liveInstaLink').href = settings.instaUrl;
+      document.getElementById('liveInstaHandle').innerText = settings.instaHandle || '@event';
+      
+      // FIXED INSTAGRAM & MAPS RESOLUTION
+      document.getElementById('liveInstaLink').href = resolveInstagramUrl();
       document.getElementById('liveVenue').innerText = "📍 " + settings.venue;
-      document.getElementById('btnMapsLink').href = settings.mapsUrl;
+      document.getElementById('btnMapsLink').href = resolveMapsUrl();
 
       document.getElementById('statAllotted').innerText = settings.quotaLimit;
       document.getElementById('cfgBrand').value = settings.brand;
       document.getElementById('cfgTitle').value = settings.title;
       document.getElementById('cfgInstaHandle').value = settings.instaHandle;
-      document.getElementById('cfgInstaUrl').value = settings.instaUrl;
+      document.getElementById('cfgInstaUrl').value = settings.instaUrl || '';
       document.getElementById('cfgVenue').value = settings.venue;
-      document.getElementById('cfgMapsUrl').value = settings.mapsUrl;
+      document.getElementById('cfgMapsUrl').value = settings.mapsUrl || '';
       document.getElementById('cfgSponsors').value = settings.sponsors;
       document.getElementById('cfgGatePin').value = settings.gatePin;
       document.getElementById('cfgAdminPass').value = settings.adminPass;
@@ -593,11 +647,12 @@
     function renderSponsorsTicker() {
       const tickerBox = document.getElementById('tickerContent');
       let html = '';
+      const instaLink = resolveInstagramUrl();
 
       if (settings.sponsorImages && settings.sponsorImages.length > 0) {
         settings.sponsorImages.forEach(sp => {
           html += `
-            <a href="${settings.instaUrl}" target="_blank" class="sponsor-pill">
+            <a href="${instaLink}" target="_blank" rel="noopener noreferrer" class="sponsor-pill">
               <img src="${sp.img}" class="sponsor-logo-img">
               <span>${sp.name}</span>
             </a>
@@ -608,7 +663,7 @@
       const textSponsors = (settings.sponsors || SYSTEM_DEFAULT_SPONSORS).split(',');
       textSponsors.forEach(sp => {
         const name = sp.trim();
-        if (name) html += `<a href="${settings.instaUrl}" target="_blank" class="sponsor-pill"><span>${name}</span></a>`;
+        if (name) html += `<a href="${instaLink}" target="_blank" rel="noopener noreferrer" class="sponsor-pill"><span>${name}</span></a>`;
       });
 
       tickerBox.innerHTML = html + html;
@@ -671,10 +726,10 @@
       });
 
       applySettingsToUI();
-      alert("✅ All Event Settings & Logos Saved Successfully!");
+      alert("✅ All Event Settings, Links & Logos Saved Successfully!");
     }
 
-    // --- 100% AIRTIGHT FAIL-CLOSED SECURITY VERIFICATION ---
+    // --- FAIL-CLOSED HARDWARE VERIFICATION ---
     function verifyPassAccessFirebase() {
       const passRef = `${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${guestPassId}.json`;
 
@@ -740,6 +795,10 @@
         badge.className = "tier-banner tier-full-style";
       }
 
+      // Re-apply latest sanitized Links to Pass
+      document.getElementById('liveInstaLink').href = resolveInstagramUrl();
+      document.getElementById('btnMapsLink').href = resolveMapsUrl();
+
       generateQRCode(pId);
       startLiveTimer();
     }
@@ -789,7 +848,7 @@
       btn.disabled = true;
     }
 
-    // --- 1-CLICK AUTOMATED PROMOTER GENERATOR ---
+    // --- AUTO PROMOTER GENERATOR ---
     function autoGenerateSlug() {
       const name = document.getElementById('genName').value.trim();
       const slug = name.toLowerCase().replace(/[^a-z0-9]/g, '_').substring(0, 16);
@@ -830,9 +889,9 @@
         sponsorImages: [],
         sponsors: SYSTEM_DEFAULT_SPONSORS,
         venue: "EVENT VENUE",
-        mapsUrl: "https://maps.google.com",
+        mapsUrl: "",
         instaHandle: "@event",
-        instaUrl: "https://instagram.com"
+        instaUrl: ""
       };
 
       await fetch(`${FIREBASE_DB_URL}/events/${slug}/settings.json`, {
@@ -865,7 +924,7 @@
         `🎟️ *Allotted Quota:* ${quota} Passes (#BK-${nextStartPass} to #BK-${endPass})\n\n` +
         `⚡ *Instructions:*\n` +
         `1. Tap 'Issue Pass' to send digital tickets via WhatsApp.\n` +
-        `2. Tap '⚙️ Settings' to attach your brand logo & sponsors directly from phone gallery!`
+        `2. Tap '⚙️ Settings' to attach your brand logo, Instagram & Google Maps link!`
       );
 
       loadAllPromotersList();
@@ -891,7 +950,6 @@
         Object.keys(data).forEach(k => {
           const p = data[k];
           const directLink = `${baseUrl}?event=${p.slug}`;
-          // Fixed: Removed target="_blank" so iPhone Safari opens immediately without popup blocking
           html += `
             <div class="promoter-card">
               <div style="display:flex; justify-content:space-between; align-items:center;">
