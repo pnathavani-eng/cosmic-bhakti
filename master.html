@@ -40,8 +40,6 @@
         <span class="form-label" style="color: #ff8a80;">🔑 Master Password & Counter Controls</span>
         <input type="password" class="form-input" id="newMasterKey" placeholder="Enter New Master Password">
         <button class="btn-save-key" onclick="updateMasterPassword()">💾 Save New Master Password</button>
-        
-        <!-- 1-CLICK RESET TO 101 BUTTON -->
         <button class="btn-reset-counter" onclick="resetGlobalPassCounter()">🔄 Reset Pass Counter to #BK-101</button>
       </div>
 
@@ -63,9 +61,8 @@
           </div>
         </div>
 
-        <!-- NEW: EXPIRY / VALIDITY DATE SELECTOR -->
         <div class="form-group">
-          <label class="form-label" style="color: #39ff14;">⏳ Portal Validity / Expiry Date (આ તારીખ પછી આપોઆપ બંધ થશે)</label>
+          <label class="form-label" style="color: #39ff14;">⏳ Portal Validity / Expiry Date</label>
           <input type="date" class="form-input" id="genExpiry">
         </div>
 
@@ -94,7 +91,6 @@
     let CURRENT_MASTER_KEY = DEFAULT_FALLBACK_KEY;
 
     window.addEventListener('DOMContentLoaded', async () => {
-      // Set default expiry date to 7 days from today
       const today = new Date();
       today.setDate(today.getDate() + 7);
       document.getElementById('genExpiry').value = today.toISOString().split('T')[0];
@@ -133,7 +129,7 @@
     async function updateMasterPassword() {
       const newKey = document.getElementById('newMasterKey').value.trim();
       if (!newKey || newKey.length < 4) {
-        alert("⚠️ Please enter a password of at least 4 characters.");
+        alert("⚠️ Please enter at least 4 characters.");
         return;
       }
       await fetch(`${FIREBASE_DB_URL}/master_security/key.json`, {
@@ -143,18 +139,17 @@
       });
       CURRENT_MASTER_KEY = newKey;
       document.getElementById('newMasterKey').value = '';
-      alert("✅ Master Admin Password Updated Successfully!");
+      alert("✅ Master Admin Password Updated!");
     }
 
-    // --- RESET PASS COUNTER TO 100 (NEXT PASS 101) ---
     async function resetGlobalPassCounter() {
-      if (confirm("Are you sure? Do you want to reset pass series counter to #BK-101 for next events? (જૂની ઇવેન્ટ્સ કાઢી નાખ્યા પછી જ આ કરવું)")) {
+      if (confirm("Reset pass series counter to #BK-101 for future events?")) {
         await fetch(`${FIREBASE_DB_URL}/global_registry.json`, {
           method: 'PATCH',
           body: JSON.stringify({ lastAssignedPass: 100 }),
           headers: { 'Content-Type': 'application/json' }
         });
-        alert("✅ Pass Counter Reset Done! Now the next new event will start from Pass #BK-101.");
+        alert("✅ Pass Counter Reset to #BK-101!");
       }
     }
 
@@ -172,23 +167,15 @@
       const pass = document.getElementById('genPass').value.trim();
       const expiry = document.getElementById('genExpiry').value;
 
-      if (!name || !slug) {
-        alert("Please enter promoter name!");
-        return;
-      }
-      if (!expiry) {
-        alert("Please choose Validity / Expiry Date!");
-        return;
-      }
+      if (!name || !slug) return alert("Please enter promoter name!");
+      if (!expiry) return alert("Please choose Expiry Date!");
 
       let nextStartPass = 101;
       try {
         const res = await fetch(`${FIREBASE_DB_URL}/global_registry.json`);
         const reg = await res.json() || {};
         nextStartPass = (reg.lastAssignedPass || 100) + 1;
-      } catch(e) {
-        nextStartPass = 101;
-      }
+      } catch(e) { nextStartPass = 101; }
 
       const endPass = nextStartPass + quota - 1;
 
@@ -198,7 +185,7 @@
         startPass: nextStartPass,
         quotaLimit: quota,
         adminPass: pass,
-        expiryDate: expiry, // Saved Expiry Date
+        expiryDate: expiry,
         brandLogo: "",
         eventBanner: "",
         eventDate: "SUNDAY • NOV 1, 2026",
@@ -226,17 +213,7 @@
         headers: { 'Content-Type': 'application/json' }
       });
 
-      const meta = { 
-        name: name, 
-        slug: slug, 
-        quota: quota, 
-        startPass: nextStartPass, 
-        endPass: endPass, 
-        phone: phone, 
-        pass: pass, 
-        expiryDate: expiry,
-        createdAt: new Date().toISOString() 
-      };
+      const meta = { name, slug, quota, startPass: nextStartPass, endPass, phone, pass, expiryDate: expiry, createdAt: new Date().toISOString() };
       await fetch(`${FIREBASE_DB_URL}/promoters_directory/${slug}.json`, {
         method: 'PUT',
         body: JSON.stringify(meta),
@@ -258,7 +235,7 @@
       );
 
       loadAllPromotersList();
-      alert(`✅ Event "${name}" Created!\nValidity till: ${expiry}\nPasses: #BK-${nextStartPass} to #BK-${endPass}`);
+      alert(`✅ Event "${name}" Created!\nValidity till: ${expiry}`);
 
       if (phone) window.open(`https://wa.me/91${phone}?text=${waText}`, '_blank');
       else window.open(`https://wa.me/?text=${waText}`, '_blank');
@@ -296,10 +273,11 @@
                 Quota: <b style="color:#fff;">${p.quota} Passes</b> (#BK-${p.startPass} - #${p.endPass})
               </div>
               <div style="font-size:11px; color:#ffb74d;">
-                Pass: <code>${p.pass}</code> | ⏳ Validity: <b>${p.expiryDate || 'Unlimited'}</b>
+                Pass: <code>${p.pass}</code> | ⏳ Till: <b>${p.expiryDate || 'Unlimited'}</b>
               </div>
               <div style="display:flex; gap:6px; margin-top:8px;">
-                <a href="${directLink}" target="_blank" style="flex:1; background:#1565c0; color:#fff; padding:8px 4px; border-radius:8px; font-size:11px; text-align:center; text-decoration:none; font-weight:700; display:inline-block;">Open Portal</a>
+                <a href="${directLink}" target="_blank" style="flex:1; background:#1565c0; color:#fff; padding:8px 4px; border-radius:8px; font-size:11px; text-align:center; text-decoration:none; font-weight:700; display:inline-block;">Portal</a>
+                <button onclick="exportMasterEventCSV('${p.slug}', '${p.name}')" style="background:#2e7d32; color:#fff; border:none; padding:8px 10px; border-radius:8px; font-size:11px; font-weight:700; cursor:pointer;">📥 Excel</button>
                 <button onclick="deletePromoter('${p.slug}')" style="background:#c62828; color:#fff; border:none; padding:8px 10px; border-radius:8px; font-size:11px; cursor:pointer;">Delete</button>
               </div>
             </div>
@@ -308,6 +286,33 @@
         box.innerHTML = html;
       } catch(e) {
         box.innerHTML = '<div style="color:#888; font-size:12px;">Failed to load events.</div>';
+      }
+    }
+
+    // --- MASTER EXCEL / CSV EXPORT FUNCTION ---
+    async function exportMasterEventCSV(slug, eventName) {
+      try {
+        const res = await fetch(`${FIREBASE_DB_URL}/events/${slug}/passes.json`);
+        const passesData = await res.json();
+        if (!passesData) return alert("આ ઇવેન્ટમાં હજુ સુધી કોઈ પાસ ઇશ્યૂ થયા નથી.");
+
+        let csv = "Pass ID,Guest Name,Mobile,Category Type,Status,CheckIn Time\n";
+        Object.keys(passesData).forEach(id => {
+          const p = passesData[id];
+          if (p && p.name) {
+            csv += `${id},"${p.name}","${p.phone || ''}","${p.type || 'FULL'}","${p.status || 'ISSUED'}","${p.enteredAt || ''}"\n`;
+          }
+        });
+
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.setAttribute("download", `${eventName.replace(/\s+/g, '_')}_Passes.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch(err) {
+        alert("Excel ફાઈલ ડાઉનલોડ કરવામાં સમસ્યા આવી.");
       }
     }
 
