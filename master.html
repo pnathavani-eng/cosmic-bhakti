@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Admin Control Room</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { background: #080503; color: #fff; min-height: 100vh; padding: 14px; display: flex; flex-direction: column; align-items: center; }
+    .container { width: 100%; max-width: 440px; margin: 0 auto; }
+    .panel-card { background: #130b06; border-radius: 20px; padding: 18px; border: 1.5px solid rgba(255,180,0,0.3); width: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+    .panel-title { font-size: 19px; font-weight: 900; color: #ff8a80; text-align: center; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px; }
+    .form-group { margin-bottom: 11px; text-align: left; }
+    .form-label { font-size: 11px; font-weight: 700; color: #ffb74d; margin-bottom: 4px; display: block; text-transform: uppercase; }
+    .form-input { width: 100%; padding: 11px 12px; background: #22140b; border: 1px solid rgba(255,180,0,0.4); border-radius: 10px; color: #fff; font-size: 13.5px; outline: none; }
+    .btn-purple { background: linear-gradient(45deg, #7b1fa2, #ab47bc); color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 13.5px; font-weight: 800; cursor: pointer; width: 100%; box-shadow: 0 3px 12px rgba(123,31,162,0.4); }
+    .btn-save-key { background: #c62828; color: #fff; border: none; padding: 10px; border-radius: 10px; font-size: 12px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 6px; }
+    .promoter-card { background: #1c0f0a; border: 1px solid rgba(255,180,0,0.25); border-radius: 14px; padding: 12px; margin-bottom: 10px; }
+    .box-sec { background: rgba(255,180,0,0.05); border: 1px dashed rgba(255,180,0,0.35); border-radius: 14px; padding: 12px; margin-bottom: 14px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="panel-card" id="loginCard">
+      <div class="panel-title">🔐 Master Security Access</div>
+      <div class="form-group">
+        <label class="form-label">Enter Master Key</label>
+        <input type="password" class="form-input" id="inputMasterKey" placeholder="Enter Master Password">
+      </div>
+      <button class="btn-purple" onclick="verifyLogin()">Unlock Master Control</button>
+    </div>
+
+    <div class="panel-card" id="mainDashboard" style="display: none;">
+      <div class="panel-title">👑 Master Admin Control Room</div>
+
+      <!-- CHANGE MASTER PASSWORD SECTION -->
+      <div class="box-sec" style="border-color: #ff5252; background: rgba(211,47,47,0.08);">
+        <span class="form-label" style="color: #ff8a80;">🔑 Change Master Password (ક્લાઉડ પાસવર્ડ બદલો)</span>
+        <div style="display: flex; gap: 6px;">
+          <input type="password" class="form-input" id="newMasterKey" placeholder="Enter New Master Password">
+        </div>
+        <button class="btn-save-key" onclick="updateMasterPassword()">💾 Save New Master Password</button>
+      </div>
+
+      <!-- CREATE NEW PROMOTER EVENT -->
+      <div class="box-sec">
+        <div class="form-group">
+          <label class="form-label">Promoter / Event Name</label>
+          <input type="text" class="form-input" id="genName" placeholder="e.g. Royal Garba Rajkot" oninput="autoGenerateSlug()">
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label">Pass Quota</label>
+            <input type="number" class="form-input" id="genQuota" value="500">
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label">Promoter Mobile</label>
+            <input type="tel" class="form-input" id="genPhone" placeholder="10 Digits">
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label">Auto Slug</label>
+            <input type="text" class="form-input" id="genSlug" disabled style="background:#150a06; color:#ffe082;">
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label">Client Password</label>
+            <input type="text" class="form-input" id="genPass" value="vip2026">
+          </div>
+        </div>
+
+        <button class="btn-purple" onclick="createPromoterAndShare()">🚀 Generate Event & Share WhatsApp</button>
+      </div>
+
+      <div style="font-size: 13px; font-weight: 800; color: #ffe082; margin: 16px 0 8px;">📋 Active Events & Promoters</div>
+      <div id="promoterListDisplay"></div>
+    </div>
+  </div>
+
+  <script>
+    const FIREBASE_DB_URL = "https://vip-pass-system-default-rtdb.firebaseio.com";
+    const DEFAULT_FALLBACK_KEY = "super999";
+    let CURRENT_MASTER_KEY = DEFAULT_FALLBACK_KEY;
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      await fetchMasterKeyFromCloud();
+      if (sessionStorage.getItem('master_logged_in') === 'true') {
+        showDashboard();
+      }
+    });
+
+    async function fetchMasterKeyFromCloud() {
+      try {
+        const res = await fetch(`${FIREBASE_DB_URL}/master_security/key.json`);
+        const data = await res.json();
+        if (data) CURRENT_MASTER_KEY = data;
+      } catch(e) {}
+    }
+
+    async function verifyLogin() {
+      await fetchMasterKeyFromCloud();
+      const entered = document.getElementById('inputMasterKey').value.trim();
+      if (entered === CURRENT_MASTER_KEY) {
+        sessionStorage.setItem('master_logged_in', 'true');
+        showDashboard();
+      } else {
+        alert("❌ Incorrect Master Key!");
+      }
+    }
+
+    function showDashboard() {
+      document.getElementById('loginCard').style.display = 'none';
+      document.getElementById('mainDashboard').style.display = 'block';
+      loadAllPromotersList();
+    }
+
+    async function updateMasterPassword() {
+      const newKey = document.getElementById('newMasterKey').value.trim();
+      if (!newKey || newKey.length < 4) {
+        alert("⚠️ Please enter a password of at least 4 characters.");
+        return;
+      }
+      await fetch(`${FIREBASE_DB_URL}/master_security/key.json`, {
+        method: 'PUT',
+        body: JSON.stringify(newKey),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      CURRENT_MASTER_KEY = newKey;
+      document.getElementById('newMasterKey').value = '';
+      alert("✅ Master Admin Password Updated Successfully!");
+    }
+
+    function autoGenerateSlug() {
+      const name = document.getElementById('genName').value.trim();
+      const slug = name.toLowerCase().replace(/[^a-z0-9]/g, '_').substring(0, 16);
+      document.getElementById('genSlug').value = slug || 'promoter_event';
+    }
+
+    async function createPromoterAndShare() {
+      const name = document.getElementById('genName').value.trim();
+      const quota = parseInt(document.getElementById('genQuota').value) || 500;
+      const phone = document.getElementById('genPhone').value.trim();
+      const slug = document.getElementById('genSlug').value.trim();
+      const pass = document.getElementById('genPass').value.trim();
+
+      if (!name || !slug) {
+        alert("Please enter promoter name!");
+        return;
+      }
+
+      let nextStartPass = 101;
+      try {
+        const res = await fetch(`${FIREBASE_DB_URL}/global_registry.json`);
+        const reg = await res.json() || {};
+        nextStartPass = (reg.lastAssignedPass || 100) + 1;
+      } catch(e) {
+        nextStartPass = 101;
+      }
+
+      const endPass = nextStartPass + quota - 1;
+
+      const newEventPayload = {
+        title: name.toUpperCase(),
+        brand: `✨ ${name.toUpperCase()} PRESENTS ✨`,
+        startPass: nextStartPass,
+        quotaLimit: quota,
+        adminPass: pass,
+        brandLogo: "",
+        eventBanner: "",
+        eventDate: "SUNDAY • NOV 1, 2026",
+        venueAddress: "EVENT VENUE ADDRESS",
+        gateNo: "VIP-1",
+        prog1Label: "PROGRAM",
+        prog1Time: "8:00 PM",
+        prog2Label: "DINNER",
+        prog2Time: "9:30 PM",
+        sponsorImages: [],
+        sponsors: "👑 Partner 1, 💍 Partner 2, 🍟 Partner 3",
+        mapsUrl: "",
+        instaHandle: "twin_aura3"
+      };
+
+      await fetch(`${FIREBASE_DB_URL}/events/${slug}/settings.json`, {
+        method: 'PUT',
+        body: JSON.stringify(newEventPayload),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      await fetch(`${FIREBASE_DB_URL}/global_registry.json`, {
+        method: 'PATCH',
+        body: JSON.stringify({ lastAssignedPass: endPass }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const meta = { name: name, slug: slug, quota: quota, startPass: nextStartPass, endPass: endPass, phone: phone, pass: pass, createdAt: new Date().toISOString() };
+      await fetch(`${FIREBASE_DB_URL}/promoters_directory/${slug}.json`, {
+        method: 'PUT',
+        body: JSON.stringify(meta),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const baseUrl = window.location.origin + window.location.pathname.replace('master.html', 'index.html');
+      const clientPortalUrl = `${baseUrl}?event=${slug}`;
+
+      const waText = encodeURIComponent(
+        `🌟 *Welcome ${name}! Your VIP Pass Portal is LIVE*\n\n` +
+        `🔗 *Admin Portal Link:*\n${clientPortalUrl}\n\n` +
+        `🔑 *Admin Password:* ${pass}\n` +
+        `🎟️ *Allotted Quota:* ${quota} Passes (#BK-${nextStartPass} to #BK-${endPass})\n\n` +
+        `⚡ *Features:*\n` +
+        `1. Issue & manage VIP passes directly.\n` +
+        `2. Tap '⚙️ Settings' to update event banner, dates, timings & address.`
+      );
+
+      loadAllPromotersList();
+      alert(`✅ Event "${name}" Created Successfully!`);
+
+      if (phone) window.open(`https://wa.me/91${phone}?text=${waText}`, '_blank');
+      else window.open(`https://wa.me/?text=${waText}`, '_blank');
+    }
+
+    async function loadAllPromotersList() {
+      const box = document.getElementById('promoterListDisplay');
+      try {
+        const res = await fetch(`${FIREBASE_DB_URL}/promoters_directory.json`);
+        const data = await res.json();
+        if (!data) {
+          box.innerHTML = '<div style="color:#888; font-size:12px; text-align:center;">No active events yet.</div>';
+          return;
+        }
+
+        let html = '';
+        const baseUrl = window.location.origin + window.location.pathname.replace('master.html', 'index.html');
+
+        Object.keys(data).forEach(k => {
+          const p = data[k];
+          const directLink = `${baseUrl}?event=${p.slug}`;
+          html += `
+            <div class="promoter-card">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <b style="color:#ffe082; font-size:14px;">${p.name}</b>
+                <span style="font-size:11px; background:#2e7d32; color:#fff; padding:2px 8px; border-radius:6px; font-weight:800;">ACTIVE</span>
+              </div>
+              <div style="font-size:11.5px; color:#a1887f; margin: 4px 0;">
+                Quota: <b style="color:#fff;">${p.quota} Passes</b> (#BK-${p.startPass} - #${p.endPass})
+              </div>
+              <div style="font-size:11px; color:#ffb74d;">Pass: <code>${p.pass}</code></div>
+              <div style="display:flex; gap:6px; margin-top:8px;">
+                <a href="${directLink}" target="_blank" style="flex:1; background:#1565c0; color:#fff; padding:8px 4px; border-radius:8px; font-size:11px; text-align:center; text-decoration:none; font-weight:700; display:inline-block;">Open Client Portal</a>
+                <button onclick="deletePromoter('${p.slug}')" style="background:#c62828; color:#fff; border:none; padding:8px 10px; border-radius:8px; font-size:11px; cursor:pointer;">Delete</button>
+              </div>
+            </div>
+          `;
+        });
+        box.innerHTML = html;
+      } catch(e) {
+        box.innerHTML = '<div style="color:#888; font-size:12px;">Failed to load events.</div>';
+      }
+    }
+
+    async function deletePromoter(slug) {
+      if (confirm(`Delete event "${slug}" completely?`)) {
+        await fetch(`${FIREBASE_DB_URL}/promoters_directory/${slug}.json`, { method: 'DELETE' });
+        await fetch(`${FIREBASE_DB_URL}/events/${slug}.json`, { method: 'DELETE' });
+        loadAllPromotersList();
+        alert('Event deleted.');
+      }
+    }
+  </script>
+</body>
+</html>
