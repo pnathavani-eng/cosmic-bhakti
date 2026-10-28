@@ -9,12 +9,10 @@
     body { background: #080503; color: #fff; min-height: 100vh; padding: 12px; display: flex; flex-direction: column; align-items: center; }
     .container { width: 100%; max-width: 440px; margin: 0 auto; }
     
-    /* Top Navigation Tabs - Master Hub Completely Removed */
     .top-nav { display: flex; gap: 6px; width: 100%; max-width: 440px; margin-bottom: 14px; background: #180f08; padding: 5px; border-radius: 14px; border: 1px solid rgba(255,180,0,0.25); }
     .tab-btn { flex: 1; padding: 10px 2px; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; color: #d7ccc8; background: transparent; text-align: center; }
     .tab-btn.active { background: #ff8f00; color: #000; box-shadow: 0 2px 10px rgba(255,143,0,0.4); }
 
-    /* Dashboard Stats Bar */
     .stats-bar { display: flex; gap: 6px; margin-bottom: 12px; }
     .stat-card { flex: 1; background: #1c1008; border: 1px solid rgba(255,180,0,0.25); border-radius: 12px; padding: 8px 3px; text-align: center; }
     .stat-num { font-size: 16px; font-weight: 900; color: #ffe082; }
@@ -23,29 +21,24 @@
     .stat-orange { color: #ff9100; }
     .stat-blue { color: #00e5ff; }
 
-    /* Panels & Cards */
     .panel-card { background: #130b06; border-radius: 20px; padding: 16px; border: 1px solid rgba(255,180,0,0.2); width: 100%; }
     .panel-title { font-size: 17px; font-weight: 800; color: #ffe082; margin-bottom: 12px; text-align: center; }
     .action-row { display: flex; gap: 8px; margin-bottom: 12px; }
     
-    /* Buttons */
     .btn-green { background: #2e7d32; color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
     .btn-sync { background: #e65100; color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
     .btn-blue { background: #1565c0; color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
     .btn-upload { background: #2b170b; border: 1px dashed #ffb300; color: #ffe082; padding: 10px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; width: 100%; text-align: center; display: block; margin-top: 6px; }
 
-    /* Inputs */
     .search-box { width: 100%; padding: 11px 13px; background: #22140b; border: 1px solid #ffb300; border-radius: 12px; color: #fff; font-size: 14px; margin-bottom: 12px; outline: none; }
     .form-group { margin-bottom: 11px; text-align: left; }
     .form-label { font-size: 11px; font-weight: 700; color: #ffb74d; margin-bottom: 3px; display: block; text-transform: uppercase; }
     .form-input { width: 100%; padding: 10px 12px; background: #22140b; border: 1px solid rgba(255,180,0,0.4); border-radius: 10px; color: #fff; font-size: 13px; outline: none; }
     .form-select { width: 100%; padding: 10px 12px; background: #22140b; border: 1px solid #ffb300; border-radius: 10px; color: #ffe082; font-size: 13px; font-weight: 700; outline: none; }
 
-    /* Image Preview Boxes */
     .preview-box { display: flex; align-items: center; gap: 10px; margin-top: 6px; background: #1c0f08; padding: 8px; border-radius: 10px; border: 1px solid rgba(255,180,0,0.2); }
     .preview-img { width: 44px; height: 44px; object-fit: contain; border-radius: 8px; background: #fff; padding: 2px; }
 
-    /* Pass List Items */
     .pass-item { background: #1c1008; border: 1px solid rgba(255,180,0,0.15); border-radius: 14px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
     .pass-info { flex: 1; }
     .pass-tag { font-size: 11px; font-weight: 800; color: #ffb300; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
@@ -61,45 +54,17 @@
     .btn-wa { background: #25d366; color: #000; border: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; text-decoration: none; }
     .btn-edit { background: #424242; color: #fff; border: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; cursor: pointer; }
 
-    /* VIP Pass Styling */
     .pass-outer { width: 100%; border-radius: 26px; padding: 3px; background: linear-gradient(60deg, #ff9900, #ff0055, #00e5ff, #ff9900); background-size: 300% 300%; animation: glow 4s ease infinite; box-shadow: 0 0 35px rgba(255,140,0,0.35); }
     @keyframes glow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     .pass-card { background: #130b06; border-radius: 24px; padding: 20px 18px; text-align: center; border: 1px solid rgba(255,180,0,0.2); }
     
-    /* 100% STATIC (સ્થિર) CIRCULAR LOGO FRAME */
-    .brand-logo-frame { 
-      display: inline-block; 
-      width: 82px; 
-      height: 82px; 
-      border-radius: 50%; 
-      padding: 3px; 
-      background: linear-gradient(135deg, #ffe082, #ffb300, #ff8f00); 
-      box-shadow: 0 4px 15px rgba(255,179,0,0.35); 
-      margin-bottom: 8px; 
-    }
+    .brand-logo-frame { display: inline-block; width: 82px; height: 82px; border-radius: 50%; padding: 3px; background: linear-gradient(135deg, #ffe082, #ffb300, #ff8f00); box-shadow: 0 4px 15px rgba(255,179,0,0.35); margin-bottom: 8px; }
     .pass-brand-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 2px solid #000; background: #000; }
     
     .pass-brand { font-size: 11.5px; font-weight: 800; color: #ffe082; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
     .pass-title { font-size: 25px; font-weight: 900; background: linear-gradient(to right, #ffe082, #ffb300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
-    /* BALANCED & ELEGANT INSTAGRAM BUTTON */
-    .insta-btn { 
-      display: inline-flex; 
-      align-items: center; 
-      justify-content: center;
-      gap: 6px; 
-      background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); 
-      color: #fff; 
-      text-decoration: none; 
-      padding: 6px 16px; 
-      border-radius: 20px; 
-      font-size: 11.5px; 
-      font-weight: 700; 
-      margin: 6px 0 10px; 
-      box-shadow: 0 2px 10px rgba(220,39,67,0.35); 
-      border: 1px solid rgba(255, 255, 255, 0.25);
-    }
-    
+    .insta-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); color: #fff; text-decoration: none; padding: 6px 16px; border-radius: 20px; font-size: 11.5px; font-weight: 700; margin: 6px 0 10px; box-shadow: 0 2px 10px rgba(220,39,67,0.35); border: 1px solid rgba(255, 255, 255, 0.25); }
     .guest-box { background: rgba(255,140,0,0.06); border-radius: 14px; padding: 12px 10px; margin-bottom: 10px; border: 1px solid rgba(255,179,0,0.25); }
     
     .tier-banner { display: block; padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 6px; }
@@ -111,79 +76,38 @@
     .clock-label { font-size: 9px; color: #39ff14; font-weight: 700; letter-spacing: 0.5px; }
     .clock-time { font-size: 20px; font-weight: 900; color: #39ff14; font-family: monospace; }
     
-    /* CUSTOM EVENT BANNER / POSTER */
     .celestial-artwork-box { width: 100%; border-radius: 16px; overflow: hidden; border: 1.5px solid rgba(255,180,0,0.3); background: #0d0704; box-shadow: 0 0 15px rgba(255,140,0,0.2); margin: 6px auto 10px; display: block; position: relative; }
     .celestial-artwork-img { width: 100%; height: auto; max-height: 155px; object-fit: cover; display: block; }
     
-    /* DATE, VENUE & SCHEDULE INFO PANEL */
-    .event-info-panel {
-      background: rgba(255, 180, 0, 0.05);
-      border: 1.5px solid rgba(255, 180, 0, 0.35);
-      border-radius: 14px;
-      padding: 10px 8px;
-      margin-bottom: 12px;
-      text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    }
-    .event-date-row {
-      font-size: 13.5px;
-      font-weight: 800;
-      color: #ffe082;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      margin-bottom: 3px;
-    }
-    .event-venue-row {
-      font-size: 11.5px;
-      font-weight: 700;
-      color: #ffb74d;
-      line-height: 1.35;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .schedule-divider-line {
-      border: 0;
-      height: 1px;
-      background: rgba(255, 180, 0, 0.25);
-      margin: 6px 0 8px;
-    }
-    .schedule-strip {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      font-size: 10.5px;
-      font-weight: 800;
-      color: #fff;
-    }
+    .event-info-panel { background: rgba(255, 180, 0, 0.05); border: 1.5px solid rgba(255, 180, 0, 0.35); border-radius: 14px; padding: 10px 8px; margin-bottom: 12px; text-align: center; }
+    .event-date-row { font-size: 13.5px; font-weight: 800; color: #ffe082; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 3px; }
+    .event-venue-row { font-size: 11.5px; font-weight: 700; color: #ffb74d; line-height: 1.35; text-transform: uppercase; margin-bottom: 8px; }
+    .schedule-divider-line { border: 0; height: 1px; background: rgba(255, 180, 0, 0.25); margin: 6px 0 8px; }
+    .schedule-strip { display: flex; justify-content: space-around; align-items: center; font-size: 10.5px; font-weight: 800; color: #fff; }
     .strip-item { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
     .strip-val { color: #ffe082; }
 
-    /* Sponsors Logo Ticker */
     .ticker-header { font-size: 11px; color: #ffe082; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin: 10px 0 6px; }
     .ticker-wrap { width: 100%; overflow: hidden; background: #1a0e07; border: 1.5px solid rgba(255,180,0,0.35); border-radius: 14px; padding: 10px 0; margin-bottom: 12px; }
     .ticker-move { display: flex; gap: 14px; width: max-content; animation: scrollTicker 15s linear infinite; align-items: center; }
-    .ticker-wrap:hover .ticker-move, .ticker-wrap:active .ticker-move { animation-play-state: paused; }
     
-    .sponsor-pill { display: flex; align-items: center; gap: 8px; background: #2b170b; border: 1.5px solid #ffb300; color: #ffe082; padding: 6px 14px; border-radius: 10px; font-size: 13px; font-weight: 800; white-space: nowrap; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+    .sponsor-pill { display: flex; align-items: center; gap: 8px; background: #2b170b; border: 1.5px solid #ffb300; color: #ffe082; padding: 6px 14px; border-radius: 10px; font-size: 13px; font-weight: 800; white-space: nowrap; text-decoration: none; }
     .sponsor-logo-img { height: 26px; width: auto; max-width: 75px; object-fit: contain; border-radius: 4px; background: #fff; padding: 1px 3px; }
     @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-    .btn-maps { background: #212121; color: #ffe082; border: 1.5px solid #ffb300; padding: 11px 14px; border-radius: 12px; font-size: 13px; font-weight: 800; width: 100%; text-decoration: none; display: block; margin-bottom: 8px; text-align: center; box-shadow: 0 2px 10px rgba(255,179,0,0.2); }
-    .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 14px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; width: 100%; cursor: pointer; box-shadow: 0 3px 12px rgba(46,125,50,0.4); }
-    .btn-entered-state { background: #424242 !important; color: #9e9e9e !important; cursor: not-allowed; box-shadow: none !important; }
+    .btn-maps { background: #212121; color: #ffe082; border: 1.5px solid #ffb300; padding: 11px 14px; border-radius: 12px; font-size: 13px; font-weight: 800; width: 100%; text-decoration: none; display: block; margin-bottom: 8px; text-align: center; }
+    .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 14px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; width: 100%; cursor: pointer; }
+    .btn-entered-state { background: #424242 !important; color: #9e9e9e !important; cursor: not-allowed; }
 
-    /* Strict Blocked Screen */
     .blocked-card { background: #1c0808; border: 2px solid #ff5252; border-radius: 24px; padding: 34px 20px; text-align: center; width: 100%; box-shadow: 0 0 30px rgba(255,82,82,0.4); }
 
-    /* Modal Overlay */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.88); display: flex; justify-content: center; align-items: center; padding: 16px; z-index: 100; }
     .modal-card { background: #1a0f08; border: 1px solid #ffb300; border-radius: 20px; padding: 20px; width: 100%; max-width: 380px; }
   </style>
 </head>
 <body>
 
-  <!-- Top Navigation (Only Client Tabs - Master Hub Removed) -->
-  <div class="top-nav" id="adminNavBar">
+  <div class="top-nav" id="adminNavBar" style="display: none;">
     <button class="tab-btn active" id="tabSheetBtn" onclick="switchTab('sheet')">Pass Manager</button>
     <button class="tab-btn" id="tabSettingsBtn" onclick="switchTab('settings')">⚙️ Settings</button>
     <button class="tab-btn" id="tabPreviewBtn" onclick="switchTab('preview')">Live VIP</button>
@@ -191,19 +115,29 @@
 
   <div class="container">
     
+    <!-- NOTICE OVERLAY FOR EXPIRED OR DELETED EVENT -->
+    <div class="blocked-card" id="statusNoticeScreen" style="display: none; margin-top: 30px;">
+      <div style="font-size: 55px;" id="noticeIcon">⛔</div>
+      <h2 style="color: #ff5252; margin: 14px 0 8px;" id="noticeTitle">Event Not Found / Deleted</h2>
+      <p style="color: #ffcdd2; font-size: 14px; line-height: 1.6;" id="noticeMsg">
+        આ ઇવેન્ટ એડમિન દ્વારા ડિલીટ કરવામાં આવી છે અથવા ઉપલબ્ધ નથી.<br><br>
+        નવી ઇવેન્ટ માટે કૃપા કરીને મુખ્ય એડમિનનો સંપર્ક કરો.
+      </p>
+    </div>
+
     <!-- Loading Screen -->
-    <div id="loadingOverlay" style="display: none; text-align: center; padding: 50px 0;">
-      <div style="font-size: 36px; margin-bottom: 10px;">⏳</div>
-      <div style="color: #ffe082; font-size: 15px; font-weight: 700;">Verifying VIP Pass Security...</div>
+    <div id="loadingOverlay" style="text-align: center; padding: 60px 0;">
+      <div style="font-size: 38px; margin-bottom: 12px;">⏳</div>
+      <div style="color: #ffe082; font-size: 15px; font-weight: 700;">Connecting to Event Cloud...</div>
     </div>
 
     <!-- 1. Pass Manager View -->
-    <div id="viewSheet" class="panel-card">
+    <div id="viewSheet" class="panel-card" style="display: none;">
       <div class="panel-title" id="dashTitle">Pass Manager</div>
       
       <div class="stats-bar">
         <div class="stat-card">
-          <div class="stat-num stat-orange" id="statAllotted">150</div>
+          <div class="stat-num stat-orange" id="statAllotted">0</div>
           <div class="stat-label">Quota</div>
         </div>
         <div class="stat-card">
@@ -232,16 +166,15 @@
       
       <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-size:13px; color:#ffb74d;">
         <button style="background:#26170d; border:1px solid #ffb300; color:#ffe082; padding:6px 14px; border-radius:8px; font-weight:700;" id="btnPrevPage" onclick="prevPage()">◀ Previous</button>
-        <span id="pageTracker">Page 1 / 8</span>
+        <span id="pageTracker">Page 1 / 1</span>
         <button style="background:#26170d; border:1px solid #ffb300; color:#ffe082; padding:6px 14px; border-radius:8px; font-weight:700;" id="btnNextPage" onclick="nextPage()">Next ▶</button>
       </div>
     </div>
 
-    <!-- 2. Settings View (Client Specific) -->
+    <!-- 2. Settings View -->
     <div id="viewSettings" class="panel-card" style="display: none;">
       <div class="panel-title">⚙️ Event Branding & Custom Options</div>
 
-      <!-- MAIN PRESENTER LOGO -->
       <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
         <label class="form-label" style="color: #39ff14;">📷 Main Top Logo (ટોચ પરનો સ્થિર ગોળ લોગો)</label>
         <input type="file" id="fileBrandLogo" accept="image/*" style="display: none;" onchange="handleBrandLogoUpload(event)">
@@ -254,7 +187,6 @@
         </div>
       </div>
 
-      <!-- EVENT BANNER / POSTER (REPLACING QR CODE) -->
       <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
         <label class="form-label" style="color: #39ff14;">🎨 Event Banner / Poster (QR ની જગ્યાએ મોટો ફોટો/પોસ્ટર)</label>
         <input type="file" id="fileEventBanner" accept="image/*" style="display: none;" onchange="handleBannerUpload(event)">
@@ -267,39 +199,34 @@
         </div>
       </div>
 
-      <!-- EVENT DATE & ADDRESS -->
       <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
-        <label class="form-label" style="color: #39ff14;">📅 Event Date & Day (ઇવેન્ટ તારીખ અને વાર)</label>
+        <label class="form-label" style="color: #39ff14;">📅 Event Date & Day</label>
         <input type="text" class="form-input" id="cfgEventDate" placeholder="e.g. SUNDAY • NOV 1, 2026" style="margin-bottom: 8px;">
 
-        <label class="form-label" style="color: #39ff14;">📍 Full Venue Address (ઇવેન્ટ સ્થળનું પૂરું સરનામું)</label>
+        <label class="form-label" style="color: #39ff14;">📍 Full Venue Address</label>
         <input type="text" class="form-input" id="cfgVenueAddress" placeholder="e.g. SHREE RAM GROUND, SANALA ROAD, MORBI">
       </div>
 
-      <!-- CUSTOMIZABLE SCHEDULE / TIMINGS -->
       <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
-        <label class="form-label" style="color: #39ff14;">⏰ Gate, Program & Food Schedule (ક્રમબદ્ધ શિડ્યુલ)</label>
-        
+        <label class="form-label" style="color: #39ff14;">⏰ Gate, Program & Food Schedule</label>
         <div style="margin-bottom: 8px;">
           <span style="font-size: 10px; color: #ffb74d; font-weight:700;">🚪 Gate Number / Name</span>
-          <input type="text" class="form-input" id="cfgGateNo" placeholder="e.g. VIP-1 or GATE 2">
+          <input type="text" class="form-input" id="cfgGateNo" placeholder="e.g. VIP-1">
         </div>
-
         <div style="display: flex; gap: 6px; margin-bottom: 8px;">
           <div style="flex: 1;">
             <span style="font-size: 10px; color: #ffb74d; font-weight:700;">🪔 Program 1 Label</span>
-            <input type="text" class="form-input" id="cfgProg1Label" placeholder="e.g. BHAKTI / GARBA / SANGEET">
+            <input type="text" class="form-input" id="cfgProg1Label" placeholder="e.g. BHAKTI">
           </div>
           <div style="flex: 1;">
             <span style="font-size: 10px; color: #ffb74d; font-weight:700;">Time</span>
             <input type="text" class="form-input" id="cfgProg1Time" placeholder="e.g. 8:00 PM">
           </div>
         </div>
-
         <div style="display: flex; gap: 6px;">
           <div style="flex: 1;">
-            <span style="font-size: 10px; color: #ffb74d; font-weight:700;">🍽️ Food / Program 2 Label</span>
-            <input type="text" class="form-input" id="cfgProg2Label" placeholder="e.g. DINNER / MAHAPRASAD">
+            <span style="font-size: 10px; color: #ffb74d; font-weight:700;">🍽️ Food Label</span>
+            <input type="text" class="form-input" id="cfgProg2Label" placeholder="e.g. DINNER">
           </div>
           <div style="flex: 1;">
             <span style="font-size: 10px; color: #ffb74d; font-weight:700;">Time</span>
@@ -310,35 +237,32 @@
 
       <div class="form-group">
         <label class="form-label">Presenter / Brand Text</label>
-        <input type="text" class="form-input" id="cfgBrand" value="✨ TWIN AURA PRESENTS ✨">
+        <input type="text" class="form-input" id="cfgBrand" value="">
       </div>
 
       <div class="form-group">
         <label class="form-label">Event Name</label>
-        <input type="text" class="form-input" id="cfgTitle" value="COSMIC BHAKTI">
+        <input type="text" class="form-input" id="cfgTitle" value="">
       </div>
 
       <div class="form-group">
-        <label class="form-label">Organizer Instagram Username (e.g. twin_aura3)</label>
+        <label class="form-label">Organizer Instagram Handle</label>
         <input type="text" class="form-input" id="cfgInstaHandle" value="twin_aura3">
       </div>
 
       <div class="form-group">
-        <label class="form-label">Google Maps Link or Plus Code</label>
-        <input type="text" class="form-input" id="cfgMapsUrl" placeholder="Paste Maps link or Plus Code">
+        <label class="form-label">Google Maps Link</label>
+        <input type="text" class="form-input" id="cfgMapsUrl" placeholder="Paste Maps link">
       </div>
 
-      <!-- SPONSOR LOGO ATTACHMENTS -->
       <div id="proSponsorSection" style="background: rgba(255,180,0,0.06); border: 1px dashed #ffb300; padding: 12px; border-radius: 12px; margin-bottom: 12px;">
-        <label class="form-label" style="color: #39ff14;">👑 Sponsor Image Logos (Attach Files for Ticker)</label>
+        <label class="form-label" style="color: #39ff14;">👑 Sponsor Image Logos</label>
         <input type="file" id="fileSponsorLogo" accept="image/*" style="display: none;" onchange="handleSponsorLogoUpload(event)">
         <label for="fileSponsorLogo" class="btn-upload">🖼️ Add Sponsor Logo Image</label>
-        
         <div id="sponsorLogosList" style="margin-top: 8px;"></div>
-
         <div style="margin-top: 10px;">
-          <label class="form-label">Fallback Sponsor Names (Comma Separated)</label>
-          <input type="text" class="form-input" id="cfgSponsors" value="👑 Maruti Buildcon, 💍 Royal Jewellers, 🍟 Fiesta Foods, 📻 92.7 Big FM, 🚗 Apex Motors">
+          <label class="form-label">Fallback Sponsor Names</label>
+          <input type="text" class="form-input" id="cfgSponsors" value="👑 Partner 1, 💍 Partner 2, 🍟 Partner 3">
         </div>
       </div>
 
@@ -354,24 +278,22 @@
     <div id="viewPass" style="display: none;">
       <div class="pass-outer">
         <div class="pass-card">
-          <!-- 100% STATIC (સ્થિર) CIRCULAR LOGO -->
           <div class="brand-logo-frame" id="liveBrandLogoContainer" style="display: none;">
             <img id="liveBrandLogoImg" class="pass-brand-img" src="">
           </div>
           
-          <div class="pass-brand" id="liveBrand">✨ TWIN AURA PRESENTS ✨</div>
-          <div class="pass-title" id="liveTitle">COSMIC BHAKTI</div>
+          <div class="pass-brand" id="liveBrand"></div>
+          <div class="pass-title" id="liveTitle"></div>
           
-          <!-- ELEGANT & BALANCED INSTAGRAM BUTTON -->
           <div>
-            <a id="liveInstaLink" href="https://www.instagram.com/twin_aura3/" target="_blank" rel="noopener noreferrer" class="insta-btn">
+            <a id="liveInstaLink" href="#" target="_blank" rel="noopener noreferrer" class="insta-btn">
               📸 Follow <span id="liveInstaHandle">@twin_aura3</span>
             </a>
           </div>
 
           <div class="guest-box">
             <div style="font-size: 11px; color: #ffb300; font-weight: 800;" id="livePassId">PASS ID: #BK-101</div>
-            <div style="font-size: 20px; font-weight: 800; color: #fff; margin: 3px 0;" id="liveGuestName">Piyush Nathavani</div>
+            <div style="font-size: 20px; font-weight: 800; color: #fff; margin: 3px 0;" id="liveGuestName">Guest</div>
             <div id="livePassTierBadge" class="tier-banner tier-full-style">🌟 VIP FULL ACCESS (EVENT + DINNER)</div>
           </div>
 
@@ -380,18 +302,14 @@
             <span class="clock-time" id="liveTimerDisplay">--:--:--</span>
           </div>
 
-          <!-- DYNAMIC CUSTOM EVENT BANNER / POSTER (REPLACING QR) -->
           <div class="celestial-artwork-box">
-            <img id="liveBannerImg" class="celestial-artwork-img" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop" alt="Event Banner">
+            <img id="liveBannerImg" class="celestial-artwork-img" src="" alt="Event Banner">
           </div>
 
-          <!-- DATE, FULL ADDRESS & ORDERED SCHEDULE PANEL -->
           <div class="event-info-panel">
-            <div class="event-date-row" id="liveEventDate">📅 SUNDAY • NOV 1, 2026</div>
-            <div class="event-venue-row" id="liveVenueAddress">📍 SHREE RAM GROUND, SANALA ROAD, MORBI</div>
-            
+            <div class="event-date-row" id="liveEventDate"></div>
+            <div class="event-venue-row" id="liveVenueAddress"></div>
             <div class="schedule-divider-line"></div>
-            
             <div class="schedule-strip">
               <span class="strip-item">🚪 GATE: <span class="strip-val" id="liveGateDisplay">VIP-1</span></span>
               <span>•</span>
@@ -406,23 +324,10 @@
             <div class="ticker-move" id="tickerContent"></div>
           </div>
 
-          <!-- DIRECT NATIVE MAPS LINK -->
           <a id="btnMapsLink" href="#" class="btn-maps">📍 Get Venue Directions (Maps)</a>
-          
-          <!-- 1-TAP GATE ENTRY (NO PIN REQUIRED) -->
           <button class="btn-gate" id="btnGateAction" onclick="handleGatekeeperEntry()">GATE ENTRY (TAP TO VERIFY)</button>
         </div>
       </div>
-    </div>
-
-    <!-- 4. Strict Blocked Pass Screen -->
-    <div class="blocked-card" id="blockedScreen" style="display: none;">
-      <div style="font-size: 50px;">⛔</div>
-      <h2 style="color: #ff5252; margin: 12px 0 8px;">Access Denied!</h2>
-      <p style="color: #ffcdd2; font-size: 14px; line-height: 1.5;" id="blockedReason">
-        This VIP pass is <b>locked to another phone</b>.<br><br>
-        Forwarded passes or screenshots are strictly invalid and blocked.
-      </p>
     </div>
 
   </div>
@@ -463,43 +368,105 @@
     const FIREBASE_DB_URL = "https://vip-pass-system-default-rtdb.firebaseio.com";
     
     const urlParams = new URLSearchParams(window.location.search);
-    const EVENT_ID = urlParams.get('event') || 'default_event';
+    const EVENT_ID = urlParams.get('event'); // Must have explicit event parameter
     const guestPassId = urlParams.get('id');
     const guestNameParam = urlParams.get('name');
 
-    const SYSTEM_DEFAULT_SPONSORS = "👑 Maruti Buildcon, 💍 Royal Jewellers, 🍟 Fiesta Foods, 📻 92.7 Big FM, 🚗 Apex Motors";
     const DEFAULT_BANNER_IMAGE = "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop";
 
-    const defaultSettings = {
-      startPass: 1,
-      quotaLimit: 150,
-      brandLogo: "",
-      eventBanner: "",
-      eventDate: "SUNDAY • NOV 1, 2026",
-      venueAddress: "SHREE RAM GROUND, SANALA ROAD, MORBI",
-      gateNo: "VIP-1",
-      prog1Label: "BHAKTI",
-      prog1Time: "8:00 PM",
-      prog2Label: "DINNER",
-      prog2Time: "9:30 PM",
-      sponsorImages: [],
-      brand: "✨ TWIN AURA PRESENTS ✨",
-      title: "COSMIC BHAKTI",
-      instaHandle: "twin_aura3",
-      mapsUrl: "",
-      sponsors: SYSTEM_DEFAULT_SPONSORS,
-      adminPass: "admin123"
-    };
+    let settings = null;
+    let passes = [];
 
-    let settings = JSON.parse(localStorage.getItem('ev_set_' + EVENT_ID) || 'null') || defaultSettings;
-    if (!settings.sponsorImages) settings.sponsorImages = [];
-
-    let passes = JSON.parse(localStorage.getItem('ev_pass_' + EVENT_ID) || 'null') || [];
-    if (!passes.length || passes.length !== parseInt(settings.quotaLimit)) {
-      initPassesArray();
+    let myDevice = localStorage.getItem('vip_device_token');
+    if (!myDevice) {
+      myDevice = 'FINGERPRINT_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+      localStorage.setItem('vip_device_token', myDevice);
     }
 
+    function showStatusNotice(icon, title, message) {
+      document.getElementById('loadingOverlay').style.display = 'none';
+      document.getElementById('adminNavBar').style.display = 'none';
+      document.getElementById('viewSheet').style.display = 'none';
+      document.getElementById('viewSettings').style.display = 'none';
+      document.getElementById('viewPass').style.display = 'none';
+      
+      const screen = document.getElementById('statusNoticeScreen');
+      document.getElementById('noticeIcon').innerText = icon;
+      document.getElementById('noticeTitle').innerText = title;
+      document.getElementById('noticeMsg').innerHTML = message;
+      screen.style.display = 'block';
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      // 1. If opened directly without ?event= parameter, block dummy display
+      if (!EVENT_ID) {
+        showStatusNotice(
+          "⚠️", 
+          "No Event Selected", 
+          "તમે સીધી મુખ્ય લિંક ખોલી છે.<br><br>કૃપા કરીને એડમિન દ્વારા આપવામાં આવેલી તમારી <b>ઇવેન્ટ લિંક (?event=...)</b> ખોલો."
+        );
+        return;
+      }
+
+      // 2. Real-time Cloud Verification: Check if Event actually exists in Firebase
+      try {
+        const res = await fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/settings.json`);
+        const cloudSettings = await res.json();
+
+        // IF EVENT WAS DELETED FROM ADMIN HUB:
+        if (!cloudSettings) {
+          // Immediately wipe any old cached data for this deleted event
+          localStorage.removeItem('ev_set_' + EVENT_ID);
+          localStorage.removeItem('ev_pass_' + EVENT_ID);
+          
+          showStatusNotice(
+            "⛔",
+            "Event Not Found / Deleted",
+            `આ ઇવેન્ટ (<b>${EVENT_ID}</b>) એડમિન દ્વારા ડિલીટ કરવામાં આવી છે અથવા અસ્તિત્વમાં નથી.<br><br>નવા એક્સેસ માટે મુખ્ય એડમિનનો સંપર્ક કરો.`
+          );
+          return;
+        }
+
+        // If event exists, load settings
+        settings = cloudSettings;
+        if (!settings.sponsorImages) settings.sponsorImages = [];
+        localStorage.setItem('ev_set_' + EVENT_ID, JSON.stringify(settings));
+
+        // 3. Check Expiry
+        if (settings.expiryDate) {
+          const todayStr = new Date().toISOString().split('T')[0];
+          if (todayStr > settings.expiryDate) {
+            showStatusNotice(
+              "⏳",
+              "Portal Validity Expired!",
+              `આ ઇવેન્ટ પોર્ટલની વેલિડિટી <b>${settings.expiryDate}</b> ના રોજ સમાપ્ત થઈ ગઈ છે.<br><br>રિન્યૂ કરવા માટે મુખ્ય એડમિનનો સંપર્ક કરો.`
+            );
+            return;
+          }
+        }
+
+        initPassesArray();
+        applySettingsToUI();
+        document.getElementById('loadingOverlay').style.display = 'none';
+
+        if (guestPassId) {
+          document.getElementById('livePassId').innerText = 'PASS ID: #BK-' + guestPassId;
+          document.getElementById('liveGuestName').innerText = guestNameParam || 'Valued Guest';
+          verifyPassAccessFirebase();
+        } else {
+          document.getElementById('adminNavBar').style.display = 'flex';
+          document.getElementById('viewSheet').style.display = 'block';
+          renderPassList();
+          syncFirebaseCloud(false);
+        }
+
+      } catch(err) {
+        showStatusNotice("📡", "Network Connection Error", "ઇવેન્ટ ડેટા લોડ કરવામાં અસમર્થ. ઇન્ટરનેટ કનેક્શન તપાસો.");
+      }
+    });
+
     function initPassesArray() {
+      passes = JSON.parse(localStorage.getItem('ev_pass_' + EVENT_ID) || 'null') || [];
       const existingMap = {};
       if (passes && passes.length) {
         passes.forEach(p => { if (p && p.name) existingMap[p.id] = p; });
@@ -515,12 +482,6 @@
         }
       }
       localStorage.setItem('ev_pass_' + EVENT_ID, JSON.stringify(passes));
-    }
-
-    let myDevice = localStorage.getItem('vip_device_token');
-    if (!myDevice) {
-      myDevice = 'FINGERPRINT_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
-      localStorage.setItem('vip_device_token', myDevice);
     }
 
     function getCleanInstagramHandle() {
@@ -587,7 +548,7 @@
     function renderBrandLogoPreview() {
       const row = document.getElementById('brandLogoPreviewRow');
       const img = document.getElementById('brandLogoPreview');
-      if (settings.brandLogo) {
+      if (settings && settings.brandLogo) {
         img.src = settings.brandLogo;
         row.style.display = 'flex';
       } else {
@@ -612,7 +573,7 @@
     function renderBannerPreview() {
       const row = document.getElementById('bannerPreviewRow');
       const img = document.getElementById('bannerPreviewImg');
-      if (settings.eventBanner) {
+      if (settings && settings.eventBanner) {
         img.src = settings.eventBanner;
         row.style.display = 'flex';
       } else {
@@ -638,8 +599,8 @@
     function renderSponsorLogosPreview() {
       const box = document.getElementById('sponsorLogosList');
       box.innerHTML = '';
-      if (!settings.sponsorImages || settings.sponsorImages.length === 0) {
-        box.innerHTML = '<div style="font-size:11px; color:#888;">No image logos attached yet. (Text fallback active)</div>';
+      if (!settings || !settings.sponsorImages || settings.sponsorImages.length === 0) {
+        box.innerHTML = '<div style="font-size:11px; color:#888;">No image logos attached yet.</div>';
         return;
       }
       settings.sponsorImages.forEach((sp, idx) => {
@@ -658,40 +619,6 @@
       settings.sponsorImages.splice(idx, 1);
       renderSponsorLogosPreview();
     }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/settings.json`)
-        .then(res => res.json())
-        .then(cloudSettings => {
-          if (cloudSettings) {
-            settings = Object.assign(settings, cloudSettings);
-            if (!settings.instaHandle || (settings.instaHandle.includes('twin_aura') && !settings.instaHandle.includes('3'))) {
-              settings.instaHandle = 'twin_aura3';
-            }
-            localStorage.setItem('ev_set_' + EVENT_ID, JSON.stringify(settings));
-            initPassesArray();
-            applySettingsToUI();
-            renderPassList();
-          }
-        })
-        .catch(() => {});
-
-      applySettingsToUI();
-
-      if (guestPassId) {
-        document.getElementById('adminNavBar').style.display = 'none';
-        document.getElementById('viewSheet').style.display = 'none';
-        document.getElementById('loadingOverlay').style.display = 'block';
-
-        document.getElementById('livePassId').innerText = 'PASS ID: #BK-' + guestPassId;
-        document.getElementById('liveGuestName').innerText = guestNameParam || 'Valued Guest';
-
-        verifyPassAccessFirebase();
-      } else {
-        renderPassList();
-        syncFirebaseCloud(false);
-      }
-    });
 
     function applySettingsToUI() {
       document.getElementById('dashTitle').innerText = settings.title + " (Pass Sheet)";
@@ -739,8 +666,8 @@
       document.getElementById('cfgTitle').value = settings.title;
       document.getElementById('cfgInstaHandle').value = cleanHandle;
       document.getElementById('cfgMapsUrl').value = settings.mapsUrl || '';
-      document.getElementById('cfgSponsors').value = settings.sponsors;
-      document.getElementById('cfgAdminPass').value = settings.adminPass;
+      document.getElementById('cfgSponsors').value = settings.sponsors || '';
+      document.getElementById('cfgAdminPass').value = settings.adminPass || 'admin123';
 
       renderBrandLogoPreview();
       renderBannerPreview();
@@ -765,7 +692,7 @@
         });
       }
 
-      const textSponsors = (settings.sponsors || SYSTEM_DEFAULT_SPONSORS).split(',');
+      const textSponsors = (settings.sponsors || "👑 Partner 1, 💍 Partner 2, 🍟 Partner 3").split(',');
       textSponsors.forEach(sp => {
         const name = sp.trim();
         if (name) html += `<a href="${finalInstaUrl}" target="_blank" rel="noopener noreferrer" class="sponsor-pill"><span>${name}</span></a>`;
@@ -827,7 +754,7 @@
       });
 
       applySettingsToUI();
-      alert("✅ All Event Settings, Date, Address & Custom Schedule Saved!");
+      alert("✅ All Event Settings Saved!");
     }
 
     function verifyPassAccessFirebase() {
@@ -842,9 +769,7 @@
           document.getElementById('loadingOverlay').style.display = 'none';
 
           if (!data || !data.name) {
-            document.getElementById('viewPass').style.display = 'none';
-            document.getElementById('blockedReason').innerHTML = "This VIP pass has not been issued by the event organizer yet.";
-            document.getElementById('blockedScreen').style.display = 'block';
+            showStatusNotice("⛔", "Pass Not Issued", "This VIP pass has not been issued yet.");
             return;
           }
 
@@ -861,16 +786,11 @@
             if (data.status === 'ENTERED') markEnteredBadge();
           } 
           else {
-            document.getElementById('viewPass').style.display = 'none';
-            document.getElementById('blockedReason').innerHTML = "This VIP pass is <b>locked to another phone</b>.<br><br>Forwarded links and screenshots are strictly rejected at entry.";
-            document.getElementById('blockedScreen').style.display = 'block';
+            showStatusNotice("🔒", "Device Locked", "This VIP pass is locked to another mobile device.<br><br>Forwarded links are rejected.");
           }
         })
         .catch(err => {
-          document.getElementById('loadingOverlay').style.display = 'none';
-          document.getElementById('viewPass').style.display = 'none';
-          document.getElementById('blockedReason').innerHTML = "Security Verification Failed. Please check internet connection.";
-          document.getElementById('blockedScreen').style.display = 'block';
+          showStatusNotice("📡", "Network Error", "Verification failed. Check internet connection.");
         });
     }
 
