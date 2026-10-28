@@ -36,6 +36,9 @@
     .form-input { width: 100%; padding: 10px 12px; background: #22140b; border: 1px solid rgba(255,180,0,0.4); border-radius: 10px; color: #fff; font-size: 13px; outline: none; }
     .form-select { width: 100%; padding: 10px 12px; background: #22140b; border: 1px solid #ffb300; border-radius: 10px; color: #ffe082; font-size: 13px; font-weight: 700; outline: none; }
 
+    .preview-box { display: flex; align-items: center; gap: 10px; margin-top: 6px; background: #1c0f08; padding: 8px; border-radius: 10px; border: 1px solid rgba(255,180,0,0.2); }
+    .preview-img { width: 44px; height: 44px; object-fit: contain; border-radius: 8px; background: #fff; padding: 2px; }
+
     .pass-item { background: #1c1008; border: 1px solid rgba(255,180,0,0.15); border-radius: 14px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
     .pass-info { flex: 1; }
     .pass-tag { font-size: 11px; font-weight: 800; color: #ffb300; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
@@ -54,42 +57,81 @@
     @keyframes glow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     .pass-card { background: #130b06; border-radius: 24px; padding: 20px 18px; text-align: center; border: 1px solid rgba(255,180,0,0.2); }
     
-    .brand-logo-frame { display: inline-block; width: 82px; height: 82px; border-radius: 50%; padding: 3px; background: linear-gradient(135deg, #ffe082, #ffb300, #ff8f00); box-shadow: 0 4px 15px rgba(255,179,0,0.35); margin-bottom: 8px; }
+    .brand-logo-frame { 
+      display: inline-block; 
+      width: 82px; 
+      height: 82px; 
+      border-radius: 50%; 
+      padding: 3px; 
+      background: linear-gradient(135deg, #ffe082, #ffb300, #ff8f00); 
+      box-shadow: 0 4px 15px rgba(255,179,0,0.35); 
+      margin-bottom: 8px; 
+    }
     .pass-brand-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 2px solid #000; background: #000; }
+    
     .pass-brand { font-size: 11.5px; font-weight: 800; color: #ffe082; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
     .pass-title { font-size: 25px; font-weight: 900; background: linear-gradient(to right, #ffe082, #ffb300); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .insta-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); color: #fff; text-decoration: none; padding: 6px 16px; border-radius: 20px; font-size: 11.5px; font-weight: 700; margin: 6px 0 10px; box-shadow: 0 2px 10px rgba(220,39,67,0.35); }
+    
+    .insta-btn { 
+      display: inline-flex; 
+      align-items: center; 
+      justify-content: center;
+      gap: 6px; 
+      background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); 
+      color: #fff; 
+      text-decoration: none; 
+      padding: 6px 16px; 
+      border-radius: 20px; 
+      font-size: 11.5px; 
+      font-weight: 700; 
+      margin: 6px 0 10px; 
+      box-shadow: 0 2px 10px rgba(220,39,67,0.35); 
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
     
     .guest-box { background: rgba(255,140,0,0.06); border-radius: 14px; padding: 12px 10px; margin-bottom: 10px; border: 1px solid rgba(255,179,0,0.25); }
     .tier-banner { display: block; padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 6px; }
-    .tier-full-style { background: linear-gradient(45deg, #ffb300, #ff8f00); color: #000; }
-    .tier-dinner-style { background: linear-gradient(45deg, #00e5ff, #00b0ff); color: #000; }
-    .tier-event-style { background: linear-gradient(45deg, #e040fb, #aa00ff); color: #fff; }
+    .tier-full-style { background: linear-gradient(45deg, #ffb300, #ff8f00); color: #000; box-shadow: 0 0 10px rgba(255,179,0,0.4); }
+    .tier-dinner-style { background: linear-gradient(45deg, #00e5ff, #00b0ff); color: #000; box-shadow: 0 0 10px rgba(0,229,255,0.4); }
+    .tier-event-style { background: linear-gradient(45deg, #e040fb, #aa00ff); color: #fff; box-shadow: 0 0 10px rgba(224,64,251,0.4); }
 
-    .clock-box { background: #000; border-radius: 12px; padding: 6px 12px; border: 1.5px solid #39ff14; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-    .clock-label { font-size: 9px; color: #39ff14; font-weight: 700; }
+    .clock-box { background: #000; border-radius: 12px; padding: 6px 12px; border: 1.5px solid #39ff14; margin-bottom: 10px; box-shadow: 0 0 10px rgba(57,255,20,0.2); display: flex; justify-content: space-between; align-items: center; }
+    .clock-label { font-size: 9px; color: #39ff14; font-weight: 700; letter-spacing: 0.5px; }
     .clock-time { font-size: 20px; font-weight: 900; color: #39ff14; font-family: monospace; }
     
-    .celestial-artwork-box { width: 100%; border-radius: 16px; overflow: hidden; border: 1.5px solid rgba(255,180,0,0.3); background: #0d0704; margin: 6px auto 10px; display: block; }
+    .celestial-artwork-box { width: 100%; border-radius: 16px; overflow: hidden; border: 1.5px solid rgba(255,180,0,0.3); background: #0d0704; box-shadow: 0 0 15px rgba(255,140,0,0.2); margin: 6px auto 10px; display: block; }
     .celestial-artwork-img { width: 100%; height: auto; max-height: 155px; object-fit: cover; display: block; }
     
-    .event-info-panel { background: rgba(255, 180, 0, 0.05); border: 1.5px solid rgba(255, 180, 0, 0.35); border-radius: 14px; padding: 10px 8px; margin-bottom: 12px; text-align: center; }
-    .event-date-row { font-size: 13.5px; font-weight: 800; color: #ffe082; text-transform: uppercase; margin-bottom: 3px; }
-    .event-venue-row { font-size: 11.5px; font-weight: 700; color: #ffb74d; text-transform: uppercase; margin-bottom: 8px; }
+    .event-info-panel {
+      background: rgba(255, 180, 0, 0.05);
+      border: 1.5px solid rgba(255, 180, 0, 0.35);
+      border-radius: 14px;
+      padding: 10px 8px;
+      margin-bottom: 12px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .event-date-row { font-size: 13.5px; font-weight: 800; color: #ffe082; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 3px; }
+    .event-venue-row { font-size: 11.5px; font-weight: 700; color: #ffb74d; line-height: 1.35; text-transform: uppercase; margin-bottom: 8px; }
     .schedule-divider-line { border: 0; height: 1px; background: rgba(255, 180, 0, 0.25); margin: 6px 0 8px; }
     .schedule-strip { display: flex; justify-content: space-around; align-items: center; font-size: 10.5px; font-weight: 800; color: #fff; }
+    .strip-item { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
+    .strip-val { color: #ffe082; }
 
-    .ticker-header { font-size: 11px; color: #ffe082; font-weight: 800; margin: 10px 0 6px; }
+    .ticker-header { font-size: 11px; color: #ffe082; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin: 10px 0 6px; }
     .ticker-wrap { width: 100%; overflow: hidden; background: #1a0e07; border: 1.5px solid rgba(255,180,0,0.35); border-radius: 14px; padding: 10px 0; margin-bottom: 12px; }
     .ticker-move { display: flex; gap: 14px; width: max-content; animation: scrollTicker 15s linear infinite; align-items: center; }
-    .sponsor-pill { display: flex; align-items: center; gap: 8px; background: #2b170b; border: 1.5px solid #ffb300; color: #ffe082; padding: 6px 14px; border-radius: 10px; font-size: 13px; font-weight: 800; text-decoration: none; }
+    .ticker-wrap:hover .ticker-move, .ticker-wrap:active .ticker-move { animation-play-state: paused; }
+    
+    .sponsor-pill { display: flex; align-items: center; gap: 8px; background: #2b170b; border: 1.5px solid #ffb300; color: #ffe082; padding: 6px 14px; border-radius: 10px; font-size: 13px; font-weight: 800; white-space: nowrap; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+    .sponsor-logo-img { height: 26px; width: auto; max-width: 75px; object-fit: contain; border-radius: 4px; background: #fff; padding: 1px 3px; }
     @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-    .btn-maps { background: #212121; color: #ffe082; border: 1.5px solid #ffb300; padding: 11px 14px; border-radius: 12px; font-size: 13px; font-weight: 800; width: 100%; text-decoration: none; display: block; margin-bottom: 8px; text-align: center; }
-    .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 14px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; width: 100%; cursor: pointer; }
-    .btn-entered-state { background: #424242 !important; color: #9e9e9e !important; cursor: not-allowed; }
+    .btn-maps { background: #212121; color: #ffe082; border: 1.5px solid #ffb300; padding: 11px 14px; border-radius: 12px; font-size: 13px; font-weight: 800; width: 100%; text-decoration: none; display: block; margin-bottom: 8px; text-align: center; box-shadow: 0 2px 10px rgba(255,179,0,0.2); }
+    .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 14px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; width: 100%; cursor: pointer; box-shadow: 0 3px 12px rgba(46,125,50,0.4); }
+    .btn-entered-state { background: #424242 !important; color: #9e9e9e !important; cursor: not-allowed; box-shadow: none !important; }
 
-    .blocked-card { background: #1c0808; border: 2px solid #ff5252; border-radius: 24px; padding: 34px 20px; text-align: center; width: 100%; }
+    .blocked-card { background: #1c0808; border: 2px solid #ff5252; border-radius: 24px; padding: 34px 20px; text-align: center; width: 100%; box-shadow: 0 0 30px rgba(255,82,82,0.4); }
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.88); display: flex; justify-content: center; align-items: center; padding: 16px; z-index: 100; }
     .modal-card { background: #1a0f08; border: 1px solid #ffb300; border-radius: 20px; padding: 20px; width: 100%; max-width: 380px; }
   </style>
@@ -157,9 +199,73 @@
       </div>
     </div>
 
-    <!-- 2. Settings View -->
+    <!-- 2. Settings View (With ALL Restored Uploaders & Options) -->
     <div id="viewSettings" class="panel-card" style="display: none;">
       <div class="panel-title">⚙️ Event Branding & Custom Options</div>
+
+      <!-- MAIN PRESENTER LOGO -->
+      <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
+        <label class="form-label" style="color: #39ff14;">📷 Main Top Logo (ટોચ પરનો સ્થિર ગોળ લોગો)</label>
+        <input type="file" id="fileBrandLogo" accept="image/*" style="display: none;" onchange="handleBrandLogoUpload(event)">
+        <label for="fileBrandLogo" class="btn-upload">📁 Choose Top Logo from Phone</label>
+        
+        <div id="brandLogoPreviewRow" class="preview-box" style="display: none;">
+          <img id="brandLogoPreview" class="preview-img" src="">
+          <div style="flex:1; font-size:11px; color:#ffe082;">Top Logo Selected</div>
+          <button style="background:#c62828; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:11px; cursor:pointer;" onclick="removeBrandLogo()">Remove</button>
+        </div>
+      </div>
+
+      <!-- EVENT BANNER / POSTER (REPLACING QR CODE) -->
+      <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
+        <label class="form-label" style="color: #39ff14;">🎨 Event Banner / Poster (QR ની જગ્યાએ મોટો ફોટો/પોસ્ટર)</label>
+        <input type="file" id="fileEventBanner" accept="image/*" style="display: none;" onchange="handleBannerUpload(event)">
+        <label for="fileEventBanner" class="btn-upload">🖼️ Choose Banner / Poster Image from Phone</label>
+        
+        <div id="bannerPreviewRow" class="preview-box" style="display: none;">
+          <img id="bannerPreviewImg" class="preview-img" style="width: 70px; height: 40px; object-fit: cover;" src="">
+          <div style="flex:1; font-size:11px; color:#ffe082;">Custom Banner Selected</div>
+          <button style="background:#c62828; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:11px; cursor:pointer;" onclick="removeEventBanner()">Remove</button>
+        </div>
+      </div>
+
+      <!-- EVENT DATE & ADDRESS -->
+      <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
+        <label class="form-label" style="color: #39ff14;">📅 Event Date & Day</label>
+        <input type="text" class="form-input" id="cfgEventDate" placeholder="e.g. SUNDAY • NOV 1, 2026" style="margin-bottom: 8px;">
+
+        <label class="form-label" style="color: #39ff14;">📍 Full Venue Address</label>
+        <input type="text" class="form-input" id="cfgVenueAddress" placeholder="e.g. SHREE RAM GROUND, SANALA ROAD, MORBI">
+      </div>
+
+      <!-- ORDERED TIMINGS & GATE -->
+      <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
+        <label class="form-label" style="color: #39ff14;">⏰ Gate, Program & Food Schedule</label>
+        <div style="margin-bottom: 8px;">
+          <span style="font-size: 10px; color: #ffb74d; font-weight:700;">🚪 Gate Number / Name</span>
+          <input type="text" class="form-input" id="cfgGateNo" placeholder="e.g. VIP-1">
+        </div>
+        <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+          <div style="flex: 1;">
+            <span style="font-size: 10px; color: #ffb74d; font-weight:700;">🪔 Program 1 Label</span>
+            <input type="text" class="form-input" id="cfgProg1Label" placeholder="e.g. BHAKTI">
+          </div>
+          <div style="flex: 1;">
+            <span style="font-size: 10px; color: #ffb74d; font-weight:700;">Time</span>
+            <input type="text" class="form-input" id="cfgProg1Time" placeholder="e.g. 8:00 PM">
+          </div>
+        </div>
+        <div style="display: flex; gap: 6px;">
+          <div style="flex: 1;">
+            <span style="font-size: 10px; color: #ffb74d; font-weight:700;">🍽️ Food Label</span>
+            <input type="text" class="form-input" id="cfgProg2Label" placeholder="e.g. DINNER">
+          </div>
+          <div style="flex: 1;">
+            <span style="font-size: 10px; color: #ffb74d; font-weight:700;">Time</span>
+            <input type="text" class="form-input" id="cfgProg2Time" placeholder="e.g. 9:30 PM">
+          </div>
+        </div>
+      </div>
 
       <div class="form-group">
         <label class="form-label">Presenter / Brand Text</label>
@@ -172,39 +278,24 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">Event Date & Day</label>
-        <input type="text" class="form-input" id="cfgEventDate" placeholder="e.g. SUNDAY • NOV 1, 2026">
+        <label class="form-label">Organizer Instagram Handle (e.g. twin_aura3)</label>
+        <input type="text" class="form-input" id="cfgInstaHandle" value="twin_aura3">
       </div>
 
       <div class="form-group">
-        <label class="form-label">Full Venue Address</label>
-        <input type="text" class="form-input" id="cfgVenueAddress" placeholder="e.g. SHREE RAM GROUND, SANALA ROAD, MORBI">
+        <label class="form-label">Google Maps Link or Plus Code</label>
+        <input type="text" class="form-input" id="cfgMapsUrl" placeholder="Paste Maps link">
       </div>
 
-      <div class="form-group">
-        <label class="form-label">Gate Number / Name</label>
-        <input type="text" class="form-input" id="cfgGateNo" placeholder="e.g. VIP-1">
-      </div>
-
-      <div style="display: flex; gap: 6px; margin-bottom: 8px;">
-        <div style="flex: 1;">
-          <label class="form-label">Program 1 Label</label>
-          <input type="text" class="form-input" id="cfgProg1Label">
-        </div>
-        <div style="flex: 1;">
-          <label class="form-label">Time</label>
-          <input type="text" class="form-input" id="cfgProg1Time">
-        </div>
-      </div>
-
-      <div style="display: flex; gap: 6px; margin-bottom: 8px;">
-        <div style="flex: 1;">
-          <label class="form-label">Food Label</label>
-          <input type="text" class="form-input" id="cfgProg2Label">
-        </div>
-        <div style="flex: 1;">
-          <label class="form-label">Time</label>
-          <input type="text" class="form-input" id="cfgProg2Time">
+      <!-- SPONSOR LOGO ATTACHMENTS -->
+      <div id="proSponsorSection" style="background: rgba(255,180,0,0.06); border: 1px dashed #ffb300; padding: 12px; border-radius: 12px; margin-bottom: 12px;">
+        <label class="form-label" style="color: #39ff14;">👑 Sponsor Image Logos</label>
+        <input type="file" id="fileSponsorLogo" accept="image/*" style="display: none;" onchange="handleSponsorLogoUpload(event)">
+        <label for="fileSponsorLogo" class="btn-upload">🖼️ Add Sponsor Logo Image</label>
+        <div id="sponsorLogosList" style="margin-top: 8px;"></div>
+        <div style="margin-top: 10px;">
+          <label class="form-label">Fallback Sponsor Names</label>
+          <input type="text" class="form-input" id="cfgSponsors" value="👑 Partner 1, 💍 Partner 2, 🍟 Partner 3">
         </div>
       </div>
 
@@ -213,7 +304,7 @@
         <input type="password" class="form-input" id="cfgAdminPass">
       </div>
 
-      <button class="btn-green" style="width: 100%; margin-top: 8px;" onclick="saveEventSettings()">💾 Save Event Settings</button>
+      <button class="btn-green" style="width: 100%; margin-top: 8px;" onclick="saveEventSettings()">💾 Save Event Settings & Logos</button>
 
       <!-- DANGER ZONE: RESET ALL PASSES DATA -->
       <div style="margin-top: 25px; padding: 12px; border: 1.5px dashed #c62828; border-radius: 12px; background: rgba(198,40,40,0.08);">
@@ -230,13 +321,20 @@
           <div class="brand-logo-frame" id="liveBrandLogoContainer" style="display: none;">
             <img id="liveBrandLogoImg" class="pass-brand-img" src="">
           </div>
+          
           <div class="pass-brand" id="liveBrand"></div>
           <div class="pass-title" id="liveTitle"></div>
           
+          <div>
+            <a id="liveInstaLink" href="#" target="_blank" rel="noopener noreferrer" class="insta-btn">
+              📸 Follow <span id="liveInstaHandle">@twin_aura3</span>
+            </a>
+          </div>
+
           <div class="guest-box">
             <div style="font-size: 11px; color: #ffb300; font-weight: 800;" id="livePassId">PASS ID: #BK-101</div>
             <div style="font-size: 20px; font-weight: 800; color: #fff; margin: 3px 0;" id="liveGuestName">Guest</div>
-            <div id="livePassTierBadge" class="tier-banner tier-full-style">🌟 VIP FULL ACCESS</div>
+            <div id="livePassTierBadge" class="tier-banner tier-full-style">🌟 VIP FULL ACCESS (EVENT + DINNER)</div>
           </div>
 
           <div class="clock-box">
@@ -253,12 +351,17 @@
             <div class="event-venue-row" id="liveVenueAddress"></div>
             <div class="schedule-divider-line"></div>
             <div class="schedule-strip">
-              <span>🚪 GATE: <span style="color:#ffe082;" id="liveGateDisplay">VIP-1</span></span>
+              <span class="strip-item">🚪 GATE: <span class="strip-val" id="liveGateDisplay">VIP-1</span></span>
               <span>•</span>
-              <span>🪔 <span id="liveProg1Lbl">BHAKTI</span>: <span style="color:#ffe082;" id="liveProg1Val">8:00 PM</span></span>
+              <span class="strip-item" id="liveProg1Container">🪔 <span id="liveProg1Lbl">BHAKTI</span>: <span class="strip-val" id="liveProg1Val">8:00 PM</span></span>
               <span>•</span>
-              <span>🍽️ <span id="liveProg2Lbl">DINNER</span>: <span style="color:#ffe082;" id="liveProg2Val">9:30 PM</span></span>
+              <span class="strip-item" id="liveProg2Container">🍽️ <span id="liveProg2Lbl">DINNER</span>: <span class="strip-val" id="liveProg2Val">9:30 PM</span></span>
             </div>
+          </div>
+
+          <div class="ticker-header">⚡ OFFICIAL SPONSORS & PARTNERS</div>
+          <div class="ticker-wrap">
+            <div class="ticker-move" id="tickerContent"></div>
           </div>
 
           <a id="btnMapsLink" href="#" class="btn-maps">📍 Get Venue Directions (Maps)</a>
@@ -294,7 +397,7 @@
         </select>
       </div>
       <div style="display: flex; gap: 8px;">
-        <button class="btn-green" style="flex: 1;" onclick="saveModalPass()">Save & Unlock Pass</button>
+        <button class="btn-green" style="flex: 1;" onclick="saveModalPass()">Save Pass</button>
         <button id="modalClearBtn" style="display: none; background: #c62828; color: #fff; border: none; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer;" onclick="clearCurrentPass()">Revoke</button>
         <button style="background: #555; color: #fff; border: none; padding: 10px 14px; border-radius: 10px;" onclick="closePassModal()">Close</button>
       </div>
@@ -308,6 +411,8 @@
     const EVENT_ID = urlParams.get('event');
     const guestPassId = urlParams.get('id');
     const guestNameParam = urlParams.get('name');
+
+    const DEFAULT_BANNER_IMAGE = "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop";
 
     let settings = null;
     let passes = [];
@@ -334,7 +439,7 @@
 
     window.addEventListener('DOMContentLoaded', async () => {
       if (!EVENT_ID) {
-        showStatusNotice("⚠️", "No Event Selected", "તમે સીધી મુખ્ય લિંક ખોલી છે. કૃપા કરીને એડમિન દ્વારા મળેલી <b>ઇવેન્ટ લિંક (?event=...)</b> ખોલો.");
+        showStatusNotice("⚠️", "No Event Selected", "તમે સીધી મુખ્ય લિંક ખોલી છે.<br><br>કૃપા કરીને એડમિન દ્વારા આપવામાં આવેલી તમારી <b>ઇવેન્ટ લિંક (?event=...)</b> ખોલો.");
         return;
       }
 
@@ -350,6 +455,8 @@
         }
 
         settings = cloudSettings;
+        if (!settings.sponsorImages) settings.sponsorImages = [];
+
         initPassesArray();
         applySettingsToUI();
         document.getElementById('loadingOverlay').style.display = 'none';
@@ -365,7 +472,7 @@
           syncFirebaseCloud(false);
         }
       } catch(err) {
-        showStatusNotice("📡", "Network Error", "કૃપા કરીને ઇન્ટરનેટ કનેક્શન તપાસો.");
+        showStatusNotice("📡", "Network Error", "ઇન્ટરનેટ કનેક્શન તપાસો.");
       }
     });
 
@@ -378,30 +485,278 @@
       }
     }
 
+    function getCleanInstagramHandle() {
+      let raw = (settings.instaHandle || '').trim();
+      if (!raw) return 'twin_aura3';
+      if (raw.includes('instagram.com/')) raw = raw.split('instagram.com/')[1];
+      raw = raw.split('?')[0].split('/')[0].split('#')[0];
+      raw = raw.replace(/@/g, '').replace(/\s+/g, '');
+      return raw.toLowerCase() || 'twin_aura3';
+    }
+
+    function getCleanMapsUrl() {
+      let raw = (settings.mapsUrl || '').trim();
+      let venue = (settings.venueAddress || 'SHREE RAM GROUND, SANALA ROAD, MORBI').trim();
+      if (raw.includes('+') || (!raw.startsWith('http://') && !raw.startsWith('https://') && raw.length > 0)) {
+        return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(raw);
+      }
+      if (!raw) {
+        return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(venue);
+      }
+      return raw;
+    }
+
+    function compressImageFile(file, maxWidth, maxHeight, quality, callback) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          if (width > height) {
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+          } else {
+            if (height > maxHeight) {
+              width = Math.round((width * maxHeight) / height);
+              height = maxHeight;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          callback(canvas.toDataURL('image/webp', quality));
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleBrandLogoUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      compressImageFile(file, 300, 300, 0.85, function(base64Uri) {
+        settings.brandLogo = base64Uri;
+        renderBrandLogoPreview();
+      });
+    }
+
+    function renderBrandLogoPreview() {
+      const row = document.getElementById('brandLogoPreviewRow');
+      const img = document.getElementById('brandLogoPreview');
+      if (settings && settings.brandLogo) {
+        img.src = settings.brandLogo;
+        row.style.display = 'flex';
+      } else {
+        row.style.display = 'none';
+      }
+    }
+
+    function removeBrandLogo() {
+      settings.brandLogo = "";
+      renderBrandLogoPreview();
+    }
+
+    function handleBannerUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      compressImageFile(file, 640, 320, 0.85, function(base64Uri) {
+        settings.eventBanner = base64Uri;
+        renderBannerPreview();
+      });
+    }
+
+    function renderBannerPreview() {
+      const row = document.getElementById('bannerPreviewRow');
+      const img = document.getElementById('bannerPreviewImg');
+      if (settings && settings.eventBanner) {
+        img.src = settings.eventBanner;
+        row.style.display = 'flex';
+      } else {
+        row.style.display = 'none';
+      }
+    }
+
+    function removeEventBanner() {
+      settings.eventBanner = "";
+      renderBannerPreview();
+    }
+
+    function handleSponsorLogoUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      compressImageFile(file, 200, 100, 0.8, function(base64Uri) {
+        const titlePrompt = prompt("Enter Sponsor Name:") || "Partner";
+        settings.sponsorImages.push({ name: titlePrompt, img: base64Uri });
+        renderSponsorLogosPreview();
+      });
+    }
+
+    function renderSponsorLogosPreview() {
+      const box = document.getElementById('sponsorLogosList');
+      box.innerHTML = '';
+      if (!settings || !settings.sponsorImages || settings.sponsorImages.length === 0) {
+        box.innerHTML = '<div style="font-size:11px; color:#888;">No image logos attached yet.</div>';
+        return;
+      }
+      settings.sponsorImages.forEach((sp, idx) => {
+        const item = document.createElement('div');
+        item.className = 'preview-box';
+        item.innerHTML = `
+          <img class="preview-img" src="${sp.img}">
+          <div style="flex:1; font-size:11.5px; color:#ffe082;">${sp.name}</div>
+          <button style="background:#c62828; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:10px; cursor:pointer;" onclick="removeSponsorLogo(${idx})">Delete</button>
+        `;
+        box.appendChild(item);
+      });
+    }
+
+    function removeSponsorLogo(idx) {
+      settings.sponsorImages.splice(idx, 1);
+      renderSponsorLogosPreview();
+    }
+
     function applySettingsToUI() {
       document.getElementById('dashTitle').innerText = settings.title + " (Pass Sheet)";
+      
+      const logoBox = document.getElementById('liveBrandLogoContainer');
+      const logoImg = document.getElementById('liveBrandLogoImg');
+      if (settings.brandLogo) {
+        logoImg.src = settings.brandLogo;
+        logoBox.style.display = 'inline-block';
+      } else {
+        logoBox.style.display = 'none';
+      }
+
+      const liveBanner = document.getElementById('liveBannerImg');
+      liveBanner.src = settings.eventBanner || DEFAULT_BANNER_IMAGE;
+
       document.getElementById('liveEventDate').innerText = "📅 " + (settings.eventDate || "SUNDAY • NOV 1, 2026");
-      document.getElementById('liveVenueAddress').innerText = "📍 " + (settings.venueAddress || "EVENT VENUE ADDRESS");
+      document.getElementById('liveVenueAddress').innerText = "📍 " + (settings.venueAddress || "SHREE RAM GROUND, SANALA ROAD, MORBI");
+
       document.getElementById('liveGateDisplay').innerText = settings.gateNo || "VIP-1";
-      document.getElementById('liveProg1Lbl').innerText = settings.prog1Label || "PROGRAM";
+      document.getElementById('liveProg1Lbl').innerText = settings.prog1Label || "BHAKTI";
       document.getElementById('liveProg1Val').innerText = settings.prog1Time || "8:00 PM";
       document.getElementById('liveProg2Lbl').innerText = settings.prog2Label || "DINNER";
       document.getElementById('liveProg2Val').innerText = settings.prog2Time || "9:30 PM";
 
       document.getElementById('cfgEventDate').value = settings.eventDate || "SUNDAY • NOV 1, 2026";
-      document.getElementById('cfgVenueAddress').value = settings.venueAddress || "EVENT VENUE ADDRESS";
+      document.getElementById('cfgVenueAddress').value = settings.venueAddress || "SHREE RAM GROUND, SANALA ROAD, MORBI";
       document.getElementById('cfgGateNo').value = settings.gateNo || "VIP-1";
-      document.getElementById('cfgProg1Label').value = settings.prog1Label || "PROGRAM";
+      document.getElementById('cfgProg1Label').value = settings.prog1Label || "BHAKTI";
       document.getElementById('cfgProg1Time').value = settings.prog1Time || "8:00 PM";
       document.getElementById('cfgProg2Label').value = settings.prog2Label || "DINNER";
       document.getElementById('cfgProg2Time').value = settings.prog2Time || "9:30 PM";
+
+      document.getElementById('liveBrand').innerText = settings.brand;
+      document.getElementById('liveTitle').innerText = settings.title;
+      
+      const cleanHandle = getCleanInstagramHandle();
+      document.getElementById('liveInstaHandle').innerText = '@' + cleanHandle;
+      document.getElementById('liveInstaLink').href = 'https://www.instagram.com/' + cleanHandle + '/';
+      
+      document.getElementById('btnMapsLink').href = getCleanMapsUrl();
+
+      document.getElementById('statAllotted').innerText = settings.quotaLimit;
       document.getElementById('cfgBrand').value = settings.brand || '';
       document.getElementById('cfgTitle').value = settings.title || '';
+      document.getElementById('cfgInstaHandle').value = cleanHandle;
+      document.getElementById('cfgMapsUrl').value = settings.mapsUrl || '';
+      document.getElementById('cfgSponsors').value = settings.sponsors || '';
       document.getElementById('cfgAdminPass').value = settings.adminPass || 'admin123';
-      document.getElementById('statAllotted').innerText = settings.quotaLimit;
+
+      renderBrandLogoPreview();
+      renderBannerPreview();
+      renderSponsorLogosPreview();
+      renderSponsorsTicker();
     }
 
-    // --- SECURE VERIFICATION WITHOUT LOCKOUT BUG ---
+    function renderSponsorsTicker() {
+      const tickerBox = document.getElementById('tickerContent');
+      let html = '';
+      const cleanHandle = getCleanInstagramHandle();
+      const finalInstaUrl = 'https://www.instagram.com/' + cleanHandle + '/';
+
+      if (settings.sponsorImages && settings.sponsorImages.length > 0) {
+        settings.sponsorImages.forEach(sp => {
+          html += `
+            <a href="${finalInstaUrl}" target="_blank" rel="noopener noreferrer" class="sponsor-pill">
+              <img src="${sp.img}" class="sponsor-logo-img">
+              <span>${sp.name}</span>
+            </a>
+          `;
+        });
+      }
+
+      const textSponsors = (settings.sponsors || "👑 Partner 1, 💍 Partner 2, 🍟 Partner 3").split(',');
+      textSponsors.forEach(sp => {
+        const name = sp.trim();
+        if (name) html += `<a href="${finalInstaUrl}" target="_blank" rel="noopener noreferrer" class="sponsor-pill"><span>${name}</span></a>`;
+      });
+
+      tickerBox.innerHTML = html + html;
+    }
+
+    function switchTab(tab) {
+      if (tab === 'settings' || tab === 'sheet') {
+        const enteredPass = sessionStorage.getItem('admin_auth_' + EVENT_ID);
+        if (!enteredPass) {
+          const passPrompt = prompt("Enter Client Admin Password:");
+          if (passPrompt !== settings.adminPass) {
+            alert("❌ Incorrect Password!");
+            return;
+          }
+          sessionStorage.setItem('admin_auth_' + EVENT_ID, 'true');
+        }
+      }
+
+      document.getElementById('viewSheet').style.display = tab === 'sheet' ? 'block' : 'none';
+      document.getElementById('viewSettings').style.display = tab === 'settings' ? 'block' : 'none';
+      document.getElementById('viewPass').style.display = tab === 'preview' ? 'block' : 'none';
+
+      document.getElementById('tabSheetBtn').className = 'tab-btn ' + (tab === 'sheet' ? 'active' : '');
+      document.getElementById('tabSettingsBtn').className = 'tab-btn ' + (tab === 'settings' ? 'active' : '');
+      document.getElementById('tabPreviewBtn').className = 'tab-btn ' + (tab === 'preview' ? 'active' : '');
+
+      if (tab === 'preview') showGuestPass();
+    }
+
+    function saveEventSettings() {
+      let rawHandle = document.getElementById('cfgInstaHandle').value.trim();
+      let cleaned = rawHandle.replace(/@/g, '').replace(/\s+/g, '').replace(/[^a-zA-Z0-9._]/g, '').toLowerCase();
+      
+      settings.brand = document.getElementById('cfgBrand').value.trim();
+      settings.title = document.getElementById('cfgTitle').value.trim();
+      settings.instaHandle = cleaned || 'twin_aura3';
+      settings.mapsUrl = document.getElementById('cfgMapsUrl').value.trim();
+      settings.sponsors = document.getElementById('cfgSponsors').value.trim();
+      settings.adminPass = document.getElementById('cfgAdminPass').value.trim();
+
+      settings.eventDate = document.getElementById('cfgEventDate').value.trim() || "SUNDAY • NOV 1, 2026";
+      settings.venueAddress = document.getElementById('cfgVenueAddress').value.trim() || "SHREE RAM GROUND, SANALA ROAD, MORBI";
+
+      settings.gateNo = document.getElementById('cfgGateNo').value.trim() || "VIP-1";
+      settings.prog1Label = document.getElementById('cfgProg1Label').value.trim() || "BHAKTI";
+      settings.prog1Time = document.getElementById('cfgProg1Time').value.trim() || "8:00 PM";
+      settings.prog2Label = document.getElementById('cfgProg2Label').value.trim() || "DINNER";
+      settings.prog2Time = document.getElementById('cfgProg2Time').value.trim() || "9:30 PM";
+
+      localStorage.setItem('ev_set_' + EVENT_ID, JSON.stringify(settings));
+      
+      fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/settings.json`, {
+        method: 'PUT',
+        body: JSON.stringify(settings),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      applySettingsToUI();
+      alert("✅ All Event Settings, Logos & Banners Saved!");
+    }
+
     function verifyPassAccessFirebase() {
       const passRef = `${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${guestPassId}.json`;
 
@@ -415,7 +770,6 @@
             return;
           }
 
-          // If pass is not locked to any phone, bind it to THIS guest's phone
           if (!data.device) {
             fetch(passRef, {
               method: 'PATCH',
@@ -424,12 +778,10 @@
             });
             showGuestPass(data);
           } 
-          // If already opened on this same phone, allow access
           else if (data.device === myDevice) {
             showGuestPass(data);
             if (data.status === 'ENTERED') markEnteredBadge();
           } 
-          // If opened on another phone, deny access
           else {
             showStatusNotice("🔒", "Device Locked", "આ VIP પાસ <b>અન્ય ફોન સાથે લોક થયેલો છે</b>.<br><br>જો તમે ફોન બદલ્યો હોય તો એડમિન પાસે અનલોક કરાવો.");
           }
@@ -446,17 +798,30 @@
       
       const badge = document.getElementById('livePassTierBadge');
       if (pData.type === 'DINNER') {
-        badge.innerText = "🍽️ DINNER ONLY PASS";
+        badge.innerText = "🍽️ DINNER ONLY PASS (FOOD ACCESS)";
         badge.className = "tier-banner tier-dinner-style";
       } else if (pData.type === 'EVENT') {
-        badge.innerText = "🎟️ EVENT ENTRY ONLY";
+        badge.innerText = "🎟️ EVENT ENTRY ONLY (NO DINNER)";
         badge.className = "tier-banner tier-event-style";
       } else {
-        badge.innerText = "🌟 VIP FULL ACCESS";
+        badge.innerText = "🌟 VIP FULL ACCESS (EVENT + DINNER)";
         badge.className = "tier-banner tier-full-style";
       }
 
-      document.getElementById('liveBannerImg').src = settings.eventBanner || "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop";
+      const cleanHandle = getCleanInstagramHandle();
+      document.getElementById('liveInstaHandle').innerText = '@' + cleanHandle;
+      document.getElementById('liveInstaLink').href = 'https://www.instagram.com/' + cleanHandle + '/';
+      document.getElementById('btnMapsLink').href = getCleanMapsUrl();
+
+      document.getElementById('liveBannerImg').src = settings.eventBanner || DEFAULT_BANNER_IMAGE;
+      document.getElementById('liveEventDate').innerText = "📅 " + (settings.eventDate || "SUNDAY • NOV 1, 2026");
+      document.getElementById('liveVenueAddress').innerText = "📍 " + (settings.venueAddress || "SHREE RAM GROUND, SANALA ROAD, MORBI");
+      document.getElementById('liveGateDisplay').innerText = settings.gateNo || "VIP-1";
+      document.getElementById('liveProg1Lbl').innerText = settings.prog1Label || "BHAKTI";
+      document.getElementById('liveProg1Val').innerText = settings.prog1Time || "8:00 PM";
+      document.getElementById('liveProg2Lbl').innerText = settings.prog2Label || "DINNER";
+      document.getElementById('liveProg2Val').innerText = settings.prog2Time || "9:30 PM";
+
       startLiveTimer();
     }
 
@@ -489,7 +854,6 @@
       btn.disabled = true;
     }
 
-    // --- 1-CLICK DEVICE UNLOCK BUTTON ---
     function unlockSinglePass(id) {
       if (confirm(`Pass #${id} નો ડિવાઇસ લોક અનલોક કરવો છે?`)) {
         fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${id}.json`, {
@@ -500,12 +864,11 @@
           let p = passes.find(item => item.id === id);
           if (p) { p.device = null; p.status = 'ISSUED'; }
           renderPassList();
-          alert(`✅ Pass #${id} સફળતાપૂર્વક અનલોક થઈ ગયો છે! હવે મહેમાન પોતાના ફોનમાં ખોલી શકશે.`);
+          alert(`✅ Pass #${id} અનલોક થઈ ગયો છે! હવે મહેમાન પોતાના ફોનમાં ખોલી શકશે.`);
         });
       }
     }
 
-    // --- RESET ALL PASSES DATA (DANGER ZONE) ---
     async function resetAllEventPasses() {
       if (confirm("ચેતવણી: આ ઇવેન્ટના તમામ પાસનો ડિવાઇસ લોક અને એન્ટ્રી સ્ટેટસ ક્લિયર થઈ જશે. શું તમારે આગળ વધવું છે?")) {
         passes.forEach(p => {
@@ -542,7 +905,7 @@
             });
             handleSearch();
           }
-          if (showAlert) alert('✅ Cloud Synchronized!');
+          if (showAlert) alert('✅ Synchronized Instantly!');
         });
     }
 
@@ -560,9 +923,9 @@
       const baseUrl = window.location.origin + window.location.pathname;
 
       pageItems.forEach(p => {
-        const typeLabel = p.type === 'DINNER' ? '🍽️ DINNER' : (p.type === 'EVENT' ? '🎟️ EVENT' : '🌟 FULL');
+        const typeLabel = p.type === 'DINNER' ? '🍽️ DINNER ONLY' : (p.type === 'EVENT' ? '🎟️ EVENT ONLY' : '🌟 VIP FULL');
         const passLink = baseUrl + '?event=' + EVENT_ID + '&id=' + p.id + (p.name ? '&name=' + encodeURIComponent(p.name) : '');
-        const waMsg = encodeURIComponent(`Hello ${p.name || ''}! Here is your [${typeLabel}] Digital Pass: ${passLink}`);
+        const waMsg = encodeURIComponent(`Hello ${p.name || ''}! Here is your [${typeLabel}] Digital Pass for ${settings.title}: ${passLink}`);
         const waUrl = p.phone ? `https://wa.me/91${p.phone}?text=${waMsg}` : '#';
 
         let badge = `<span class="badge-avail">AVAILABLE</span>`;
@@ -570,11 +933,15 @@
         else if (p.name) badge = `<span class="badge-issued">ISSUED</span>`;
         if (p.device) badge += ` <span class="badge-locked">🔒 LOCKED</span>`;
 
+        let tierTag = `<span class="badge-tier-full">FULL VIP</span>`;
+        if (p.type === 'DINNER') tierTag = `<span class="badge-tier-dinner">DINNER ONLY</span>`;
+        else if (p.type === 'EVENT') tierTag = `<span class="badge-tier-event">EVENT ONLY</span>`;
+
         const item = document.createElement('div');
         item.className = 'pass-item';
         item.innerHTML = `
           <div class="pass-info">
-            <div class="pass-tag">PASS #BK-${p.id} ${badge}</div>
+            <div class="pass-tag">PASS #BK-${p.id} ${badge} ${p.name ? tierTag : ''}</div>
             <div class="pass-name">${p.name || '<span style="color:#757575;">(Empty Slot)</span>'}</div>
             <div class="pass-phone">${p.phone || 'No phone recorded'}</div>
           </div>
@@ -596,6 +963,15 @@
       document.getElementById('statFullCount').innerText = issuedList.filter(p => p.type === 'FULL' || !p.type).length;
       document.getElementById('statDinnerCount').innerText = issuedList.filter(p => p.type === 'DINNER').length;
       document.getElementById('statEntered').innerText = passes.filter(p => p.status === 'ENTERED').length;
+
+      const issueBtn = document.getElementById('btnIssuePass');
+      if (issuedList.length >= settings.quotaLimit) {
+        issueBtn.innerText = "⛔ Quota Full (Limit Hit)";
+        issueBtn.style.background = "#555";
+      } else {
+        issueBtn.innerText = "➕ Issue Pass";
+        issueBtn.style.background = "#2e7d32";
+      }
     }
 
     function prevPage() { if (currentPage > 1) { currentPage--; renderPassList(); } }
@@ -607,6 +983,7 @@
         p.id.toString().includes(q) || 
         p.name.toLowerCase().includes(q) || 
         p.phone.includes(q) || 
+        (p.type && p.type.toLowerCase().includes(q)) || 
         p.status.toLowerCase().includes(q)
       );
       currentPage = 1;
@@ -614,6 +991,12 @@
     }
 
     function openPassModal() {
+      const issuedCount = passes.filter(p => p.name).length;
+      if (issuedCount >= settings.quotaLimit) {
+        alert("⚠️ Quota Limit Full (" + settings.quotaLimit + " Passes)!");
+        return;
+      }
+
       const free = passes.find(p => !p.name);
       document.getElementById('modalHeading').innerText = 'Issue VIP Pass';
       document.getElementById('mPassId').value = free ? free.id : settings.startPass;
@@ -640,12 +1023,17 @@
       document.getElementById('passModal').style.display = 'flex';
     }
 
-    // --- SAVE AND FORCE-CLEAR OLD LOCK BUG ---
     function saveModalPass() {
       const id = parseInt(document.getElementById('mPassId').value);
       const name = document.getElementById('mName').value.trim();
       const phone = document.getElementById('mPhone').value.trim();
       const type = document.getElementById('mPassType').value;
+      const endPass = parseInt(settings.startPass) + parseInt(settings.quotaLimit) - 1;
+
+      if (id < settings.startPass || id > endPass) {
+        alert(`❌ Invalid Pass Number! Quota strictly between #BK-${settings.startPass} and #BK-${endPass}`);
+        return;
+      }
 
       let p = passes.find(item => item.id === id);
       if (p) {
@@ -653,9 +1041,8 @@
         p.phone = phone;
         p.type = type;
         p.status = name ? 'ISSUED' : 'AVAILABLE';
-        p.device = null; // Clears old device lock on update!
+        p.device = null; // Automatically removes any old device lock!
 
-        // OVERWRITE IN CLOUD WITH CLEANED STATE
         fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${id}.json`, {
           method: 'PUT',
           body: JSON.stringify({ 
@@ -664,7 +1051,7 @@
             phone: phone, 
             type: type, 
             status: p.status,
-            device: null,    // Force unlock for fresh assignment
+            device: null,
             enteredAt: null
           }),
           headers: { 'Content-Type': 'application/json' }
@@ -688,51 +1075,6 @@
         closePassModal();
         handleSearch();
       }
-    }
-
-    function switchTab(tab) {
-      if (tab === 'settings' || tab === 'sheet') {
-        const enteredPass = sessionStorage.getItem('admin_auth_' + EVENT_ID);
-        if (!enteredPass) {
-          const passPrompt = prompt("Enter Client Admin Password:");
-          if (passPrompt !== settings.adminPass) {
-            alert("❌ Incorrect Password!");
-            return;
-          }
-          sessionStorage.setItem('admin_auth_' + EVENT_ID, 'true');
-        }
-      }
-
-      document.getElementById('viewSheet').style.display = tab === 'sheet' ? 'block' : 'none';
-      document.getElementById('viewSettings').style.display = tab === 'settings' ? 'block' : 'none';
-      document.getElementById('viewPass').style.display = tab === 'preview' ? 'block' : 'none';
-
-      document.getElementById('tabSheetBtn').className = 'tab-btn ' + (tab === 'sheet' ? 'active' : '');
-      document.getElementById('tabSettingsBtn').className = 'tab-btn ' + (tab === 'settings' ? 'active' : '');
-      document.getElementById('tabPreviewBtn').className = 'tab-btn ' + (tab === 'preview' ? 'active' : '');
-
-      if (tab === 'preview') showGuestPass();
-    }
-
-    function saveEventSettings() {
-      settings.brand = document.getElementById('cfgBrand').value.trim();
-      settings.title = document.getElementById('cfgTitle').value.trim();
-      settings.eventDate = document.getElementById('cfgEventDate').value.trim();
-      settings.venueAddress = document.getElementById('cfgVenueAddress').value.trim();
-      settings.gateNo = document.getElementById('cfgGateNo').value.trim();
-      settings.prog1Label = document.getElementById('cfgProg1Label').value.trim();
-      settings.prog1Time = document.getElementById('cfgProg1Time').value.trim();
-      settings.prog2Label = document.getElementById('cfgProg2Label').value.trim();
-      settings.prog2Time = document.getElementById('cfgProg2Time').value.trim();
-      settings.adminPass = document.getElementById('cfgAdminPass').value.trim();
-
-      fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/settings.json`, {
-        method: 'PUT',
-        body: JSON.stringify(settings),
-        headers: { 'Content-Type': 'application/json' }
-      });
-      applySettingsToUI();
-      alert("✅ All Event Settings Saved!");
     }
 
     function exportCSVReport() {
