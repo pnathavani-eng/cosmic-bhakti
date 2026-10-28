@@ -90,11 +90,14 @@
     const DEFAULT_FALLBACK_KEY = "super999";
     let CURRENT_MASTER_KEY = DEFAULT_FALLBACK_KEY;
 
-    window.addEventListener('DOMContentLoaded', async () => {
+    function resetExpiryDefault() {
       const today = new Date();
       today.setDate(today.getDate() + 7);
       document.getElementById('genExpiry').value = today.toISOString().split('T')[0];
+    }
 
+    window.addEventListener('DOMContentLoaded', async () => {
+      resetExpiryDefault();
       await fetchMasterKeyFromCloud();
       if (sessionStorage.getItem('master_logged_in') === 'true') {
         showDashboard();
@@ -156,7 +159,7 @@
     function autoGenerateSlug() {
       const name = document.getElementById('genName').value.trim();
       const slug = name.toLowerCase().replace(/[^a-z0-9]/g, '_').substring(0, 16);
-      document.getElementById('genSlug').value = slug || 'promoter_event';
+      document.getElementById('genSlug').value = slug || '';
     }
 
     async function createPromoterAndShare() {
@@ -234,6 +237,14 @@
         `2. Tap '⚙️ Settings' to update event banner, dates, timings & address.`
       );
 
+      // --- AUTO BLANK / RESET INPUT FIELDS ---
+      document.getElementById('genName').value = '';
+      document.getElementById('genQuota').value = '500';
+      document.getElementById('genPhone').value = '';
+      document.getElementById('genSlug').value = '';
+      document.getElementById('genPass').value = 'vip2026';
+      resetExpiryDefault();
+
       loadAllPromotersList();
       alert(`✅ Event "${name}" Created!\nValidity till: ${expiry}`);
 
@@ -289,7 +300,6 @@
       }
     }
 
-    // --- MASTER EXCEL / CSV EXPORT FUNCTION ---
     async function exportMasterEventCSV(slug, eventName) {
       try {
         const res = await fetch(`${FIREBASE_DB_URL}/events/${slug}/passes.json`);
