@@ -15,6 +15,7 @@
     .form-input { width: 100%; padding: 11px 12px; background: #22140b; border: 1px solid rgba(255,180,0,0.4); border-radius: 10px; color: #fff; font-size: 13.5px; outline: none; }
     .btn-purple { background: linear-gradient(45deg, #7b1fa2, #ab47bc); color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 13.5px; font-weight: 800; cursor: pointer; width: 100%; box-shadow: 0 3px 12px rgba(123,31,162,0.4); }
     .btn-save-key { background: #c62828; color: #fff; border: none; padding: 10px; border-radius: 10px; font-size: 12px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 6px; }
+    .btn-reset-counter { background: #e65100; color: #fff; border: none; padding: 10px; border-radius: 10px; font-size: 12px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 8px; }
     .promoter-card { background: #1c0f0a; border: 1px solid rgba(255,180,0,0.25); border-radius: 14px; padding: 12px; margin-bottom: 10px; }
     .box-sec { background: rgba(255,180,0,0.05); border: 1px dashed rgba(255,180,0,0.35); border-radius: 14px; padding: 12px; margin-bottom: 14px; }
   </style>
@@ -34,16 +35,17 @@
     <div class="panel-card" id="mainDashboard" style="display: none;">
       <div class="panel-title">👑 Master Admin Control Room</div>
 
-      <!-- CHANGE MASTER PASSWORD SECTION -->
+      <!-- MASTER SECURITY & PASS COUNTER RESET -->
       <div class="box-sec" style="border-color: #ff5252; background: rgba(211,47,47,0.08);">
-        <span class="form-label" style="color: #ff8a80;">🔑 Change Master Password (ક્લાઉડ પાસવર્ડ બદલો)</span>
-        <div style="display: flex; gap: 6px;">
-          <input type="password" class="form-input" id="newMasterKey" placeholder="Enter New Master Password">
-        </div>
+        <span class="form-label" style="color: #ff8a80;">🔑 Master Password & Counter Controls</span>
+        <input type="password" class="form-input" id="newMasterKey" placeholder="Enter New Master Password">
         <button class="btn-save-key" onclick="updateMasterPassword()">💾 Save New Master Password</button>
+        
+        <!-- 1-CLICK RESET TO 101 BUTTON -->
+        <button class="btn-reset-counter" onclick="resetGlobalPassCounter()">🔄 Reset Pass Counter to #BK-101</button>
       </div>
 
-      <!-- CREATE NEW PROMOTER EVENT -->
+      <!-- CREATE NEW PROMOTER EVENT WITH EXPIRY DATE -->
       <div class="box-sec">
         <div class="form-group">
           <label class="form-label">Promoter / Event Name</label>
@@ -59,6 +61,12 @@
             <label class="form-label">Promoter Mobile</label>
             <input type="tel" class="form-input" id="genPhone" placeholder="10 Digits">
           </div>
+        </div>
+
+        <!-- NEW: EXPIRY / VALIDITY DATE SELECTOR -->
+        <div class="form-group">
+          <label class="form-label" style="color: #39ff14;">⏳ Portal Validity / Expiry Date (આ તારીખ પછી આપોઆપ બંધ થશે)</label>
+          <input type="date" class="form-input" id="genExpiry">
         </div>
 
         <div style="display: flex; gap: 8px;">
@@ -86,6 +94,11 @@
     let CURRENT_MASTER_KEY = DEFAULT_FALLBACK_KEY;
 
     window.addEventListener('DOMContentLoaded', async () => {
+      // Set default expiry date to 7 days from today
+      const today = new Date();
+      today.setDate(today.getDate() + 7);
+      document.getElementById('genExpiry').value = today.toISOString().split('T')[0];
+
       await fetchMasterKeyFromCloud();
       if (sessionStorage.getItem('master_logged_in') === 'true') {
         showDashboard();
@@ -133,6 +146,18 @@
       alert("✅ Master Admin Password Updated Successfully!");
     }
 
+    // --- RESET PASS COUNTER TO 100 (NEXT PASS 101) ---
+    async function resetGlobalPassCounter() {
+      if (confirm("Are you sure? Do you want to reset pass series counter to #BK-101 for next events? (જૂની ઇવેન્ટ્સ કાઢી નાખ્યા પછી જ આ કરવું)")) {
+        await fetch(`${FIREBASE_DB_URL}/global_registry.json`, {
+          method: 'PATCH',
+          body: JSON.stringify({ lastAssignedPass: 100 }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+        alert("✅ Pass Counter Reset Done! Now the next new event will start from Pass #BK-101.");
+      }
+    }
+
     function autoGenerateSlug() {
       const name = document.getElementById('genName').value.trim();
       const slug = name.toLowerCase().replace(/[^a-z0-9]/g, '_').substring(0, 16);
@@ -145,9 +170,14 @@
       const phone = document.getElementById('genPhone').value.trim();
       const slug = document.getElementById('genSlug').value.trim();
       const pass = document.getElementById('genPass').value.trim();
+      const expiry = document.getElementById('genExpiry').value;
 
       if (!name || !slug) {
         alert("Please enter promoter name!");
+        return;
+      }
+      if (!expiry) {
+        alert("Please choose Validity / Expiry Date!");
         return;
       }
 
@@ -168,6 +198,7 @@
         startPass: nextStartPass,
         quotaLimit: quota,
         adminPass: pass,
+        expiryDate: expiry, // Saved Expiry Date
         brandLogo: "",
         eventBanner: "",
         eventDate: "SUNDAY • NOV 1, 2026",
@@ -195,7 +226,17 @@
         headers: { 'Content-Type': 'application/json' }
       });
 
-      const meta = { name: name, slug: slug, quota: quota, startPass: nextStartPass, endPass: endPass, phone: phone, pass: pass, createdAt: new Date().toISOString() };
+      const meta = { 
+        name: name, 
+        slug: slug, 
+        quota: quota, 
+        startPass: nextStartPass, 
+        endPass: endPass, 
+        phone: phone, 
+        pass: pass, 
+        expiryDate: expiry,
+        createdAt: new Date().toISOString() 
+      };
       await fetch(`${FIREBASE_DB_URL}/promoters_directory/${slug}.json`, {
         method: 'PUT',
         body: JSON.stringify(meta),
@@ -209,14 +250,15 @@
         `🌟 *Welcome ${name}! Your VIP Pass Portal is LIVE*\n\n` +
         `🔗 *Admin Portal Link:*\n${clientPortalUrl}\n\n` +
         `🔑 *Admin Password:* ${pass}\n` +
-        `🎟️ *Allotted Quota:* ${quota} Passes (#BK-${nextStartPass} to #BK-${endPass})\n\n` +
-        `⚡ *Features:*\n` +
+        `🎟️ *Allotted Quota:* ${quota} Passes (#BK-${nextStartPass} to #BK-${endPass})\n` +
+        `⏳ *Portal Validity Till:* ${expiry}\n\n` +
+        `⚡ *Instructions:*\n` +
         `1. Issue & manage VIP passes directly.\n` +
         `2. Tap '⚙️ Settings' to update event banner, dates, timings & address.`
       );
 
       loadAllPromotersList();
-      alert(`✅ Event "${name}" Created Successfully!`);
+      alert(`✅ Event "${name}" Created!\nValidity till: ${expiry}\nPasses: #BK-${nextStartPass} to #BK-${endPass}`);
 
       if (phone) window.open(`https://wa.me/91${phone}?text=${waText}`, '_blank');
       else window.open(`https://wa.me/?text=${waText}`, '_blank');
@@ -234,22 +276,30 @@
 
         let html = '';
         const baseUrl = window.location.origin + window.location.pathname.replace('master.html', 'index.html');
+        const todayStr = new Date().toISOString().split('T')[0];
 
         Object.keys(data).forEach(k => {
           const p = data[k];
           const directLink = `${baseUrl}?event=${p.slug}`;
+          const isExpired = p.expiryDate && p.expiryDate < todayStr;
+          const statusBadge = isExpired ? 
+            `<span style="font-size:10px; background:#c62828; color:#fff; padding:2px 7px; border-radius:6px; font-weight:800;">EXPIRED</span>` : 
+            `<span style="font-size:10px; background:#2e7d32; color:#fff; padding:2px 7px; border-radius:6px; font-weight:800;">ACTIVE</span>`;
+
           html += `
             <div class="promoter-card">
               <div style="display:flex; justify-content:space-between; align-items:center;">
                 <b style="color:#ffe082; font-size:14px;">${p.name}</b>
-                <span style="font-size:11px; background:#2e7d32; color:#fff; padding:2px 8px; border-radius:6px; font-weight:800;">ACTIVE</span>
+                ${statusBadge}
               </div>
               <div style="font-size:11.5px; color:#a1887f; margin: 4px 0;">
                 Quota: <b style="color:#fff;">${p.quota} Passes</b> (#BK-${p.startPass} - #${p.endPass})
               </div>
-              <div style="font-size:11px; color:#ffb74d;">Pass: <code>${p.pass}</code></div>
+              <div style="font-size:11px; color:#ffb74d;">
+                Pass: <code>${p.pass}</code> | ⏳ Validity: <b>${p.expiryDate || 'Unlimited'}</b>
+              </div>
               <div style="display:flex; gap:6px; margin-top:8px;">
-                <a href="${directLink}" target="_blank" style="flex:1; background:#1565c0; color:#fff; padding:8px 4px; border-radius:8px; font-size:11px; text-align:center; text-decoration:none; font-weight:700; display:inline-block;">Open Client Portal</a>
+                <a href="${directLink}" target="_blank" style="flex:1; background:#1565c0; color:#fff; padding:8px 4px; border-radius:8px; font-size:11px; text-align:center; text-decoration:none; font-weight:700; display:inline-block;">Open Portal</a>
                 <button onclick="deletePromoter('${p.slug}')" style="background:#c62828; color:#fff; border:none; padding:8px 10px; border-radius:8px; font-size:11px; cursor:pointer;">Delete</button>
               </div>
             </div>
