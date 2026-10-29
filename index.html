@@ -129,6 +129,7 @@
     .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 14px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; width: 100%; cursor: pointer; box-shadow: 0 3px 12px rgba(46,125,50,0.4); }
     .btn-entered-state { background: #c62828 !important; color: #fff !important; cursor: not-allowed; box-shadow: none !important; }
 
+    .security-auth-card { background: #130b06; border: 1.5px solid #ffb300; border-radius: 24px; padding: 26px 20px; text-align: center; width: 100%; box-shadow: 0 4px 25px rgba(255,179,0,0.25); margin-top: 25px; }
     .blocked-card { background: #1c0808; border: 2px solid #ff5252; border-radius: 24px; padding: 34px 20px; text-align: center; width: 100%; box-shadow: 0 0 30px rgba(255,82,82,0.4); }
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.88); display: flex; justify-content: center; align-items: center; padding: 16px; z-index: 100; }
     .modal-card { background: #1a0f08; border: 1px solid #ffb300; border-radius: 20px; padding: 20px; width: 100%; max-width: 380px; }
@@ -144,6 +145,7 @@
 
   <div class="container">
     
+    <!-- ERROR / DELETED NOTICE SCREEN -->
     <div class="blocked-card" id="statusNoticeScreen" style="display: none; margin-top: 30px;">
       <div style="font-size: 55px;" id="noticeIcon">⛔</div>
       <h2 style="color: #ff5252; margin: 14px 0 8px;" id="noticeTitle">Event Not Found / Deleted</h2>
@@ -152,6 +154,23 @@
       </p>
     </div>
 
+    <!-- PHONE NUMBER SECURITY UNLOCK CARD (OPTION A) -->
+    <div class="security-auth-card" id="phoneAuthScreen" style="display: none;">
+      <div style="font-size: 48px; margin-bottom: 8px;">🔐</div>
+      <h2 style="color: #ffe082; font-size: 19px; font-weight: 800; margin-bottom: 6px;">VIP Pass Verification</h2>
+      <p style="color: #d7ccc8; font-size: 13px; line-height: 1.5; margin-bottom: 18px;">
+        આ પાસ સુરક્ષિત રાખવા માટે કૃપા કરીને તમારો <b style="color: #ffb300;">રજિસ્ટર્ડ મોબાઈલ નંબર</b> દાખલ કરો:
+      </p>
+      
+      <div class="form-group">
+        <input type="tel" class="search-box" id="inputVerifyPhone" placeholder="Enter 10-Digit Mobile Number" maxlength="10" style="text-align: center; font-size: 17px; letter-spacing: 2px; font-weight: 800;">
+      </div>
+      
+      <button class="btn-green" style="width: 100%; padding: 13px; font-size: 14px;" onclick="verifyGuestMobileAccess()">🔓 Unlock VIP Pass</button>
+      <div id="phoneVerifyError" style="color: #ff5252; font-size: 12px; margin-top: 10px; font-weight: 700; display: none;"></div>
+    </div>
+
+    <!-- Loading Screen -->
     <div id="loadingOverlay" style="text-align: center; padding: 60px 0;">
       <div style="font-size: 38px; margin-bottom: 12px;">⏳</div>
       <div style="color: #ffe082; font-size: 15px; font-weight: 700;">Loading VIP Pass...</div>
@@ -197,7 +216,7 @@
       </div>
     </div>
 
-    <!-- 2. Settings View -->
+    <!-- 2. Settings View (With All Restored Branding, Image Uploaders & Schedules) -->
     <div id="viewSettings" class="panel-card" style="display: none;">
       <div class="panel-title">⚙️ Event Branding & Custom Options</div>
 
@@ -214,7 +233,7 @@
         </div>
       </div>
 
-      <!-- EVENT BANNER / POSTER -->
+      <!-- EVENT BANNER / POSTER (REPLACING QR CODE) -->
       <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
         <label class="form-label" style="color: #39ff14;">🎨 Event Banner / Poster (QR ની જગ્યાએ મોટો ફોટો/પોસ્ટર)</label>
         <input type="file" id="fileEventBanner" accept="image/*" style="display: none;" onchange="handleBannerUpload(event)">
@@ -407,9 +426,11 @@
 
     let settings = null;
     let passes = [];
+    let currentLoadedPassData = null;
 
     function showStatusNotice(icon, title, message) {
       document.getElementById('loadingOverlay').style.display = 'none';
+      document.getElementById('phoneAuthScreen').style.display = 'none';
       document.getElementById('adminNavBar').style.display = 'none';
       document.getElementById('viewSheet').style.display = 'none';
       document.getElementById('viewSettings').style.display = 'none';
@@ -449,7 +470,7 @@
         if (guestPassId) {
           document.getElementById('livePassId').innerText = 'PASS ID: #BK-' + guestPassId;
           document.getElementById('liveGuestName').innerText = guestNameParam || 'Valued Guest';
-          verifyPassAccessFirebase();
+          fetchAndVerifyPassData();
         } else {
           document.getElementById('adminNavBar').style.display = 'flex';
           document.getElementById('viewSheet').style.display = 'block';
@@ -741,8 +762,8 @@
       alert("✅ All Event Settings, Logos & Banners Saved!");
     }
 
-    // --- RELIABLE VERIFICATION WITHOUT FRAGILE PHONE LOCKOUT ---
-    function verifyPassAccessFirebase() {
+    // --- SECURE PHONE NUMBER LOCK LOGIC (OPTION A) ---
+    function fetchAndVerifyPassData() {
       const passRef = `${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${guestPassId}.json`;
 
       fetch(passRef)
@@ -755,15 +776,57 @@
             return;
           }
 
-          // Pass opens smoothly for guest every single time
-          showGuestPass(data);
-          if (data.status === 'ENTERED') {
-            markEnteredBadge();
+          currentLoadedPassData = data;
+
+          // Check if already authenticated on this phone session
+          const sessionAuthKey = 'pass_verified_' + EVENT_ID + '_' + guestPassId;
+          if (sessionStorage.getItem(sessionAuthKey) === 'true') {
+            showGuestPass(data);
+            if (data.status === 'ENTERED') markEnteredBadge();
+          } else {
+            // Show Mobile Number Unlock Screen
+            document.getElementById('phoneAuthScreen').style.display = 'block';
+            document.getElementById('inputVerifyPhone').focus();
           }
         })
         .catch(err => {
           showStatusNotice("📡", "Network Error", "વેરિફિકેશન નિષ્ફળ ગયું.");
         });
+    }
+
+    function verifyGuestMobileAccess() {
+      const enteredPhone = document.getElementById('inputVerifyPhone').value.trim().replace(/\D/g, '');
+      const errBox = document.getElementById('phoneVerifyError');
+      errBox.style.display = 'none';
+
+      if (!enteredPhone || enteredPhone.length < 10) {
+        errBox.innerText = "❌ કૃપા કરીને તમારો પૂરો ૧૦ આંકડાનો નંબર દાખલ કરો.";
+        errBox.style.display = 'block';
+        return;
+      }
+
+      if (!currentLoadedPassData || !currentLoadedPassData.phone) {
+        errBox.innerText = "❌ સિસ્ટમ એરર! કૃપા કરીને એડમિનનો સંપર્ક કરો.";
+        errBox.style.display = 'block';
+        return;
+      }
+
+      const registeredCleanPhone = currentLoadedPassData.phone.replace(/\D/g, '').slice(-10);
+      const enteredCleanPhone = enteredPhone.slice(-10);
+
+      if (registeredCleanPhone === enteredCleanPhone) {
+        const sessionAuthKey = 'pass_verified_' + EVENT_ID + '_' + guestPassId;
+        sessionStorage.setItem(sessionAuthKey, 'true');
+        
+        document.getElementById('phoneAuthScreen').style.display = 'none';
+        showGuestPass(currentLoadedPassData);
+        if (currentLoadedPassData.status === 'ENTERED') {
+          markEnteredBadge();
+        }
+      } else {
+        errBox.innerText = "❌ આ નંબર આ VIP પાસ સાથે મેળ ખાતો નથી!";
+        errBox.style.display = 'block';
+      }
     }
 
     function showGuestPass(passObj = null) {
@@ -815,19 +878,18 @@
     function handleGatekeeperEntry() {
       if (confirm("Confirm Gate Entry? (આ પાસની એન્ટ્રી વેરિફાઈ કરીને લોક કરવી છે?)")) {
         const pId = guestPassId || settings.startPass;
-        const entryTimestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
         fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${pId}.json`, {
           method: 'PATCH',
           body: JSON.stringify({ status: 'ENTERED', enteredAt: new Date().toISOString() }),
           headers: { 'Content-Type': 'application/json' }
         }).then(() => {
-          markEnteredBadge(entryTimestamp);
+          markEnteredBadge();
         });
       }
     }
 
-    function markEnteredBadge(timeStr) {
+    function markEnteredBadge() {
       const btn = document.getElementById('btnGateAction');
       btn.innerText = `⛔ ALREADY CHECKED-IN (ENTRY COMPLETED)`;
       btn.className = "btn-gate btn-entered-state";
