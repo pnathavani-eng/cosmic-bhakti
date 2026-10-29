@@ -45,11 +45,13 @@
     .badge-entered { background: #2e7d32; color: #fff; padding: 2px 6px; border-radius: 6px; font-size: 10px; font-weight: 800; }
     .badge-issued { background: #ef6c00; color: #fff; padding: 2px 6px; border-radius: 6px; font-size: 10px; }
     .badge-avail { background: #424242; color: #bbb; padding: 2px 6px; border-radius: 6px; font-size: 10px; }
+    .badge-locked { background: #c62828; color: #fff; padding: 2px 6px; border-radius: 6px; font-size: 10px; font-weight: 800; }
     .pass-name { font-size: 15px; font-weight: 700; color: #fff; margin: 3px 0; }
     .pass-phone { font-size: 12px; color: #a1887f; }
-    .pass-actions { display: flex; gap: 6px; align-items: center; }
+    .pass-actions { display: flex; gap: 5px; align-items: center; }
     .btn-wa { background: #25d366; color: #000; border: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; text-decoration: none; }
-    .btn-edit { background: #424242; color: #fff; border: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; cursor: pointer; }
+    .btn-edit { background: #424242; color: #fff; border: none; padding: 8px 9px; border-radius: 10px; font-size: 12px; cursor: pointer; }
+    .btn-unlock { background: #b71c1c; color: #fff; border: none; padding: 8px 9px; border-radius: 10px; font-size: 12px; cursor: pointer; }
 
     .pass-outer { width: 100%; border-radius: 26px; padding: 3px; background: linear-gradient(60deg, #ff9900, #ff0055, #00e5ff, #ff9900); background-size: 300% 300%; animation: glow 4s ease infinite; box-shadow: 0 0 35px rgba(255,140,0,0.35); }
     @keyframes glow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
@@ -154,19 +156,19 @@
       </p>
     </div>
 
-    <!-- PHONE NUMBER SECURITY UNLOCK CARD (OPTION A) -->
+    <!-- PHONE NUMBER SECURITY UNLOCK CARD (WITH DEVICE BINDING) -->
     <div class="security-auth-card" id="phoneAuthScreen" style="display: none;">
       <div style="font-size: 48px; margin-bottom: 8px;">🔐</div>
-      <h2 style="color: #ffe082; font-size: 19px; font-weight: 800; margin-bottom: 6px;">VIP Pass Verification</h2>
+      <h2 style="color: #ffe082; font-size: 19px; font-weight: 800; margin-bottom: 6px;">VIP Pass Security Check</h2>
       <p style="color: #d7ccc8; font-size: 13px; line-height: 1.5; margin-bottom: 18px;">
-        આ પાસ સુરક્ષિત રાખવા માટે કૃપા કરીને તમારો <b style="color: #ffb300;">રજિસ્ટર્ડ મોબાઈલ નંબર</b> દાખલ કરો:
+        આ પાસ તમારા ફોન સાથે લોક કરવા માટે કૃપા કરીને તમારો <b style="color: #ffb300;">રજિસ્ટર્ડ મોબાઈલ નંબર</b> દાખલ કરો:
       </p>
       
       <div class="form-group">
         <input type="tel" class="search-box" id="inputVerifyPhone" placeholder="Enter 10-Digit Mobile Number" maxlength="10" style="text-align: center; font-size: 17px; letter-spacing: 2px; font-weight: 800;">
       </div>
       
-      <button class="btn-green" style="width: 100%; padding: 13px; font-size: 14px;" onclick="verifyGuestMobileAccess()">🔓 Unlock VIP Pass</button>
+      <button class="btn-green" style="width: 100%; padding: 13px; font-size: 14px;" onclick="verifyGuestMobileAccess()">🔓 Unlock & Bind to This Phone</button>
       <div id="phoneVerifyError" style="color: #ff5252; font-size: 12px; margin-top: 10px; font-weight: 700; display: none;"></div>
     </div>
 
@@ -216,11 +218,10 @@
       </div>
     </div>
 
-    <!-- 2. Settings View (With All Restored Branding, Image Uploaders & Schedules) -->
+    <!-- 2. Settings View -->
     <div id="viewSettings" class="panel-card" style="display: none;">
       <div class="panel-title">⚙️ Event Branding & Custom Options</div>
 
-      <!-- MAIN PRESENTER LOGO -->
       <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
         <label class="form-label" style="color: #39ff14;">📷 Main Top Logo (ટોચ પરનો સ્થિર ગોળ લોગો)</label>
         <input type="file" id="fileBrandLogo" accept="image/*" style="display: none;" onchange="handleBrandLogoUpload(event)">
@@ -233,7 +234,6 @@
         </div>
       </div>
 
-      <!-- EVENT BANNER / POSTER (REPLACING QR CODE) -->
       <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
         <label class="form-label" style="color: #39ff14;">🎨 Event Banner / Poster (QR ની જગ્યાએ મોટો ફોટો/પોસ્ટર)</label>
         <input type="file" id="fileEventBanner" accept="image/*" style="display: none;" onchange="handleBannerUpload(event)">
@@ -246,7 +246,6 @@
         </div>
       </div>
 
-      <!-- EVENT DATE & ADDRESS -->
       <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
         <label class="form-label" style="color: #39ff14;">📅 Event Date & Day</label>
         <input type="text" class="form-input" id="cfgEventDate" placeholder="e.g. SUNDAY • NOV 1, 2026" style="margin-bottom: 8px;">
@@ -255,7 +254,6 @@
         <input type="text" class="form-input" id="cfgVenueAddress" placeholder="e.g. SHREE RAM GROUND, SANALA ROAD, MORBI">
       </div>
 
-      <!-- ORDERED TIMINGS & GATE -->
       <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
         <label class="form-label" style="color: #39ff14;">⏰ Gate, Program & Food Schedule</label>
         <div style="margin-bottom: 8px;">
@@ -299,9 +297,10 @@
         <input type="text" class="form-input" id="cfgInstaHandle" value="twin_aura3">
       </div>
 
+      <!-- GOOGLE MAPS LINK -->
       <div class="form-group">
-        <label class="form-label">Google Maps Link</label>
-        <input type="text" class="form-input" id="cfgMapsUrl" placeholder="Paste Maps link">
+        <label class="form-label" style="color: #39ff14;">📍 Google Maps Link</label>
+        <input type="text" class="form-input" id="cfgMapsUrl" value="https://maps.app.goo.gl/8Tf1rtGipbG2tPdg7?g_st=awb">
       </div>
 
       <!-- SPONSOR LOGO ATTACHMENTS -->
@@ -374,7 +373,7 @@
             <div class="ticker-move" id="tickerContent"></div>
           </div>
 
-          <a id="btnMapsLink" href="#" class="btn-maps">📍 Get Venue Directions (Maps)</a>
+          <a id="btnMapsLink" href="https://maps.app.goo.gl/8Tf1rtGipbG2tPdg7?g_st=awb" target="_blank" class="btn-maps">📍 Get Venue Directions (Maps)</a>
           <button class="btn-gate" id="btnGateAction" onclick="handleGatekeeperEntry()">GATE ENTRY (TAP TO VERIFY)</button>
         </div>
       </div>
@@ -422,11 +421,29 @@
     const guestPassId = urlParams.get('id');
     const guestNameParam = urlParams.get('name');
 
+    const DEFAULT_MAPS_LINK = "https://maps.app.goo.gl/8Tf1rtGipbG2tPdg7?g_st=awb";
     const DEFAULT_BANNER_IMAGE = "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop";
 
     let settings = null;
     let passes = [];
     let currentLoadedPassData = null;
+
+    // --- SMART STABLE DEVICE FINGERPRINT ---
+    function getStableDeviceSignature() {
+      let localId = localStorage.getItem('vip_stable_uuid');
+      if (!localId) {
+        localId = 'DEV_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
+        localStorage.setItem('vip_stable_uuid', localId);
+      }
+      const sw = screen.width || 0;
+      const sh = screen.height || 0;
+      const dpr = window.devicePixelRatio || 1;
+      const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+      const isAndroid = /Android/.test(navigator.userAgent);
+      const osType = isIOS ? 'iOS' : (isAndroid ? 'Android' : 'Desktop');
+      
+      return `${osType}_${sw}x${sh}_dpr${dpr}`;
+    }
 
     function showStatusNotice(icon, title, message) {
       document.getElementById('loadingOverlay').style.display = 'none';
@@ -461,6 +478,7 @@
         }
 
         settings = cloudSettings;
+        if (!settings.mapsUrl) settings.mapsUrl = DEFAULT_MAPS_LINK;
         if (!settings.sponsorImages) settings.sponsorImages = [];
 
         initPassesArray();
@@ -470,7 +488,7 @@
         if (guestPassId) {
           document.getElementById('livePassId').innerText = 'PASS ID: #BK-' + guestPassId;
           document.getElementById('liveGuestName').innerText = guestNameParam || 'Valued Guest';
-          fetchAndVerifyPassData();
+          fetchAndVerifyPassSecurity();
         } else {
           document.getElementById('adminNavBar').style.display = 'flex';
           document.getElementById('viewSheet').style.display = 'block';
@@ -487,7 +505,7 @@
       const s = parseInt(settings.startPass) || 1;
       const q = parseInt(settings.quotaLimit) || 150;
       for (let i = s; i < s + q; i++) {
-        passes.push({ id: i, name: '', phone: '', status: 'AVAILABLE', type: 'FULL' });
+        passes.push({ id: i, name: '', phone: '', status: 'AVAILABLE', type: 'FULL', boundSignature: null });
       }
     }
 
@@ -501,15 +519,7 @@
     }
 
     function getCleanMapsUrl() {
-      let raw = (settings.mapsUrl || '').trim();
-      let venue = (settings.venueAddress || 'SHREE RAM GROUND, SANALA ROAD, MORBI').trim();
-      if (raw.includes('+') || (!raw.startsWith('http://') && !raw.startsWith('https://') && raw.length > 0)) {
-        return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(raw);
-      }
-      if (!raw) {
-        return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(venue);
-      }
-      return raw;
+      return (settings && settings.mapsUrl) ? settings.mapsUrl.trim() : DEFAULT_MAPS_LINK;
     }
 
     function compressImageFile(file, maxWidth, maxHeight, quality, callback) {
@@ -664,13 +674,15 @@
       const cleanHandle = getCleanInstagramHandle();
       document.getElementById('liveInstaHandle').innerText = '@' + cleanHandle;
       document.getElementById('liveInstaLink').href = 'https://www.instagram.com/' + cleanHandle + '/';
-      document.getElementById('btnMapsLink').href = getCleanMapsUrl();
+      
+      const currentMaps = getCleanMapsUrl();
+      document.getElementById('btnMapsLink').href = currentMaps;
+      document.getElementById('cfgMapsUrl').value = currentMaps;
 
       document.getElementById('statAllotted').innerText = settings.quotaLimit;
       document.getElementById('cfgBrand').value = settings.brand || '';
       document.getElementById('cfgTitle').value = settings.title || '';
       document.getElementById('cfgInstaHandle').value = cleanHandle;
-      document.getElementById('cfgMapsUrl').value = settings.mapsUrl || '';
       document.getElementById('cfgSponsors').value = settings.sponsors || '';
       document.getElementById('cfgAdminPass').value = settings.adminPass || 'admin123';
 
@@ -737,7 +749,7 @@
       settings.brand = document.getElementById('cfgBrand').value.trim();
       settings.title = document.getElementById('cfgTitle').value.trim();
       settings.instaHandle = cleaned || 'twin_aura3';
-      settings.mapsUrl = document.getElementById('cfgMapsUrl').value.trim();
+      settings.mapsUrl = document.getElementById('cfgMapsUrl').value.trim() || DEFAULT_MAPS_LINK;
       settings.sponsors = document.getElementById('cfgSponsors').value.trim();
       settings.adminPass = document.getElementById('cfgAdminPass').value.trim();
 
@@ -759,11 +771,11 @@
       });
 
       applySettingsToUI();
-      alert("✅ All Event Settings, Logos & Banners Saved!");
+      alert("✅ All Event Settings, Map Link & Logos Saved!");
     }
 
-    // --- SECURE PHONE NUMBER LOCK LOGIC (OPTION A) ---
-    function fetchAndVerifyPassData() {
+    // --- SMART SECURITY: VERIFY MOBILE + BIND SPECIFIC DEVICE ---
+    function fetchAndVerifyPassSecurity() {
       const passRef = `${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${guestPassId}.json`;
 
       fetch(passRef)
@@ -777,14 +789,29 @@
           }
 
           currentLoadedPassData = data;
+          const currentSignature = getStableDeviceSignature();
+          const localUUID = localStorage.getItem('vip_stable_uuid');
 
-          // Check if already authenticated on this phone session
-          const sessionAuthKey = 'pass_verified_' + EVENT_ID + '_' + guestPassId;
-          if (sessionStorage.getItem(sessionAuthKey) === 'true') {
-            showGuestPass(data);
-            if (data.status === 'ENTERED') markEnteredBadge();
-          } else {
-            // Show Mobile Number Unlock Screen
+          // Case 1: Pass is already activated on a device
+          if (data.boundSignature) {
+            // Check if THIS phone matches the original bound phone
+            const isMatchingDevice = (data.boundSignature === currentSignature) || (data.boundUUID === localUUID);
+            
+            if (isMatchingDevice) {
+              // Real owner opening on their same phone (opens smoothly 10 times, 100 times!)
+              showGuestPass(data);
+              if (data.status === 'ENTERED') markEnteredBadge();
+            } else {
+              // Someone else opened the forwarded link!
+              showStatusNotice(
+                "🔒",
+                "Device Access Denied",
+                "આ VIP પાસ <b>અસલ મહેમાનના મોબાઈલ સાથે પહેલેથી લોક થઈ ચૂક્યો છે</b>.<br><br>લિંક કે નંબર બીજા કોઈને ફોરવર્ડ કરવાથી પાસ ખૂલશે નહીં.<br><br>જો તમે ફોન બદલ્યો હોય તો મુખ્ય એડમિન પાસે અનલોક કરાવો."
+              );
+            }
+          } 
+          // Case 2: First time opening - Ask for Registered Mobile to BIND to this phone
+          else {
             document.getElementById('phoneAuthScreen').style.display = 'block';
             document.getElementById('inputVerifyPhone').focus();
           }
@@ -814,17 +841,32 @@
       const registeredCleanPhone = currentLoadedPassData.phone.replace(/\D/g, '').slice(-10);
       const enteredCleanPhone = enteredPhone.slice(-10);
 
+      // Verify Mobile Number Match
       if (registeredCleanPhone === enteredCleanPhone) {
-        const sessionAuthKey = 'pass_verified_' + EVENT_ID + '_' + guestPassId;
-        sessionStorage.setItem(sessionAuthKey, 'true');
-        
+        const currentSignature = getStableDeviceSignature();
+        const localUUID = localStorage.getItem('vip_stable_uuid');
+
+        // BIND this pass permanently to THIS phone in Firebase
+        fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${guestPassId}.json`, {
+          method: 'PATCH',
+          body: JSON.stringify({ 
+            boundSignature: currentSignature,
+            boundUUID: localUUID,
+            activatedAt: new Date().toISOString()
+          }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        currentLoadedPassData.boundSignature = currentSignature;
+        currentLoadedPassData.boundUUID = localUUID;
+
         document.getElementById('phoneAuthScreen').style.display = 'none';
         showGuestPass(currentLoadedPassData);
         if (currentLoadedPassData.status === 'ENTERED') {
           markEnteredBadge();
         }
       } else {
-        errBox.innerText = "❌ આ નંબર આ VIP પાસ સાથે મેળ ખાતો નથી!";
+        errBox.innerText = "❌ આ મોબાઈલ નંબર આ VIP પાસ સાથે મેળ ખાતો નથી!";
         errBox.style.display = 'block';
       }
     }
@@ -896,6 +938,22 @@
       btn.disabled = true;
     }
 
+    // --- 1-CLICK UNLOCK BUTTON FOR ADMIN (IF GUEST CHANGES PHONE) ---
+    function unlockGuestDevice(id) {
+      if (confirm(`Pass #${id} નો ડિવાઇસ લોક અનલોક કરવો છે? જેથી મહેમાન નવા ફોનમાં નંબર નાખીને ખોલી શકે.`)) {
+        fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${id}.json`, {
+          method: 'PATCH',
+          body: JSON.stringify({ boundSignature: null, boundUUID: null }),
+          headers: { 'Content-Type': 'application/json' }
+        }).then(() => {
+          let p = passes.find(item => item.id === id);
+          if (p) p.boundSignature = null;
+          renderPassList();
+          alert(`✅ Pass #${id} સફળતાપૂર્વક અનલોક થઈ ગયો છે!`);
+        });
+      }
+    }
+
     function syncFirebaseCloud(showAlert = false) {
       fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes.json`)
         .then(res => res.json())
@@ -909,6 +967,7 @@
                 p.name = cp.name || '';
                 p.phone = cp.phone || '';
                 p.type = cp.type || 'FULL';
+                p.boundSignature = cp.boundSignature || null;
               }
             });
             handleSearch();
@@ -939,6 +998,7 @@
         let badge = `<span class="badge-avail">AVAILABLE</span>`;
         if (p.status === 'ENTERED') badge = `<span class="badge-entered">✅ CHECKED-IN</span>`;
         else if (p.name) badge = `<span class="badge-issued">ISSUED</span>`;
+        if (p.boundSignature) badge += ` <span class="badge-locked">🔒 BOUND</span>`;
 
         let tierTag = `<span class="badge-tier-full">FULL VIP</span>`;
         if (p.type === 'DINNER') tierTag = `<span class="badge-tier-dinner">DINNER ONLY</span>`;
@@ -954,6 +1014,7 @@
           </div>
           <div class="pass-actions">
             ${p.phone ? `<a href="${waUrl}" target="_blank" class="btn-wa">WhatsApp 📲</a>` : ''}
+            ${p.boundSignature ? `<button class="btn-unlock" title="Unlock Device" onclick="unlockGuestDevice(${p.id})">🔓</button>` : ''}
             <button class="btn-edit" onclick="editPassRecord(${p.id})">✏️</button>
           </div>
         `;
@@ -1047,6 +1108,7 @@
         p.phone = phone;
         p.type = type;
         p.status = name ? 'ISSUED' : 'AVAILABLE';
+        p.boundSignature = null; // Fresh issue unlocks bound device
 
         fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${id}.json`, {
           method: 'PUT',
@@ -1056,6 +1118,8 @@
             phone: phone, 
             type: type, 
             status: p.status,
+            boundSignature: null,
+            boundUUID: null,
             enteredAt: null
           }),
           headers: { 'Content-Type': 'application/json' }
@@ -1074,6 +1138,7 @@
         p.phone = '';
         p.type = 'FULL';
         p.status = 'AVAILABLE';
+        p.boundSignature = null;
         fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${id}.json`, { method: 'DELETE' });
         closePassModal();
         handleSearch();
