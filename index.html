@@ -45,13 +45,11 @@
     .badge-entered { background: #2e7d32; color: #fff; padding: 2px 6px; border-radius: 6px; font-size: 10px; font-weight: 800; }
     .badge-issued { background: #ef6c00; color: #fff; padding: 2px 6px; border-radius: 6px; font-size: 10px; }
     .badge-avail { background: #424242; color: #bbb; padding: 2px 6px; border-radius: 6px; font-size: 10px; }
-    .badge-locked { background: #d32f2f; color: #fff; padding: 2px 6px; border-radius: 6px; font-size: 10px; font-weight: 800; }
     .pass-name { font-size: 15px; font-weight: 700; color: #fff; margin: 3px 0; }
     .pass-phone { font-size: 12px; color: #a1887f; }
-    .pass-actions { display: flex; gap: 5px; align-items: center; }
+    .pass-actions { display: flex; gap: 6px; align-items: center; }
     .btn-wa { background: #25d366; color: #000; border: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; text-decoration: none; }
-    .btn-edit { background: #424242; color: #fff; border: none; padding: 8px 9px; border-radius: 10px; font-size: 12px; cursor: pointer; }
-    .btn-unlock { background: #c62828; color: #fff; border: none; padding: 8px 9px; border-radius: 10px; font-size: 12px; cursor: pointer; }
+    .btn-edit { background: #424242; color: #fff; border: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; cursor: pointer; }
 
     .pass-outer { width: 100%; border-radius: 26px; padding: 3px; background: linear-gradient(60deg, #ff9900, #ff0055, #00e5ff, #ff9900); background-size: 300% 300%; animation: glow 4s ease infinite; box-shadow: 0 0 35px rgba(255,140,0,0.35); }
     @keyframes glow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
@@ -75,7 +73,7 @@
     .insta-btn { 
       display: inline-flex; 
       align-items: center; 
-      justify-content: center;
+      justify-content: center; 
       gap: 6px; 
       background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); 
       color: #fff; 
@@ -129,7 +127,7 @@
 
     .btn-maps { background: #212121; color: #ffe082; border: 1.5px solid #ffb300; padding: 11px 14px; border-radius: 12px; font-size: 13px; font-weight: 800; width: 100%; text-decoration: none; display: block; margin-bottom: 8px; text-align: center; box-shadow: 0 2px 10px rgba(255,179,0,0.2); }
     .btn-gate { background: #2e7d32; color: #fff; border: none; padding: 14px 18px; border-radius: 12px; font-size: 14px; font-weight: 800; width: 100%; cursor: pointer; box-shadow: 0 3px 12px rgba(46,125,50,0.4); }
-    .btn-entered-state { background: #424242 !important; color: #9e9e9e !important; cursor: not-allowed; box-shadow: none !important; }
+    .btn-entered-state { background: #c62828 !important; color: #fff !important; cursor: not-allowed; box-shadow: none !important; }
 
     .blocked-card { background: #1c0808; border: 2px solid #ff5252; border-radius: 24px; padding: 34px 20px; text-align: center; width: 100%; box-shadow: 0 0 30px rgba(255,82,82,0.4); }
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.88); display: flex; justify-content: center; align-items: center; padding: 16px; z-index: 100; }
@@ -156,7 +154,7 @@
 
     <div id="loadingOverlay" style="text-align: center; padding: 60px 0;">
       <div style="font-size: 38px; margin-bottom: 12px;">⏳</div>
-      <div style="color: #ffe082; font-size: 15px; font-weight: 700;">Connecting to VIP Pass Cloud...</div>
+      <div style="color: #ffe082; font-size: 15px; font-weight: 700;">Loading VIP Pass...</div>
     </div>
 
     <!-- 1. Pass Manager View -->
@@ -199,7 +197,7 @@
       </div>
     </div>
 
-    <!-- 2. Settings View (With ALL Restored Uploaders & Options) -->
+    <!-- 2. Settings View -->
     <div id="viewSettings" class="panel-card" style="display: none;">
       <div class="panel-title">⚙️ Event Branding & Custom Options</div>
 
@@ -216,11 +214,11 @@
         </div>
       </div>
 
-      <!-- EVENT BANNER / POSTER (REPLACING QR CODE) -->
+      <!-- EVENT BANNER / POSTER -->
       <div class="form-group" style="background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.3); padding: 12px; border-radius: 12px;">
         <label class="form-label" style="color: #39ff14;">🎨 Event Banner / Poster (QR ની જગ્યાએ મોટો ફોટો/પોસ્ટર)</label>
         <input type="file" id="fileEventBanner" accept="image/*" style="display: none;" onchange="handleBannerUpload(event)">
-        <label for="fileEventBanner" class="btn-upload">🖼️ Choose Banner / Poster Image from Phone</label>
+        <label for="fileEventBanner" class="btn-upload">🖼️ Choose Banner Image from Phone</label>
         
         <div id="bannerPreviewRow" class="preview-box" style="display: none;">
           <img id="bannerPreviewImg" class="preview-img" style="width: 70px; height: 40px; object-fit: cover;" src="">
@@ -278,12 +276,12 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">Organizer Instagram Handle (e.g. twin_aura3)</label>
+        <label class="form-label">Organizer Instagram Handle</label>
         <input type="text" class="form-input" id="cfgInstaHandle" value="twin_aura3">
       </div>
 
       <div class="form-group">
-        <label class="form-label">Google Maps Link or Plus Code</label>
+        <label class="form-label">Google Maps Link</label>
         <input type="text" class="form-input" id="cfgMapsUrl" placeholder="Paste Maps link">
       </div>
 
@@ -305,13 +303,6 @@
       </div>
 
       <button class="btn-green" style="width: 100%; margin-top: 8px;" onclick="saveEventSettings()">💾 Save Event Settings & Logos</button>
-
-      <!-- DANGER ZONE: RESET ALL PASSES DATA -->
-      <div style="margin-top: 25px; padding: 12px; border: 1.5px dashed #c62828; border-radius: 12px; background: rgba(198,40,40,0.08);">
-        <div style="font-size: 12px; font-weight: 800; color: #ff5252; margin-bottom: 6px;">⚠️ Reset Passes & Device Locks</div>
-        <div style="font-size: 11px; color: #d7ccc8; margin-bottom: 10px;">જો બધા પાસમાંથી જૂના ડિવાઇસ લોક અથવા 'Entered' સ્ટેટસ ક્લિયર કરવું હોય તો આ બટન દબાવો.</div>
-        <button style="background: #c62828; color: #fff; border: none; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; width: 100%;" onclick="resetAllEventPasses()">🗑️ Reset All Passes & Unlock Devices</button>
-      </div>
     </div>
 
     <!-- 3. VIP Live Digital Pass View -->
@@ -417,12 +408,6 @@
     let settings = null;
     let passes = [];
 
-    let myDevice = localStorage.getItem('vip_device_token');
-    if (!myDevice) {
-      myDevice = 'DEV_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
-      localStorage.setItem('vip_device_token', myDevice);
-    }
-
     function showStatusNotice(icon, title, message) {
       document.getElementById('loadingOverlay').style.display = 'none';
       document.getElementById('adminNavBar').style.display = 'none';
@@ -481,7 +466,7 @@
       const s = parseInt(settings.startPass) || 1;
       const q = parseInt(settings.quotaLimit) || 150;
       for (let i = s; i < s + q; i++) {
-        passes.push({ id: i, name: '', phone: '', status: 'AVAILABLE', type: 'FULL', device: null });
+        passes.push({ id: i, name: '', phone: '', status: 'AVAILABLE', type: 'FULL' });
       }
     }
 
@@ -652,13 +637,12 @@
       document.getElementById('cfgProg2Label').value = settings.prog2Label || "DINNER";
       document.getElementById('cfgProg2Time').value = settings.prog2Time || "9:30 PM";
 
-      document.getElementById('liveBrand').innerText = settings.brand;
-      document.getElementById('liveTitle').innerText = settings.title;
+      document.getElementById('liveBrand').innerText = settings.brand || '';
+      document.getElementById('liveTitle').innerText = settings.title || '';
       
       const cleanHandle = getCleanInstagramHandle();
       document.getElementById('liveInstaHandle').innerText = '@' + cleanHandle;
       document.getElementById('liveInstaLink').href = 'https://www.instagram.com/' + cleanHandle + '/';
-      
       document.getElementById('btnMapsLink').href = getCleanMapsUrl();
 
       document.getElementById('statAllotted').innerText = settings.quotaLimit;
@@ -757,6 +741,7 @@
       alert("✅ All Event Settings, Logos & Banners Saved!");
     }
 
+    // --- RELIABLE VERIFICATION WITHOUT FRAGILE PHONE LOCKOUT ---
     function verifyPassAccessFirebase() {
       const passRef = `${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${guestPassId}.json`;
 
@@ -770,20 +755,10 @@
             return;
           }
 
-          if (!data.device) {
-            fetch(passRef, {
-              method: 'PATCH',
-              body: JSON.stringify({ device: myDevice, firstSeen: new Date().toISOString() }),
-              headers: { 'Content-Type': 'application/json' }
-            });
-            showGuestPass(data);
-          } 
-          else if (data.device === myDevice) {
-            showGuestPass(data);
-            if (data.status === 'ENTERED') markEnteredBadge();
-          } 
-          else {
-            showStatusNotice("🔒", "Device Locked", "આ VIP પાસ <b>અન્ય ફોન સાથે લોક થયેલો છે</b>.<br><br>જો તમે ફોન બદલ્યો હોય તો એડમિન પાસે અનલોક કરાવો.");
+          // Pass opens smoothly for guest every single time
+          showGuestPass(data);
+          if (data.status === 'ENTERED') {
+            markEnteredBadge();
           }
         })
         .catch(err => {
@@ -836,55 +811,27 @@
       update();
     }
 
+    // --- GATE VERIFICATION & CHECK-IN LOCK ---
     function handleGatekeeperEntry() {
-      if (confirm("Confirm Gate Entry? (મહેમાનની એન્ટ્રી વેરિફાઈ કરવી છે?)")) {
+      if (confirm("Confirm Gate Entry? (આ પાસની એન્ટ્રી વેરિફાઈ કરીને લોક કરવી છે?)")) {
         const pId = guestPassId || settings.startPass;
+        const entryTimestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
         fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${pId}.json`, {
           method: 'PATCH',
           body: JSON.stringify({ status: 'ENTERED', enteredAt: new Date().toISOString() }),
           headers: { 'Content-Type': 'application/json' }
-        }).then(() => markEnteredBadge());
+        }).then(() => {
+          markEnteredBadge(entryTimestamp);
+        });
       }
     }
 
-    function markEnteredBadge() {
+    function markEnteredBadge(timeStr) {
       const btn = document.getElementById('btnGateAction');
-      btn.innerText = "✓ CHECKED-IN (ENTRY VERIFIED)";
+      btn.innerText = `⛔ ALREADY CHECKED-IN (ENTRY COMPLETED)`;
       btn.className = "btn-gate btn-entered-state";
       btn.disabled = true;
-    }
-
-    function unlockSinglePass(id) {
-      if (confirm(`Pass #${id} નો ડિવાઇસ લોક અનલોક કરવો છે?`)) {
-        fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${id}.json`, {
-          method: 'PATCH',
-          body: JSON.stringify({ device: null, enteredAt: null, status: 'ISSUED' }),
-          headers: { 'Content-Type': 'application/json' }
-        }).then(() => {
-          let p = passes.find(item => item.id === id);
-          if (p) { p.device = null; p.status = 'ISSUED'; }
-          renderPassList();
-          alert(`✅ Pass #${id} અનલોક થઈ ગયો છે! હવે મહેમાન પોતાના ફોનમાં ખોલી શકશે.`);
-        });
-      }
-    }
-
-    async function resetAllEventPasses() {
-      if (confirm("ચેતવણી: આ ઇવેન્ટના તમામ પાસનો ડિવાઇસ લોક અને એન્ટ્રી સ્ટેટસ ક્લિયર થઈ જશે. શું તમારે આગળ વધવું છે?")) {
-        passes.forEach(p => {
-          if (p.name) {
-            p.device = null;
-            p.status = 'ISSUED';
-            fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${p.id}.json`, {
-              method: 'PATCH',
-              body: JSON.stringify({ device: null, enteredAt: null, status: 'ISSUED' }),
-              headers: { 'Content-Type': 'application/json' }
-            });
-          }
-        });
-        renderPassList();
-        alert("✅ તમામ પાસ સફળતાપૂર્વક રીસેટ અને અનલોક થઈ ગયા છે!");
-      }
     }
 
     function syncFirebaseCloud(showAlert = false) {
@@ -900,7 +847,6 @@
                 p.name = cp.name || '';
                 p.phone = cp.phone || '';
                 p.type = cp.type || 'FULL';
-                p.device = cp.device || null;
               }
             });
             handleSearch();
@@ -931,7 +877,6 @@
         let badge = `<span class="badge-avail">AVAILABLE</span>`;
         if (p.status === 'ENTERED') badge = `<span class="badge-entered">✅ CHECKED-IN</span>`;
         else if (p.name) badge = `<span class="badge-issued">ISSUED</span>`;
-        if (p.device) badge += ` <span class="badge-locked">🔒 LOCKED</span>`;
 
         let tierTag = `<span class="badge-tier-full">FULL VIP</span>`;
         if (p.type === 'DINNER') tierTag = `<span class="badge-tier-dinner">DINNER ONLY</span>`;
@@ -947,7 +892,6 @@
           </div>
           <div class="pass-actions">
             ${p.phone ? `<a href="${waUrl}" target="_blank" class="btn-wa">WhatsApp 📲</a>` : ''}
-            ${p.device ? `<button class="btn-unlock" title="Unlock Device" onclick="unlockSinglePass(${p.id})">🔓</button>` : ''}
             <button class="btn-edit" onclick="editPassRecord(${p.id})">✏️</button>
           </div>
         `;
@@ -1041,7 +985,6 @@
         p.phone = phone;
         p.type = type;
         p.status = name ? 'ISSUED' : 'AVAILABLE';
-        p.device = null; // Automatically removes any old device lock!
 
         fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${id}.json`, {
           method: 'PUT',
@@ -1051,7 +994,6 @@
             phone: phone, 
             type: type, 
             status: p.status,
-            device: null,
             enteredAt: null
           }),
           headers: { 'Content-Type': 'application/json' }
@@ -1070,7 +1012,6 @@
         p.phone = '';
         p.type = 'FULL';
         p.status = 'AVAILABLE';
-        p.device = null;
         fetch(`${FIREBASE_DB_URL}/events/${EVENT_ID}/passes/${id}.json`, { method: 'DELETE' });
         closePassModal();
         handleSearch();
